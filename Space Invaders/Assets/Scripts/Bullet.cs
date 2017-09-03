@@ -29,8 +29,8 @@ public class Bullet : MonoBehaviour
 			Destroy (collider.gameObject);
 			Destroy (gameObject);
 
-			// TODO
-			// Increase player score
+			// Update score
+			PlayerScore.playerScore += 10;
 		}
 		// Only destroy the bullet 
 		else if (collider.tag == "Base") {
