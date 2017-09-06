@@ -1,0 +1,25 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Global.cs">
+    <Files>
+      <File FileName="Assets\Scripts\BulletController.cs" Line="55" Column="39" />
+      <File FileName="Assets\Scripts\Global.cs" Line="55" Column="3" />
+      <File FileName="Assets\Scripts\ScoreUI.cs" Line="26" Column="1" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="50" Column="4" />
+      <File FileName="Assets\Scripts\BaseController.cs" Line="13" Column="12" />
+      <File FileName="Assets\Scripts\EnemyController.cs" Line="58" Column="4" />
+      <File FileName="Assets\Scripts\EnemyBulletController.cs" Line="37" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State name="__root__">
+          <Node name="SpaceInvaders_v2" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
