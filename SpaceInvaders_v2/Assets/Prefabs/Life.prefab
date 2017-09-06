@@ -9,47 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1947092312417818}
+  m_RootGameObject: {fileID: 1492661383923864}
   m_IsPrefabParent: 1
---- !u!1 &1947092312417818
+--- !u!1 &1492661383923864
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4349602412662522}
-  - component: {fileID: 33551489109428688}
-  - component: {fileID: 135172765876776146}
-  - component: {fileID: 54053193680948442}
-  - component: {fileID: 23461104223024350}
-  - component: {fileID: 114607651715404428}
+  - component: {fileID: 4703525058163406}
+  - component: {fileID: 33882594764169566}
+  - component: {fileID: 65068508652179278}
+  - component: {fileID: 23595392791261054}
+  - component: {fileID: 54357732095943586}
   m_Layer: 0
-  m_Name: EnemyBullet
-  m_TagString: EnemyBullet
+  m_Name: Life
+  m_TagString: Life
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4349602412662522
+--- !u!4 &4703525058163406
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1947092312417818}
+  m_GameObject: {fileID: 1492661383923864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 5.94, z: 10.0625}
-  m_LocalScale: {x: 0.3940854, y: 0.39408544, z: 0.39408544}
+  m_LocalPosition: {x: 0, y: 0, z: 10.06}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23461104223024350
+--- !u!23 &23595392791261054
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1947092312417818}
+  m_GameObject: {fileID: 1492661383923864}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -57,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 6fe7bf79c54636a4fba09c10e8b43496, type: 2}
+  - {fileID: 2100000, guid: c1b0ebbbfe46b344591988967d639375, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,19 +75,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33551489109428688
+--- !u!33 &33882594764169566
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1947092312417818}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54053193680948442
+  m_GameObject: {fileID: 1492661383923864}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54357732095943586
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1947092312417818}
+  m_GameObject: {fileID: 1492661383923864}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -98,28 +97,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114607651715404428
-MonoBehaviour:
+--- !u!65 &65068508652179278
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1947092312417818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ec45ad9479bae44ba311debe3c26333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 1676673465608534, guid: cc81659800acd104e91be24f63fe469a, type: 2}
-  speed: 0.5
---- !u!135 &135172765876776146
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1947092312417818}
+  m_GameObject: {fileID: 1492661383923864}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

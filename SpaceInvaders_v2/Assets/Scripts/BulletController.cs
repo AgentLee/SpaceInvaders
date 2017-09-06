@@ -27,8 +27,16 @@ public class BulletController : MonoBehaviour
 	void OnTriggerEnter(Collider collider)
 	{
 		if (collider.tag == "Enemy") {
+			GameObject obj = collider.gameObject;
+			EnemyController enemy = obj.GetComponent<EnemyController> ();
+
 			Destroy (collider.gameObject);
 			Destroy (gameObject);
+
+			obj = GameObject.Find ("GlobalObject");
+			Global g = obj.GetComponent<Global> ();
+			g.score += enemy.pointValue;
+			g.numEnemies--;
 
 			// TODO
 			// Increase score

@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
 	void OnTriggerEnter(Collider collider)
 	{
 		if (collider.tag == "Bullet") {
-			Debug.Log (pointValue);
+			//Debug.Log (pointValue);
 		}
 	}
 
@@ -56,15 +56,5 @@ public class EnemyController : MonoBehaviour
 				//Time.timeScale = 0;
 			}
 		}
-
-	/*	if (enemyHolder.childCount == 1) {
-			CancelInvoke ();
-			InvokeRepeating ("MoveEnemy", 0.1f, 0.25f);
-		}
-
-		if (enemyHolder.childCount == 0) {
-			winText.enabled = true;
-		}
-	*/
 	}
 }

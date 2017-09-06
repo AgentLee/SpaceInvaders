@@ -31,38 +31,25 @@ public class EnemyBulletController : MonoBehaviour
 			Destroy (gameObject);
 		}
 		else if (collider.tag == "Player") {
-			Destroy (collider.gameObject);
-			Destroy (gameObject);
-		}
-	}
-
-	/*
-	void OnTriggerEnter(Collider collider)
-	{
-		if (collider.tag == "Player") {
-			Destroy (collider.gameObject);
+			//Destroy (collider.gameObject);
 			Destroy (gameObject);
 
-			// TODO
-			// Increase score
-		}
-		else if (collider.tag == "Base") {
-			Debug.Log ("BASE");
-			Destroy (collider.gameObject);
-			Destroy (gameObject);
+			GameObject obj = GameObject.Find ("GlobalObject");
+			Global g = obj.GetComponent<Global> ();
+			g.numLives--;
+			g.lostLife = true;
 		}
 
 		// TODO
 		// Figure out how to make it so that the explosions are on top of the other bases.
 		Vector3 pos = gameObject.transform.position;
-		pos.y += 2.0f;
+		pos.y -= 2.0f;
 		Quaternion angle = Quaternion.AngleAxis (0, Vector3.right);
 		// Create a copy of the explosion 
 		GameObject newExplosion = (GameObject)Instantiate (explosion, pos, angle);
 		// Delete after 5 seconds
 		Destroy (newExplosion, 5);
 	}
-	*/
 
 	// Update is called once per frame
 	void Update () 
