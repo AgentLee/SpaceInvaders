@@ -19,7 +19,7 @@ public class EnemyBulletController : MonoBehaviour
 		bullet.position -= Vector3.up * speed;
 
 		// Check
-		if (bullet.position.y <= -11) {
+		if (bullet.position.y <= -20) {
 			Destroy (gameObject);
 		}
 	}
@@ -29,7 +29,7 @@ public class EnemyBulletController : MonoBehaviour
 		if (collider.tag == "Base") {
 			Destroy (collider.gameObject);
 			Destroy (gameObject);
-		}
+		} 
 		else if (collider.tag == "Player") {
 			//Destroy (collider.gameObject);
 			Destroy (gameObject);
@@ -38,6 +38,9 @@ public class EnemyBulletController : MonoBehaviour
 			Global g = obj.GetComponent<Global> ();
 			g.numLives--;
 			g.lostLife = true;
+		} 
+		else if (collider.tag == "Enemy") {
+			return;
 		}
 
 		// TODO

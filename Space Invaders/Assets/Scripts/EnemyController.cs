@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
 		enemies.position += Vector3.right * speed;
 
 		foreach (Transform enemy in enemies) {
-			if (enemy.position.x < -19.5|| enemy.position.x > 19.5) {
+			if (enemy.position.x < -15|| enemy.position.x > 15) {
 				// Have them move left to right, right to left
 				speed = -speed;
 				// Move them down
