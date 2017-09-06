@@ -23,8 +23,11 @@ public class BulletController : MonoBehaviour
 		}
 	}
 
+	public GameObject deathExplosion;
 	void OnTriggerEnter(Collider collider)
 	{
+		Instantiate (deathExplosion, gameObject.transform.position, Quaternion.AngleAxis (0, Vector3.right));
+
 		if (collider.tag == "Enemy") {
 			Destroy (collider.gameObject);
 			Destroy (gameObject);
@@ -32,8 +35,8 @@ public class BulletController : MonoBehaviour
 			// TODO
 			// Increase score
 		}
-		// TODO
 		else if (collider.tag == "Base") {
+			Destroy (collider.gameObject);
 			Destroy (gameObject);
 		}
 	}

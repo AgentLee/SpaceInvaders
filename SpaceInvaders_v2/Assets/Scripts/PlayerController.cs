@@ -38,15 +38,27 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetButton ("Fire1") && Time.time > nextFire) {
-			nextFire = Time.time + fireRate;
+		if (Input.GetKeyDown (KeyCode.Space) || Input.GetButton ("Fire1")) {
+			if (Time.time > nextFire) {
+				nextFire = Time.time + fireRate;
+
+				Vector3 pos = shotSpawn.position;
+				pos.y += 1.5f;
+
+				Instantiate (shot, pos, shotSpawn.rotation);
+			}
+		}
+
+
+		//if (Input.GetButton ("Fire1") && Time.time > nextFire) {
+		//	nextFire = Time.time + fireRate;
 
 			// TODO: FIX!
 			// Need to see if there's a way to spawn bullet without it bouncing off the player.
-			Vector3 pos = shotSpawn.position;
-			pos.y += 1.5f;
+	//		Vector3 pos = shotSpawn.position;
+		//	pos.y += 1.5f;
 
-			Instantiate (shot, pos, shotSpawn.rotation);
-		}
+		//	Instantiate (shot, pos, shotSpawn.rotation);
+	//	}
 	}
 }
