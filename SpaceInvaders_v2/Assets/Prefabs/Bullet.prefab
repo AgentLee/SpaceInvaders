@@ -109,9 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be4fb02fc07f524099cd67d4f32a012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion: {fileID: 1676673465608534, guid: cc81659800acd104e91be24f63fe469a, type: 2}
   speed: 0.3
-  deathExplosion: {fileID: 1676673465608534, guid: cc81659800acd104e91be24f63fe469a,
-    type: 2}
 --- !u!136 &136862364459541834
 CapsuleCollider:
   m_ObjectHideFlags: 1

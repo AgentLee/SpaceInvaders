@@ -48,17 +48,5 @@ public class PlayerController : MonoBehaviour
 				Instantiate (shot, pos, shotSpawn.rotation);
 			}
 		}
-
-
-		//if (Input.GetButton ("Fire1") && Time.time > nextFire) {
-		//	nextFire = Time.time + fireRate;
-
-			// TODO: FIX!
-			// Need to see if there's a way to spawn bullet without it bouncing off the player.
-	//		Vector3 pos = shotSpawn.position;
-		//	pos.y += 1.5f;
-
-		//	Instantiate (shot, pos, shotSpawn.rotation);
-	//	}
 	}
 }

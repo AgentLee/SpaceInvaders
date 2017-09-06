@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour 
+public class EnemyBulletController : MonoBehaviour 
 {
 	public GameObject explosion;
 	private Transform bullet;
@@ -16,17 +16,30 @@ public class BulletController : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		bullet.position += Vector3.up * speed;
+		bullet.position -= Vector3.up * speed;
 
 		// Check
-		if (bullet.position.y >= 11) {
+		if (bullet.position.y <= -11) {
 			Destroy (gameObject);
 		}
 	}
 
 	void OnTriggerEnter(Collider collider)
 	{
-		if (collider.tag == "Enemy") {
+		if (collider.tag == "Base") {
+			Destroy (collider.gameObject);
+			Destroy (gameObject);
+		}
+		else if (collider.tag == "Player") {
+			Destroy (collider.gameObject);
+			Destroy (gameObject);
+		}
+	}
+
+	/*
+	void OnTriggerEnter(Collider collider)
+	{
+		if (collider.tag == "Player") {
 			Destroy (collider.gameObject);
 			Destroy (gameObject);
 
@@ -34,6 +47,7 @@ public class BulletController : MonoBehaviour
 			// Increase score
 		}
 		else if (collider.tag == "Base") {
+			Debug.Log ("BASE");
 			Destroy (collider.gameObject);
 			Destroy (gameObject);
 		}
@@ -48,6 +62,7 @@ public class BulletController : MonoBehaviour
 		// Delete after 5 seconds
 		Destroy (newExplosion, 5);
 	}
+	*/
 
 	// Update is called once per frame
 	void Update () 
