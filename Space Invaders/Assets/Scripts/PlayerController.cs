@@ -32,6 +32,12 @@ public class PlayerController : MonoBehaviour
 			h = 0;
 		}
 
+		// TODO
+//		float z = Input.GetAxis ("Horizontal") * -15.0f;
+//		Vector3 euler = transform.localEulerAngles;
+//		euler.z = Mathf.Lerp (euler.z, z, 2.0f * Time.deltaTime);
+//		player.transform.localEulerAngles = euler;
+
 		player.position += Vector3.right * h * speed;
 	}
 

@@ -12,6 +12,7 @@ public class Global : MonoBehaviour
 
 	public GameObject player;
 	public bool lostLife;
+	public bool freezeEnemies;
 	public int numLives;
 
 	// Use this for initialization
@@ -26,6 +27,8 @@ public class Global : MonoBehaviour
 
 		lostLife = false;
 		numLives = 3;
+
+		freezeEnemies = false;
 
 		originInScreenCoords = Camera.main.WorldToScreenPoint (new Vector3 (0, 0, 0));
 	}
@@ -54,7 +57,6 @@ public class Global : MonoBehaviour
 		}
 
 		if (lostLife) {
-
 			// Destroy one by one
 			foreach (Transform life in lives) {
 				Destroy (life.gameObject);
@@ -62,35 +64,46 @@ public class Global : MonoBehaviour
 			}
 
 			if (numLives == 0) {
+				StartCoroutine ("GG");
+
 				Debug.Log ("YOU LOSE");
 
-				Time.timeScale = 0;
 			}
 			else {
+				StartCoroutine ("Respawn");
 				lostLife = false;
 			}
-		}
-
-
-
-		if (numLives > 0 && lostLife) {
-
-			lostLife = false;
-
-			//Respawn ();
 		}
 	}
 
 	IEnumerator Respawn()
 	{
-		GameObject tempPlayer = player.gameObject;
-
+		freezeEnemies = true;
+		
 		MeshRenderer render = player.gameObject.GetComponentInChildren<MeshRenderer> ();
 		render.enabled = false;
 
-		
-		yield return new WaitForSeconds(10);
+		yield return new WaitForSeconds (1);
 
-		//render.enabled = true;
+		// Flash
+		float timeToBlink = Time.time + 3;
+		while (Time.time < timeToBlink) {
+			yield return new WaitForSeconds (0.5f);
+			 
+			render.enabled = !render.enabled;
+		}
+
+		freezeEnemies = false;
+
+		render.enabled = true;
+	}
+
+	IEnumerator GG()
+	{
+		DestroyObject (player);
+
+		yield return new WaitForSeconds (10);
+
+		Time.timeScale = 0;
 	}
 }

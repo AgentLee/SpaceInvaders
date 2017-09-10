@@ -20,6 +20,8 @@ public class EnemyController : MonoBehaviour
 		InvokeRepeating ("MoveEnemy", 0.1f, 0.3f);
 
 		enemies = GetComponent<Transform> ();
+
+		freeze = false;
 	}
 
 	void OnTriggerEnter(Collider collider)
@@ -29,32 +31,49 @@ public class EnemyController : MonoBehaviour
 		}
 	}
 
+	public bool freeze;
+	void FixedUpdate()
+	{
+		GameObject g = GameObject.Find ("GlobalObject");
+		if (g.GetComponent<Global> ().freezeEnemies) {
+			freeze = true;
+		}
+		else {
+			freeze = false;
+		}
+	}
+
 	void MoveEnemy()
 	{
-		enemies.position += Vector3.right * speed;
+		if(!freeze) {
+			enemies.position += Vector3.right * speed;
 
-		foreach (Transform enemy in enemies) {
-			if (enemy.position.x < -15|| enemy.position.x > 15) {
-				// Have them move left to right, right to left
-				speed = -speed;
-				// Move them down
-				enemies.position += Vector3.down * 0.5f;
+			foreach (Transform enemy in enemies) {
+				if (enemy.position.x < -15 || enemy.position.x > 15) {
+					// Have them move left to right, right to left
+					speed = -speed;
+					// Move them down
+					enemies.position += Vector3.down * 0.5f;
 
-				return;
+					return;
+				}
+
+				if (Random.value > fireRate) {
+					Vector3 pos = enemy.position;
+					pos.y -= 1.0f;
+					Instantiate (shot, pos, enemy.rotation);
+				}
+
+				// Enemy reached the bases
+				if (enemy.position.y <= -4) {
+					//GameOver.isPlayerDead = true;
+
+					//Time.timeScale = 0;
+				}
 			}
-
-			if (Random.value > fireRate) {
-				Vector3 pos = enemy.position;
-				pos.y -= 1.0f;
-				Instantiate (shot, pos, enemy.rotation);
-			}
-
-			// Enemy reached the bases
-			if (enemy.position.y <= -4) {
-				//GameOver.isPlayerDead = true;
-
-				//Time.timeScale = 0;
-			}
+		}
+		else {
+			Debug.Log ("FREEZE");
 		}
 	}
 }
