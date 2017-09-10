@@ -47,6 +47,10 @@ public class EnemyBulletController : MonoBehaviour
 		if (collider.tag == "Base") {
 			Destroy (collider.gameObject);
 			Destroy (gameObject);
+
+			GameObject obj = GameObject.Find ("GlobalObject");
+			Global g = obj.GetComponent<Global> ();
+			g.baseCount--;
 		} 
 		else if (collider.tag == "Player") {
 			//Destroy (collider.gameObject);

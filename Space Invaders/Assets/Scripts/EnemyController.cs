@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Base enemy class
 // There are 3 types of enemies that are made as prefabs
@@ -65,15 +66,18 @@ public class EnemyController : MonoBehaviour
 				}
 
 				// Enemy reached the bases
-				if (enemy.position.y <= -4) {
-					//GameOver.isPlayerDead = true;
-
-					//Time.timeScale = 0;
-				}
+//				if (enemy.position.y <= 0.0f) {
+//					//GameOver.isPlayerDead = true;
+//
+//					//Time.timeScale = 0;
+//
+//					GameObject g = GameObject.Find ("GameOver").gameObject;
+//					g.GetComponent<Text> ().enabled = true;
+//				}
 			}
 		}
 		else {
-			Debug.Log ("FREEZE");
+
 		}
 	}
 }

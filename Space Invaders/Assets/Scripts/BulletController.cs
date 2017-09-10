@@ -41,6 +41,10 @@ public class BulletController : MonoBehaviour
 		else if (collider.tag == "Base") {
 			Destroy (collider.gameObject);
 			Destroy (gameObject);
+
+			GameObject obj = GameObject.Find ("GlobalObject");
+			Global g = obj.GetComponent<Global> ();
+			g.baseCount--;
 		}
 
 		// TODO

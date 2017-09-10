@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Global : MonoBehaviour 
 {
@@ -8,12 +9,17 @@ public class Global : MonoBehaviour
 	public Vector3 originInScreenCoords;
 	public int score;
 
+	public GameObject enemies;
 	public int numEnemies;
 
 	public GameObject player;
 	public bool lostLife;
 	public bool freezeEnemies;
 	public int numLives;
+
+	// TODO
+	// Find a better way to delete bases
+	public int baseCount;
 
 	// Use this for initialization
 	void Start ()
@@ -31,6 +37,11 @@ public class Global : MonoBehaviour
 		freezeEnemies = false;
 
 		originInScreenCoords = Camera.main.WorldToScreenPoint (new Vector3 (0, 0, 0));
+
+		GameObject g = GameObject.Find ("GameOver").gameObject;
+		g.GetComponent<Text> ().enabled = false;
+
+		baseCount = 40;
 	}
 
 	void FixedUpdate()
@@ -45,9 +56,25 @@ public class Global : MonoBehaviour
 	{
 		timer += Time.deltaTime;
 
-		// Level Up
-		if (numEnemies == 0) {
+		GameObject bases = GameObject.Find ("Bases").gameObject;
 
+		if (baseCount == 0) {
+			StartCoroutine ("GG");
+
+			GameObject g = GameObject.Find ("GameOver").gameObject;
+			g.GetComponent<Text> ().enabled = true;
+		}
+
+		if (enemies.transform.position.y <= 1.0f) {
+			StartCoroutine ("GG");
+
+			GameObject g = GameObject.Find ("GameOver").gameObject;
+			g.GetComponent<Text> ().enabled = true;
+		}
+
+		// Level Up
+		if (numEnemies <= 0) {
+			Debug .Log("BASES GONE");
 		}
 
 		GameObject obj = GameObject.Find ("Lives");
@@ -66,8 +93,8 @@ public class Global : MonoBehaviour
 			if (numLives == 0) {
 				StartCoroutine ("GG");
 
-				Debug.Log ("YOU LOSE");
-
+				GameObject g = GameObject.Find ("GameOver").gameObject;
+				g.GetComponent<Text> ().enabled = true;
 			}
 			else {
 				StartCoroutine ("Respawn");
