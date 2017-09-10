@@ -127,3 +127,4 @@ MonoBehaviour:
   shot: {fileID: 1249517185252342, guid: 835a1c6f9d785974aad7bbde75447c81, type: 2}
   shotSpawn: {fileID: 4020272677949902}
   fireRate: 0.5
+  blaster: {fileID: 8300000, guid: 76ecdec37d1ef1b4c894c97f0ba69430, type: 3}

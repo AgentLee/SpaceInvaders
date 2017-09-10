@@ -8,6 +8,7 @@ public class Global : MonoBehaviour
 	public float timer;
 	public Vector3 originInScreenCoords;
 	public int score;
+	public Text highScore;
 
 	public GameObject enemies;
 	public int numEnemies;
@@ -16,6 +17,8 @@ public class Global : MonoBehaviour
 	public bool lostLife;
 	public bool freezeEnemies;
 	public int numLives;
+
+	public AudioClip explosion;
 
 	// TODO
 	// Find a better way to delete bases
@@ -29,7 +32,7 @@ public class Global : MonoBehaviour
 
 		// TODO
 		// Find a better way to keep track of enemies
-		numEnemies = 3;
+		numEnemies = 33;
 
 		lostLife = false;
 		numLives = 3;
@@ -41,7 +44,12 @@ public class Global : MonoBehaviour
 		GameObject g = GameObject.Find ("GameOver").gameObject;
 		g.GetComponent<Text> ().enabled = false;
 
+		g = GameObject.Find ("LevelUp").gameObject;
+		g.GetComponent<Text> ().enabled = false;
+
 		baseCount = 40;
+
+		highScore.text = PlayerPrefs.GetInt ("HighScore", 0).ToString();
 	}
 
 	void FixedUpdate()
@@ -49,6 +57,7 @@ public class Global : MonoBehaviour
 		
 	}
 
+	public Transform extraLife;
 	public Vector3 rotateAmount;
 
 	// Update is called once per frame
@@ -74,7 +83,23 @@ public class Global : MonoBehaviour
 
 		// Level Up
 		if (numEnemies <= 0) {
-			Debug .Log("BASES GONE");
+			GameObject g = GameObject.Find ("LevelUp").gameObject;
+			g.GetComponent<Text> ().enabled = true;
+
+			numLives++;
+
+			// TODO
+			// Fix extra life instantiation
+	//		g = GameObject.FindGameObjectWithTag ("Lives");
+	//		Vector3 lifePos = new Vector3(0, 0, 0);
+	//		Quaternion lifeRotation = Quaternion.identity;
+	//		foreach (Transform life in g.transform) {
+	//			lifePos = life.position;
+	//			lifeRotation = life.rotation;
+	//		}
+
+	//		Instantiate (extraLife, lifePos, lifeRotation);
+			//Debug.Log (g.transform.childCount);
 		}
 
 		GameObject obj = GameObject.Find ("Lives");
@@ -100,6 +125,13 @@ public class Global : MonoBehaviour
 				StartCoroutine ("Respawn");
 				lostLife = false;
 			}
+
+			AudioSource.PlayClipAtPoint (explosion, gameObject.transform.transform.position);
+		}
+
+		if (score > PlayerPrefs.GetInt ("HighScore", 0)) {
+			PlayerPrefs.SetInt ("HighScore", score);
+			highScore.text = score.ToString();
 		}
 	}
 

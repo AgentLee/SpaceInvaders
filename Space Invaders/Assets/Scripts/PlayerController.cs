@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
 
 	private float nextFire;
 
+	public AudioClip blaster;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -52,6 +54,8 @@ public class PlayerController : MonoBehaviour
 				pos.y += 1.5f;
 
 				Instantiate (shot, pos, shotSpawn.rotation);
+
+				AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
 			}
 		}
 	}

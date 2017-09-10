@@ -15,6 +15,8 @@ public class EnemyController : MonoBehaviour
 	public GameObject shot;
 	public float fireRate = 0.95f;
 
+	public AudioClip move;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -64,17 +66,9 @@ public class EnemyController : MonoBehaviour
 					pos.y -= 1.0f;
 					Instantiate (shot, pos, enemy.rotation);
 				}
-
-				// Enemy reached the bases
-//				if (enemy.position.y <= 0.0f) {
-//					//GameOver.isPlayerDead = true;
-//
-//					//Time.timeScale = 0;
-//
-//					GameObject g = GameObject.Find ("GameOver").gameObject;
-//					g.GetComponent<Text> ().enabled = true;
-//				}
 			}
+
+			AudioSource.PlayClipAtPoint (move, gameObject.transform.position);
 		}
 		else {
 
