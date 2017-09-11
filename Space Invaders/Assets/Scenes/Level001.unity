@@ -198,19 +198,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0
-  originInScreenCoords: {x: 0, y: 0, z: 0}
   score: 0
   highScore: {fileID: 1007636501}
+  gameOver: {fileID: 0}
+  levelUp: {fileID: 0}
   enemies: {fileID: 1406786451}
   numEnemies: 0
   player: {fileID: 1919823062}
   lostLife: 0
-  freeze: 0
   numLives: 0
-  explosion: {fileID: 8300000, guid: 83248dac16a4da94980a24822a8971fd, type: 3}
-  baseCount: 0
   extraLife: {fileID: 4703525058163406, guid: f8f670a596c50d84eb0f5be5cfa9962b, type: 2}
   rotateAmount: {x: 0, y: -50, z: -15}
+  baseCount: 0
+  freeze: 0
+  explosion: {fileID: 8300000, guid: 83248dac16a4da94980a24822a8971fd, type: 3}
 --- !u!4 &114891637
 Transform:
   m_ObjectHideFlags: 0
@@ -3959,6 +3960,11 @@ Prefab:
         type: 2}
       propertyPath: tilt
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54993133965550326, guid: 592a9ca6ac0ee0b45b998169b16b76ff,
+        type: 2}
+      propertyPath: m_AngularDrag
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}

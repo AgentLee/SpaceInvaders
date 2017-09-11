@@ -5,19 +5,21 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour 
 {
 	private Transform player;
+
+	// Movement
 	public float speed;
 	public float tilt;
 	public float minBounds;
 	public float maxBounds;
 
-	public GameObject shot;
+	// Blaster properties
 	public Transform shotSpawn;
+	public GameObject shot;
 	public float fireRate;
-
 	private float nextFire;
-
 	public AudioClip blaster;
 
+	// Global GameObject
 	public GameObject g;
 	public bool freeze;
 
@@ -38,6 +40,32 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	// Update is called once per frame
+	void Update()
+	{
+		// If the player gets hit by an enemy bullet,
+		// we want to freeze all movement until the respawn is finished.
+		freeze = g.GetComponent<Global> ().freeze;
+
+		if (!freeze) {
+			if (Input.GetKeyDown (KeyCode.Space) || Input.GetButton ("Fire1")) {
+				if (Time.time > nextFire) {
+					nextFire = Time.time + fireRate;
+
+					Vector3 pos = shotSpawn.position;
+					pos.y += 1.5f;
+
+					Instantiate (shot, pos, shotSpawn.rotation);
+
+					AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
+				}
+			}
+		}
+	}
+
+	// Moves player left/right
+	// Want to extend this so that when the player hits the redUFO
+	// they can move anywhere in space.
 	void MovePlayer()
 	{
 		float h = Input.GetAxis ("Horizontal");
@@ -66,29 +94,6 @@ public class PlayerController : MonoBehaviour
 		}
 		else {
 			player.transform.rotation = Quaternion.Euler (0.0f, 0.0f, 0 * -tilt);
-		}
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-		// If the player gets hit by an enemy bullet,
-		// we want to freeze all movement until the respawn is finished.
-		freeze = g.GetComponent<Global> ().freeze;
-
-		if (!freeze) {
-			if (Input.GetKeyDown (KeyCode.Space) || Input.GetButton ("Fire1")) {
-				if (Time.time > nextFire) {
-					nextFire = Time.time + fireRate;
-
-					Vector3 pos = shotSpawn.position;
-					pos.y += 1.5f;
-
-					Instantiate (shot, pos, shotSpawn.rotation);
-
-					AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
-				}
-			}
 		}
 	}
 }

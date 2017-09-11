@@ -8,9 +8,13 @@ public class EnemyBulletController : MonoBehaviour
 	private Transform bullet;
 	public float speed;
 
+	public GameObject g;
+
 	// Use this for initialization
 	void Start () 
 	{
+		g = GameObject.Find ("GlobalObject");
+
 		bullet = GetComponent<Transform> ();	
 	}
 
@@ -18,7 +22,7 @@ public class EnemyBulletController : MonoBehaviour
 	{
 		bullet.position -= Vector3.up * speed;
 
-		// Check
+		// Destroy the bullet if it goes out of bounds
 		if (bullet.position.y <= -20) {
 			Destroy (gameObject);
 		}
@@ -26,14 +30,15 @@ public class EnemyBulletController : MonoBehaviour
 
 	void OnTriggerEnter(Collider collider)
 	{
-		if (collider.tag == "Line") {
+		// Checks to see if the bullet hit
+		// other bullets, the line element, or other enemies.
+		// If it does then an explosion shouldn't occur and 
+		// we just return out of the function.
+		if (!CheckBulletCollision (collider.tag)) {
 			return;
 		}
 
-		if (collider.tag == "Enemy") {
-			return;
-		}
-
+		// Create an explosion
 		// TODO
 		// Figure out how to make it so that the explosions are on top of the other bases.
 		Vector3 pos = gameObject.transform.position;
@@ -44,28 +49,42 @@ public class EnemyBulletController : MonoBehaviour
 		// Delete after 5 seconds
 		Destroy (newExplosion, 5);
 
-		if (collider.tag == "Base") {
-			Destroy (collider.gameObject);
-			Destroy (gameObject);
+		// Destroy the bullet
+		Destroy (gameObject);
 
-			GameObject obj = GameObject.Find ("GlobalObject");
-			Global g = obj.GetComponent<Global> ();
-			g.baseCount--;
-		} 
-		else if (collider.tag == "Player") {
-			//Destroy (collider.gameObject);
-			Destroy (gameObject);
+		switch (collider.tag) 
+		{
+			case "Base":
+				// Destroy base piece
+				Destroy (collider.gameObject);
+				g.GetComponent<Global> ().baseCount--;
 
-			GameObject obj = GameObject.Find ("GlobalObject");
-			Global g = obj.GetComponent<Global> ();
-			g.numLives--;
-			g.lostLife = true;
-		} 
+				break;
+			case "Player":
+				g.GetComponent<Global> ().numLives--;
+				// Trigger Respawn() in Global
+				g.GetComponent<Global> ().lostLife = true;
+
+				break;
+			default:
+				break;
+		}
 	}
 
-	// Update is called once per frame
-	void Update () 
+	bool CheckBulletCollision(string tag)
 	{
-
+		switch (tag) 
+		{
+			case "Line":
+				return false;
+			case "Enemy":
+				return false;
+			case "Bullet":
+				return false;
+			case "EnemyBullet":
+				return false;
+			default:
+				return true;
+		}
 	}
 }

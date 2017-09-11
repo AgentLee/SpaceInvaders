@@ -5,59 +5,63 @@ using UnityEngine.UI;
 
 public class Global : MonoBehaviour 
 {
+	// UI Elements
 	public float timer;
-	public Vector3 originInScreenCoords;
 	public int score;
 	public Text highScore;
+	public GameObject gameOver;
+	public GameObject levelUp;
+	public GameObject livesObject;
 
+	// Enemy Management
 	public GameObject enemies;
 	public int numEnemies;
 
+	// Player Management
 	public GameObject player;
 	public bool lostLife;
-	public bool freeze;
 	public int numLives;
-
-	public AudioClip explosion;
-
+	public Transform extraLife;
+	public Vector3 rotateAmount;
 	// TODO
 	// Find a better way to delete bases
 	public int baseCount;
 
-	public Transform extraLife;
-	public Vector3 rotateAmount;
+	// Toggle this whenever the player loses a life
+	// so the player and the enemies don't move/fire.
+	public bool freeze;
+	public AudioClip explosion;
 
 	// Use this for initialization
 	void Start ()
 	{
+		// Hide the cursor
 		Cursor.visible = false;
 
 		score = 0;
 		timer = 0;
 
-		// TODO
-		// Find a better way to keep track of enemies
+		// Should be able to create enemies in a loop rather than
+		// having them static in the editor.
 		numEnemies = 33;
 
 		lostLife = false;
 		numLives = 3;
+		baseCount = 40;
 
 		freeze = false;
 
-		GameObject g = GameObject.Find ("GameOver").gameObject;
-		g.GetComponent<Text> ().enabled = false;
+		// Hide the end game conditions
+		livesObject = GameObject.Find ("Lives").gameObject;
 
-		g = GameObject.Find ("LevelUp").gameObject;
-		g.GetComponent<Text> ().enabled = false;
+		gameOver = GameObject.Find ("GameOver").gameObject;
+		gameOver.GetComponent<Text> ().enabled = false;
 
-		baseCount = 40;
+		levelUp = GameObject.Find ("LevelUp").gameObject;
+		levelUp.GetComponent<Text> ().enabled = false;
 
+		// Set the high score to 0 if it's the first time playing on the machine.
 		highScore.text = PlayerPrefs.GetInt ("HighScore", 0).ToString();
-	}
-
-	void FixedUpdate()
-	{
-		
 	}
 
 	// Update is called once per frame
@@ -65,49 +69,62 @@ public class Global : MonoBehaviour
 	{
 		timer += Time.deltaTime;
 
-		GameObject bases = GameObject.Find ("Bases").gameObject;
+		// Checks for
+		// 		- Player loses all their lives
+		// 		- All the bases are destroyed
+		//		- The enemies reached the bases
+		//
+		if (CheckEndGame ()) {
+			return;
+		}
 
-		if (baseCount == 0) {
+		// Rotate the lives at the bottom left
+		RotateLives (livesObject.transform);
+		// Check to see if the player died and needs to respawn
+		CheckRespawn (livesObject.transform);
+
+		// TODO
+		CheckLevelUp();
+
+		UpdateHighScore ();
+	}
+		
+	bool EnemiesReachedBase()
+	{
+		return enemies.transform.position.y <= 1.0f;
+	}
+
+	bool RanOutOfLives()
+	{
+		if (lostLife && numLives == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	bool CheckEndGame()
+	{
+		if (baseCount == 0 || EnemiesReachedBase () || RanOutOfLives()) {
 			StartCoroutine ("GG");
 
-			GameObject g = GameObject.Find ("GameOver").gameObject;
-			g.GetComponent<Text> ().enabled = true;
+			gameOver.GetComponent<Text> ().enabled = true;
+
+			return true;
 		}
 
-		if (enemies.transform.position.y <= 1.0f) {
-			StartCoroutine ("GG");
+		return false;
+	}
 
-			GameObject g = GameObject.Find ("GameOver").gameObject;
-			g.GetComponent<Text> ().enabled = true;
-		}
-
-		// Level Up
-		if (numEnemies <= 0) {
-			GameObject g = GameObject.Find ("LevelUp").gameObject;
-			g.GetComponent<Text> ().enabled = true;
-
-			numLives++;
-
-			// TODO
-			// Fix extra life instantiation
-	//		g = GameObject.FindGameObjectWithTag ("Lives");
-	//		Vector3 lifePos = new Vector3(0, 0, 0);
-	//		Quaternion lifeRotation = Quaternion.identity;
-	//		foreach (Transform life in g.transform) {
-	//			lifePos = life.position;
-	//			lifeRotation = life.rotation;
-	//		}
-
-	//		Instantiate (extraLife, lifePos, lifeRotation);
-			//Debug.Log (g.transform.childCount);
-		}
-
-		GameObject obj = GameObject.Find ("Lives");
-		Transform lives = obj.transform;
+	void RotateLives(Transform lives)
+	{
 		foreach (Transform life in lives) {
 			life.Rotate (rotateAmount * Time.deltaTime);
 		}
+	}
 
+	void CheckRespawn(Transform lives)
+	{
 		if (lostLife) {
 			// Destroy one by one
 			foreach (Transform life in lives) {
@@ -115,36 +132,58 @@ public class Global : MonoBehaviour
 				break;
 			}
 
-			if (numLives == 0) {
-				StartCoroutine ("GG");
-
-				GameObject g = GameObject.Find ("GameOver").gameObject;
-				g.GetComponent<Text> ().enabled = true;
-			}
-			else {
-				StartCoroutine ("Respawn");
-				lostLife = false;
-			}
+			StartCoroutine ("Respawn");
+			lostLife = false;
 
 			AudioSource.PlayClipAtPoint (explosion, gameObject.transform.transform.position);
 		}
+	}
 
+	void UpdateHighScore()
+	{
 		if (score > PlayerPrefs.GetInt ("HighScore", 0)) {
 			PlayerPrefs.SetInt ("HighScore", score);
 			highScore.text = score.ToString();
 		}
 	}
 
+	void CheckLevelUp()
+	{
+		// Level Up
+		if (numEnemies <= 0) {
+			levelUp.GetComponent<Text> ().enabled = true;
+
+			numLives++;
+
+			// TODO
+			// Fix extra life instantiation
+			//		g = GameObject.FindGameObjectWithTag ("Lives");
+			//		Vector3 lifePos = new Vector3(0, 0, 0);
+			//		Quaternion lifeRotation = Quaternion.identity;
+			//		foreach (Transform life in g.transform) {
+			//			lifePos = life.position;
+			//			lifeRotation = life.rotation;
+			//		}
+
+			//		Instantiate (extraLife, lifePos, lifeRotation);
+			//Debug.Log (g.transform.childCount);
+		}
+	}
+
 	IEnumerator Respawn()
 	{
+		// Make sure nothing moves/fires
 		freeze = true;
-		
+
+		// Hide the player
+		// EnemyBulletController handles the explosion effect
 		MeshRenderer render = player.gameObject.GetComponentInChildren<MeshRenderer> ();
 		render.enabled = false;
 
+		// Respawn time
 		yield return new WaitForSeconds (1);
 
-		// Flash
+		// Flash the player
 		float timeToBlink = Time.time + 3;
 		while (Time.time < timeToBlink) {
 			yield return new WaitForSeconds (0.5f);
@@ -152,9 +191,11 @@ public class Global : MonoBehaviour
 			render.enabled = !render.enabled;
 		}
 
-		freeze = false;
-
+		// Just to make sure the player is shown
 		render.enabled = true;
+
+		// Allow the player/enemies to move
+		freeze = false;
 	}
 
 	IEnumerator GG()

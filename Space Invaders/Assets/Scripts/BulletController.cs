@@ -8,17 +8,21 @@ public class BulletController : MonoBehaviour
 	private Transform bullet;
 	public float speed;
 
+	public GameObject g;
+
 	// Use this for initialization
 	void Start () 
 	{
 		bullet = GetComponent<Transform> ();	
+
+		g = GameObject.Find ("GlobalObject");
 	}
 
 	void FixedUpdate()
 	{
 		bullet.position += Vector3.up * speed;
 
-		// Check
+		// Destroy the bullet if it goes out of bounds
 		if (bullet.position.y >= 20) {
 			Destroy (gameObject);
 		}
@@ -26,42 +30,32 @@ public class BulletController : MonoBehaviour
 
 	void OnTriggerEnter(Collider collider)
 	{
-		if (collider.tag == "Enemy") {
-			GameObject obj = collider.gameObject;
-			EnemyController enemy = obj.GetComponent<EnemyController> ();
-
-			Destroy (collider.gameObject);
-			Destroy (gameObject);
-
-			obj = GameObject.Find ("GlobalObject");
-			Global g = obj.GetComponent<Global> ();
-			g.score += enemy.pointValue;
-			g.numEnemies--;
-		} 
-		else if (collider.tag == "Base") {
-			Destroy (collider.gameObject);
-			Destroy (gameObject);
-
-			GameObject obj = GameObject.Find ("GlobalObject");
-			Global g = obj.GetComponent<Global> ();
-			g.baseCount--;
-		}
-
+		// Create Explosion
 		// TODO
 		// Figure out how to make it so that the explosions are on top of the other bases.
 		Vector3 pos = gameObject.transform.position;
 		pos.y += 2.0f;
-//		pos.z += -10.0f;
+		//		pos.z += -10.0f;
 		Quaternion angle = Quaternion.AngleAxis (0, Vector3.right);
 		// Create a copy of the explosion 
 		GameObject newExplosion = (GameObject)Instantiate (explosion, pos, angle);
 		// Delete after 5 seconds
 		Destroy (newExplosion, 5);
-	}
 
-	// Update is called once per frame
-	void Update () 
-	{
+		// Destroy the bullet
+		Destroy (gameObject);
+		// Destroy the enemy/base piece
+		Destroy (collider.gameObject);
 
+		if (collider.tag == "Enemy") {
+			EnemyController enemy = collider.gameObject.GetComponent<EnemyController> ();
+
+			// Update score and enemy counter
+			g.GetComponent<Global>().score += enemy.pointValue;
+			g.GetComponent<Global>().numEnemies--;
+		} 
+		else if (collider.tag == "Base") {
+			g.GetComponent<Global>().baseCount--;
+		}
 	}
 }

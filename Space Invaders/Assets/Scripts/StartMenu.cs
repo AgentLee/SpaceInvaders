@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour 
 {
-	public void StartGame(string scene)
+	public void MenuButton(string scene)
 	{
-		Application.LoadLevel (scene);
+		if (scene == "quit") {
+			Application.Quit ();
+		}
+
+		SceneManager.LoadScene (scene);
 	}
 }
