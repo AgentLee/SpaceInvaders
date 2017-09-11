@@ -44,18 +44,25 @@ public class BulletController : MonoBehaviour
 
 		// Destroy the bullet
 		Destroy (gameObject);
-		// Destroy the enemy/base piece
+		// Destroy the enemy/base piece/red ufo
 		Destroy (collider.gameObject);
 
 		if (collider.tag == "Enemy") {
 			EnemyController enemy = collider.gameObject.GetComponent<EnemyController> ();
 
 			// Update score and enemy counter
-			g.GetComponent<Global>().score += enemy.pointValue;
-			g.GetComponent<Global>().numEnemies--;
+			g.GetComponent<Global> ().score += enemy.pointValue;
+			g.GetComponent<Global> ().numEnemies--;
 		} 
 		else if (collider.tag == "Base") {
-			g.GetComponent<Global>().baseCount--;
+			g.GetComponent<Global> ().baseCount--;
+		} 
+		else if (collider.tag == "RedUFO") {
+			RedUFOController ufo = collider.gameObject.GetComponent<RedUFOController> ();
+
+			// Get random point value in the point values array
+			int pointValue = ufo.pointValues[Random.Range (0, 3)];
+			g.GetComponent<Global> ().score += pointValue;
 		}
 	}
 }

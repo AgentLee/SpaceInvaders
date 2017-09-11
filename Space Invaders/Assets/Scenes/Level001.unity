@@ -202,18 +202,18 @@ MonoBehaviour:
   gameOver: {fileID: 0}
   levelUp: {fileID: 0}
   livesObject: {fileID: 0}
-  enemies: {fileID: 1406786451}
-  numEnemies: 0
-  redUFO: {fileID: 1281604306036518, guid: f36bde76d8ed8984aa03274db3a6ab24, type: 2}
-  maxTime: 5
-  minTime: 2
-  spawnedRedUFO: 0
   player: {fileID: 1919823062}
   lostLife: 0
   numLives: 0
   extraLife: {fileID: 4703525058163406, guid: f8f670a596c50d84eb0f5be5cfa9962b, type: 2}
   rotateAmount: {x: 0, y: -50, z: -15}
   baseCount: 0
+  enemies: {fileID: 1406786451}
+  numEnemies: 0
+  redUFO: {fileID: 1281604306036518, guid: f36bde76d8ed8984aa03274db3a6ab24, type: 2}
+  maxTime: 5
+  minTime: 2
+  spawnedRedUFO: 0
   freeze: 0
   explosion: {fileID: 8300000, guid: 83248dac16a4da94980a24822a8971fd, type: 3}
 --- !u!4 &114891637

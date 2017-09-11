@@ -6,7 +6,7 @@ public class RedUFOController : MonoBehaviour
 {
 	private Transform ufo;
 	public float speed;
-
+	public int[] pointValues;
 	public Vector3 startPos;
 
 	public GameObject g;
@@ -21,15 +21,20 @@ public class RedUFOController : MonoBehaviour
 		ufo = GetComponent<Transform> ();
 
 		if (Mathf.Ceil (Random.Range (0.0f, 10.0f)) % 2 == 0) {
-			startPos = new Vector3 (-30.0f, 10.5f, 0.0f);
+			startPos = new Vector3 (-30.0f, 14f, 9.95f);
 		} 
 		else {
-			startPos = new Vector3 (30.0f, 10.5f, 0.0f);
+			startPos = new Vector3 (30.0f, 14f, 9.95f);
 		}
+
+		pointValues = new int[3];
+		pointValues [0] = 50;
+		pointValues [1] = 100;
+		pointValues [2] = 150;
 
 		ufo.position = startPos;
 	}
-	
+
 	void MoveEnemy()
 	{
 		MeshRenderer render = ufo.gameObject.GetComponentInChildren<MeshRenderer> ();

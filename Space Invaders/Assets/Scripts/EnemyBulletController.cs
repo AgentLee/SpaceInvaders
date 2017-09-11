@@ -79,6 +79,10 @@ public class EnemyBulletController : MonoBehaviour
 				return false;
 			case "Enemy":
 				return false;
+			// Shouldn't ever get to this but
+			// BKR taught me about defensive programming. 
+			case "RedUFO":
+				return false;
 			case "Bullet":
 				return false;
 			case "EnemyBullet":
