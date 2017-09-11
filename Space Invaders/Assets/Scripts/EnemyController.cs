@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
 	public GameObject shot;
 	public float fireRate = 0.95f;
 
-	public AudioClip move;
+	//public AudioClip move;
 
 	// Use this for initialization
 	void Start () 
@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
 				}
 			}
 
-			AudioSource.PlayClipAtPoint (move, gameObject.transform.position);
+			//AudioSource.PlayClipAtPoint (move, gameObject.transform.position);
 		}
 		else {
 

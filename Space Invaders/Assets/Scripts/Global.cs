@@ -27,6 +27,8 @@ public class Global : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		Cursor.visible = false;
+
 		score = 0;
 		timer = 0;
 
