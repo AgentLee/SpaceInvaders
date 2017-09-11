@@ -13,10 +13,6 @@ public class Global : MonoBehaviour
 	public GameObject levelUp;
 	public GameObject livesObject;
 
-	// Enemy Management
-	public GameObject enemies;
-	public int numEnemies;
-
 	// Player Management
 	public GameObject player;
 	public bool lostLife;
@@ -26,6 +22,17 @@ public class Global : MonoBehaviour
 	// TODO
 	// Find a better way to delete bases
 	public int baseCount;
+
+	// Enemy Management
+	public GameObject enemies;
+	public int numEnemies;
+	// Red UFO
+	public GameObject redUFO;
+	public float maxTime = 5;
+	public float minTime = 2;
+	private float timeRedUFO;
+	private float spawnTime;
+	public bool spawnedRedUFO;
 
 	// Toggle this whenever the player loses a life
 	// so the player and the enemies don't move/fire.
@@ -38,18 +45,26 @@ public class Global : MonoBehaviour
 		// Hide the cursor
 		Cursor.visible = false;
 
+		// UI
 		score = 0;
 		timer = 0;
 
-		// Should be able to create enemies in a loop rather than
-		// having them static in the editor.
-		numEnemies = 33;
-
+		// Player
 		lostLife = false;
 		numLives = 3;
 		baseCount = 40;
 
+		// Enemy
+		// Should be able to create enemies in a loop rather than
+		// having them static in the editor.
+		numEnemies = 33;
+
+		// Lock player/enemy movement
 		freeze = false;
+
+		// Red UFO
+		SetRandomTime ();
+		spawnedRedUFO = false;
 
 		// Hide the end game conditions
 		livesObject = GameObject.Find ("Lives").gameObject;
@@ -78,6 +93,12 @@ public class Global : MonoBehaviour
 			return;
 		}
 
+		timeRedUFO += Time.deltaTime;
+		if (timeRedUFO >= spawnTime) {
+			SpawnRedUFO ();
+			SetRandomTime ();
+		}
+
 		// Rotate the lives at the bottom left
 		RotateLives (livesObject.transform);
 		// Check to see if the player died and needs to respawn
@@ -88,7 +109,11 @@ public class Global : MonoBehaviour
 
 		UpdateHighScore ();
 	}
-		
+
+	// ---------------------------------------------------------------
+	// End Game Conditions
+	// ---------------------------------------------------------------
+
 	bool EnemiesReachedBase()
 	{
 		return enemies.transform.position.y <= 1.0f;
@@ -115,6 +140,10 @@ public class Global : MonoBehaviour
 
 		return false;
 	}
+
+	// ---------------------------------------------------------------
+	// Lives Management
+	// --------------------------------------------------------------
 
 	void RotateLives(Transform lives)
 	{
@@ -169,6 +198,28 @@ public class Global : MonoBehaviour
 			//Debug.Log (g.transform.childCount);
 		}
 	}
+
+	// ---------------------------------------------------------------
+	// Red UFO Management
+	// ---------------------------------------------------------------
+
+	void SpawnRedUFO()
+	{
+		timeRedUFO = 0;
+
+		if (!spawnedRedUFO) {
+			Instantiate (redUFO, new Vector3 (0.0f, 0.0f, 0.0f), Quaternion.identity);
+		}
+	}
+
+	void SetRandomTime()
+	{
+		spawnTime = Random.Range (minTime, maxTime);
+	}
+
+	// ---------------------------------------------------------------
+	// Wait Functions
+	// ---------------------------------------------------------------
 
 	IEnumerator Respawn()
 	{

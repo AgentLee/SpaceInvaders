@@ -178,7 +178,6 @@ GameObject:
   m_Component:
   - component: {fileID: 114891637}
   - component: {fileID: 114891636}
-  - component: {fileID: 114891638}
   m_Layer: 0
   m_Name: GlobalObject
   m_TagString: Untagged
@@ -202,8 +201,13 @@ MonoBehaviour:
   highScore: {fileID: 1007636501}
   gameOver: {fileID: 0}
   levelUp: {fileID: 0}
+  livesObject: {fileID: 0}
   enemies: {fileID: 1406786451}
   numEnemies: 0
+  redUFO: {fileID: 1281604306036518, guid: f36bde76d8ed8984aa03274db3a6ab24, type: 2}
+  maxTime: 5
+  minTime: 2
+  spawnedRedUFO: 0
   player: {fileID: 1919823062}
   lostLife: 0
   numLives: 0
@@ -225,22 +229,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114891638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 114891635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4617b9449c989dc47a1c0b8f9e216577, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ufo: {fileID: 1281604306036518, guid: f36bde76d8ed8984aa03274db3a6ab24, type: 2}
-  maxTime: 5
-  minTime: 2
-  speed: 0.25
-  spawned: 0
 --- !u!4 &121041119 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4685453059442120, guid: 02d0532c9bca8194fa68ca2a52359bad,

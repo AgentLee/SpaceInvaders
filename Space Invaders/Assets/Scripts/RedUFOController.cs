@@ -4,72 +4,56 @@ using UnityEngine;
 
 public class RedUFOController : MonoBehaviour
 {
-	public GameObject ufo;
+	private Transform ufo;
+	public float speed;
 
-	public float maxTime = 5;
-	public float minTime = 2;
+	public Vector3 startPos;
 
-	private float currTime;
-	private float spawnTime;
-
-	public float speed = 0.25f;
-
-	public bool spawned;
+	public GameObject g;
 
 	// Use this for initialization
 	void Start () 
 	{
-		InvokeRepeating ("Move", 0.1f, 0.3f);
-		//Instantiate (ufo, new Vector3 (15, 0, 0), Quaternion.identity);
-		//SetRandomTime ();
-		//currTime = minTime;
+		g = GameObject.Find ("GlobalObject");
 
-		//spawned = false;
+		InvokeRepeating ("MoveEnemy", 0.1f, 0.3f);
+
+		ufo = GetComponent<Transform> ();
+
+		if (Mathf.Ceil (Random.Range (0.0f, 10.0f)) % 2 == 0) {
+			startPos = new Vector3 (-30.0f, 10.5f, 0.0f);
+		} 
+		else {
+			startPos = new Vector3 (30.0f, 10.5f, 0.0f);
+		}
+
+		ufo.position = startPos;
 	}
 	
-	void FixedUpdate () 
+	void MoveEnemy()
 	{
-		//currTime += Time.deltaTime;
+		MeshRenderer render = ufo.gameObject.GetComponentInChildren<MeshRenderer> ();
 
-		//if (currTime >= spawnTime) {
-		//	if (!spawned) {
-		//		SpawnObject ();
-		//	}
+		// Move left to right
+		if (startPos.x < 0.0f) {
 
-		//	SetRandomTime ();
-		//}
-	}
-
-	void Update()
-	{
-		if (spawned) {
-			Move ();
+			if (render.isVisible) {
+				ufo.position += Vector3.right * speed;
+				g.GetComponent<Global> ().spawnedRedUFO = true;
+			} else {
+				Destroy (ufo.gameObject);
+				g.GetComponent<Global> ().spawnedRedUFO = false;
+			}
 		}
-	}
-
-	void SpawnObject()
-	{
-		currTime = 0;
-
-		if (!spawned) {
-			Instantiate (ufo, new Vector3 (15, 0, 0), Quaternion.identity);
-			spawned = true;
-
-			Debug.Log (spawned);
-		} 
-
-
-	}
-
-	void SetRandomTime()
-	{
-		spawnTime = Random.Range (minTime, maxTime);
-	}
-
-	void Move()
-	{
-		//ufo.transform.position += Vector3.right * speed;
-
-		gameObject.transform.position += Vector3.right * speed;
+		// Move right to left
+		else {
+			if (render.isVisible) {
+				ufo.position += Vector3.left * speed;
+				g.GetComponent<Global> ().spawnedRedUFO = true;
+			} else {
+				Destroy (ufo.gameObject);
+				g.GetComponent<Global> ().spawnedRedUFO = false;
+			}
+		}
 	}
 }
