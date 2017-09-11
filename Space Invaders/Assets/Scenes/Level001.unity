@@ -205,7 +205,7 @@ MonoBehaviour:
   numEnemies: 0
   player: {fileID: 1919823062}
   lostLife: 0
-  freezeEnemies: 0
+  freeze: 0
   numLives: 0
   explosion: {fileID: 8300000, guid: 83248dac16a4da94980a24822a8971fd, type: 3}
   baseCount: 0
@@ -3786,7 +3786,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 63d0a750c6df33840a587313db0576cf, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.747
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3954,6 +3954,11 @@ Prefab:
         type: 2}
       propertyPath: maxBounds
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792851345170136, guid: 592a9ca6ac0ee0b45b998169b16b76ff,
+        type: 2}
+      propertyPath: tilt
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}

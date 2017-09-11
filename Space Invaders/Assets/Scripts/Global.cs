@@ -15,7 +15,7 @@ public class Global : MonoBehaviour
 
 	public GameObject player;
 	public bool lostLife;
-	public bool freezeEnemies;
+	public bool freeze;
 	public int numLives;
 
 	public AudioClip explosion;
@@ -23,6 +23,9 @@ public class Global : MonoBehaviour
 	// TODO
 	// Find a better way to delete bases
 	public int baseCount;
+
+	public Transform extraLife;
+	public Vector3 rotateAmount;
 
 	// Use this for initialization
 	void Start ()
@@ -39,9 +42,7 @@ public class Global : MonoBehaviour
 		lostLife = false;
 		numLives = 3;
 
-		freezeEnemies = false;
-
-		originInScreenCoords = Camera.main.WorldToScreenPoint (new Vector3 (0, 0, 0));
+		freeze = false;
 
 		GameObject g = GameObject.Find ("GameOver").gameObject;
 		g.GetComponent<Text> ().enabled = false;
@@ -58,9 +59,6 @@ public class Global : MonoBehaviour
 	{
 		
 	}
-
-	public Transform extraLife;
-	public Vector3 rotateAmount;
 
 	// Update is called once per frame
 	void Update () 
@@ -139,7 +137,7 @@ public class Global : MonoBehaviour
 
 	IEnumerator Respawn()
 	{
-		freezeEnemies = true;
+		freeze = true;
 		
 		MeshRenderer render = player.gameObject.GetComponentInChildren<MeshRenderer> ();
 		render.enabled = false;
@@ -154,7 +152,7 @@ public class Global : MonoBehaviour
 			render.enabled = !render.enabled;
 		}
 
-		freezeEnemies = false;
+		freeze = false;
 
 		render.enabled = true;
 	}

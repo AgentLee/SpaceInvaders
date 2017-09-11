@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
 	void FixedUpdate()
 	{
 		GameObject g = GameObject.Find ("GlobalObject");
-		if (g.GetComponent<Global> ().freezeEnemies) {
+		if (g.GetComponent<Global> ().freeze) {
 			freeze = true;
 		}
 		else {
@@ -69,9 +69,6 @@ public class EnemyController : MonoBehaviour
 			}
 
 			//AudioSource.PlayClipAtPoint (move, gameObject.transform.position);
-		}
-		else {
-
 		}
 	}
 }
