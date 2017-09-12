@@ -7,6 +7,7 @@ public class BulletController : MonoBehaviour
 	public GameObject explosion;
 	private Transform bullet;
 	public float speed;
+	public AudioClip blaster;
 
 	public GameObject g;
 
@@ -30,6 +31,8 @@ public class BulletController : MonoBehaviour
 
 	void OnTriggerEnter(Collider collider)
 	{
+		AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
+
 		// Create Explosion
 		// TODO
 		// Figure out how to make it so that the explosions are on top of the other bases.
@@ -53,6 +56,9 @@ public class BulletController : MonoBehaviour
 			// Update score and enemy counter
 			g.GetComponent<Global> ().score += enemy.pointValue;
 			g.GetComponent<Global> ().numEnemies--;
+
+			// Update player's accuracy
+			g.gameObject.GetComponent<Global>().hitEnemy = true;
 		} 
 		else if (collider.tag == "Base") {
 			g.GetComponent<Global> ().baseCount--;
@@ -63,6 +69,13 @@ public class BulletController : MonoBehaviour
 			// Get random point value in the point values array
 			int pointValue = ufo.pointValues[Random.Range (0, 3)];
 			g.GetComponent<Global> ().score += pointValue;
+
+			// Update player's accuracy
+			PlayerController player = GameObject.Find("PlayerController").gameObject.GetComponent<PlayerController>();
+			player.shotsHit++;
+
+			Global global = g.gameObject.GetComponent<Global> ();
+			Debug.Log (global.player.gameObject.GetComponent<PlayerController> ().shotsHit);
 		}
 	}
 }

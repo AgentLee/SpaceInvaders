@@ -22,6 +22,10 @@ public class Global : MonoBehaviour
 	// TODO
 	// Find a better way to delete bases
 	public int baseCount;
+	public Text baseText;
+	public AudioClip wilhelm;
+	public bool hitEnemy;
+	public Text accuracy;
 
 	// Enemy Management
 	public GameObject enemies;
@@ -37,7 +41,6 @@ public class Global : MonoBehaviour
 	// Toggle this whenever the player loses a life
 	// so the player and the enemies don't move/fire.
 	public bool freeze;
-	public AudioClip explosion;
 
 	// Use this for initialization
 	void Start ()
@@ -77,6 +80,14 @@ public class Global : MonoBehaviour
 
 		// Set the high score to 0 if it's the first time playing on the machine.
 		highScore.text = PlayerPrefs.GetInt ("HighScore", 0).ToString();
+
+		accuracy.enabled = false;
+		accuracy.text = "Accuracy: 0.00%";
+
+		baseText.enabled = false;
+		baseText.text = "Base Health: 100.00%";
+
+		hitEnemy = false;
 	}
 
 	// Update is called once per frame
@@ -108,6 +119,19 @@ public class Global : MonoBehaviour
 		CheckLevelUp();
 
 		UpdateHighScore ();
+
+		accuracy.text = "Accuracy: " + player.gameObject.GetComponent<PlayerController> ().accuracy.ToString ("F2") + "%";
+		if (Input.GetKey (KeyCode.Tab)) {
+			accuracy.enabled = true;
+		} else {
+			accuracy.enabled = false;
+		}
+
+		if (hitEnemy) {
+			hitEnemy = false;
+
+			player.gameObject.GetComponent<PlayerController> ().shotsHit++;
+		}
 	}
 
 	// ---------------------------------------------------------------
@@ -155,6 +179,8 @@ public class Global : MonoBehaviour
 	void CheckRespawn(Transform lives)
 	{
 		if (lostLife) {
+			AudioSource.PlayClipAtPoint (wilhelm, player.transform.position);
+
 			// Destroy one by one
 			foreach (Transform life in lives) {
 				Destroy (life.gameObject);
@@ -163,8 +189,6 @@ public class Global : MonoBehaviour
 
 			StartCoroutine ("Respawn");
 			lostLife = false;
-
-			AudioSource.PlayClipAtPoint (explosion, gameObject.transform.transform.position);
 		}
 	}
 

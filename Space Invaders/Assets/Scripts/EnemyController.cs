@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
 	public GameObject shot;
 	public float fireRate = 0.95f;
 
-	//public AudioClip move;
+	public AudioClip blasterSound;
 
 	// Use this for initialization
 	void Start () 
@@ -62,6 +62,7 @@ public class EnemyController : MonoBehaviour
 				}
 
 				if (Random.value > fireRate) {
+					AudioSource.PlayClipAtPoint (blasterSound, gameObject.transform.position);
 					Vector3 pos = enemy.position;
 					pos.y -= 1.0f;
 					Instantiate (shot, pos, enemy.rotation);

@@ -8,6 +8,8 @@ public class EnemyBulletController : MonoBehaviour
 	private Transform bullet;
 	public float speed;
 
+	public AudioClip bulletSound;
+
 	public GameObject g;
 
 	// Use this for initialization
@@ -37,6 +39,8 @@ public class EnemyBulletController : MonoBehaviour
 		if (!CheckBulletCollision (collider.tag)) {
 			return;
 		}
+
+		AudioSource.PlayClipAtPoint (bulletSound, gameObject.transform.position);
 
 		// Create an explosion
 		// TODO

@@ -21,7 +21,7 @@ Platform assembly: D:\Penn\F17\CIS568\SpaceInvaders\spaceinvaders_Data\Managed\U
 Loading D:\Penn\F17\CIS568\SpaceInvaders\spaceinvaders_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
 Platform assembly: D:\Penn\F17\CIS568\SpaceInvaders\spaceinvaders_Data\Managed\System.dll (this message is harmless)
 Platform assembly: D:\Penn\F17\CIS568\SpaceInvaders\spaceinvaders_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.013 seconds
+- Completed reload, in  0.014 seconds
 OnLevelWasLoaded was found on Fading
 This message has been deprecated and will be removed in a later version of Unity.
 Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
@@ -32,15 +32,15 @@ Add a delegate to SceneManager.sceneLoaded instead to get notifications after sc
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 2.052387 ms
+UnloadTime: 2.097492 ms
 Setting up 4 worker threads for Enlighten.
-  Thread -> id: 30c8 -> priority: 1 
-  Thread -> id: 28fc -> priority: 1 
-  Thread -> id: 2170 -> priority: 1 
-  Thread -> id: 1aa8 -> priority: 1 
+  Thread -> id: 3758 -> priority: 1 
+  Thread -> id: 2b60 -> priority: 1 
+  Thread -> id: 7f4 -> priority: 1 
+  Thread -> id: 274 -> priority: 1 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 3.189515 ms
+UnloadTime: 3.256562 ms
 
-Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 922.
-Total: 0.218453 ms (FindLiveObjects: 0.022186 ms CreateObjectMapping: 0.010727 ms MarkObjects: 0.167253 ms  DeleteObjects: 0.018041 ms)
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 932.
+Total: 0.236251 ms (FindLiveObjects: 0.022918 ms CreateObjectMapping: 0.011946 ms MarkObjects: 0.182369 ms  DeleteObjects: 0.018285 ms)
 

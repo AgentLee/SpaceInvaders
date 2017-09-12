@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour 
 {
@@ -19,6 +20,12 @@ public class PlayerController : MonoBehaviour
 	private float nextFire;
 	public AudioClip blaster;
 
+	// Accuracy
+	public bool hitEnemy;
+	public float shotsFired;
+	public float shotsHit;
+	public float accuracy;
+
 	// Global GameObject
 	public GameObject g;
 	public bool freeze;
@@ -31,12 +38,22 @@ public class PlayerController : MonoBehaviour
 		player = GetComponent<Transform> ();	
 
 		freeze = false;
+
+		shotsFired = 0.0f;
+		shotsHit = 0.0f;
+		accuracy = 0.0f;
 	}
 	
 	void FixedUpdate () 
 	{
 		if (!freeze) {
 			MovePlayer ();
+		}
+
+		if (shotsHit == 0.0f && shotsFired >= 0.0f) {
+			accuracy = 0.0f;
+		} else {
+			accuracy = (shotsHit / shotsFired) * 100.0f;
 		}
 	}
 
@@ -58,6 +75,8 @@ public class PlayerController : MonoBehaviour
 					Instantiate (shot, pos, shotSpawn.rotation);
 
 					AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
+
+					shotsFired++;
 				}
 			}
 		}

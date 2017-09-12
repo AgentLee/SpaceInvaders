@@ -125,3 +125,5 @@ MonoBehaviour:
   speed: 0
   shot: {fileID: 1947092312417818, guid: 2c9c6b46ba432b94690a4910f1bb5e3f, type: 2}
   fireRate: 0.95
+  blasterSound: {fileID: 8300000, guid: 481626f52095c4641812b39ccaec8123, type: 3}
+  freeze: 0
