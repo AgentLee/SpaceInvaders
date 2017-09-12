@@ -219,6 +219,10 @@ MonoBehaviour:
   minTime: 2
   spawnedRedUFO: 0
   freeze: 0
+  enemy1: {fileID: 1692353688823458, guid: a3376d2990142e948a7bc2f56f044840, type: 2}
+  enemy2: {fileID: 1604382169929878, guid: def76996081eca349a6fc35a7d0d29c9, type: 2}
+  enemy3: {fileID: 1671115734895284, guid: ea74029e9c7f63447b468e22f7b38105, type: 2}
+  enemy4: {fileID: 1281604306036518, guid: f36bde76d8ed8984aa03274db3a6ab24, type: 2}
 --- !u!4 &114891637
 Transform:
   m_ObjectHideFlags: 0
@@ -4436,6 +4440,7 @@ MonoBehaviour:
   speed: 0.15
   shot: {fileID: 1947092312417818, guid: 2c9c6b46ba432b94690a4910f1bb5e3f, type: 2}
   fireRate: 0.95
+  raid: 0
   blasterSound: {fileID: 8300000, guid: 481626f52095c4641812b39ccaec8123, type: 3}
   freeze: 0
 --- !u!1001 &1421648905

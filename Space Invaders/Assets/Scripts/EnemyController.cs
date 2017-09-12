@@ -15,6 +15,8 @@ public class EnemyController : MonoBehaviour
 	public GameObject shot;
 	public float fireRate = 0.95f;
 
+	public bool raid;
+
 	public AudioClip blasterSound;
 
 	// Use this for initialization
@@ -25,6 +27,8 @@ public class EnemyController : MonoBehaviour
 		enemies = GetComponent<Transform> ();
 
 		freeze = false;
+
+		raid = false;
 	}
 
 	void OnTriggerEnter(Collider collider)
@@ -43,6 +47,15 @@ public class EnemyController : MonoBehaviour
 		}
 		else {
 			freeze = false;
+		}
+	}
+
+	void Update()
+	{
+		if (raid) {
+			foreach (Transform enemy in enemies) {
+				enemy.position += Vector3.down * 2.0f;
+			}
 		}
 	}
 
@@ -68,8 +81,6 @@ public class EnemyController : MonoBehaviour
 					Instantiate (shot, pos, enemy.rotation);
 				}
 			}
-
-			//AudioSource.PlayClipAtPoint (move, gameObject.transform.position);
 		}
 	}
 }

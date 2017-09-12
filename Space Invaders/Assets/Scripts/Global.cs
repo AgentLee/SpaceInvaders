@@ -118,6 +118,8 @@ public class Global : MonoBehaviour
 		// TODO
 		CheckLevelUp();
 
+
+
 		UpdateHighScore ();
 
 		accuracy.text = "Accuracy: " + player.gameObject.GetComponent<PlayerController> ().accuracy.ToString ("F2") + "%";
@@ -146,12 +148,23 @@ public class Global : MonoBehaviour
 	bool RanOutOfLives()
 	{
 		if (lostLife && numLives == 0) {
+			AudioSource.PlayClipAtPoint (wilhelm, player.transform.position);
+
+			foreach (Transform life in livesObject.transform) {
+				Destroy (life.gameObject);
+				break;
+			}
+
 			return true;
 		}
 
 		return false;
 	}
 
+	public GameObject enemy1;
+	public GameObject enemy2;
+	public GameObject enemy3;
+	public GameObject enemy4;
 	bool CheckEndGame()
 	{
 		if (baseCount == 0 || EnemiesReachedBase () || RanOutOfLives()) {
@@ -163,6 +176,11 @@ public class Global : MonoBehaviour
 		}
 
 		return false;
+	}
+
+	Vector3 RandomPosition()
+	{
+		return new Vector3 (Random.Range (-30, 30), Random.Range (-30, 30), Random.Range (-10, 10));
 	}
 
 	// ---------------------------------------------------------------
@@ -194,6 +212,11 @@ public class Global : MonoBehaviour
 
 	void UpdateHighScore()
 	{
+		if (Input.GetKey (KeyCode.R)) {
+			PlayerPrefs.SetInt ("HighScore", 0);
+			highScore.text = score.ToString();
+		}
+
 		if (score > PlayerPrefs.GetInt ("HighScore", 0)) {
 			PlayerPrefs.SetInt ("HighScore", score);
 			highScore.text = score.ToString();
@@ -277,8 +300,29 @@ public class Global : MonoBehaviour
 	{
 		DestroyObject (player);
 
+		if (EnemiesReachedBase()) {
+			for (int i = 0; i < 5; i++) {
+				Instantiate (enemy1, RandomPosition(), Quaternion.identity);
+				Instantiate (enemy2, RandomPosition(), Quaternion.identity);
+				Instantiate (enemy3, RandomPosition(), Quaternion.identity);
+				Instantiate (enemy4, RandomPosition(), Quaternion.identity);
+
+				StartCoroutine ("DestroyEnemies");
+
+				DestroyObject (enemy1);
+				DestroyObject (enemy2);
+				DestroyObject (enemy3);
+				DestroyObject (enemy4);
+			}
+		}
+
 		yield return new WaitForSeconds (10);
 
 		Time.timeScale = 0;
+	}
+
+	IEnumerator DestroyEnemies()
+	{
+		yield return new WaitForSeconds (3);
 	}
 }

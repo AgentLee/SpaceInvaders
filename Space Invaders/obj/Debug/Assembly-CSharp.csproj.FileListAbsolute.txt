@@ -31,34 +31,3 @@ D:\Penn\F17\CIS568\SpaceInvaders\SpaceInvaders_v2\obj\Debug\Assembly-CSharp.cspr
 D:\Penn\F17\CIS568\SpaceInvaders\SpaceInvaders_v2\obj\Debug\Assembly-CSharp.dll
 D:\Penn\F17\CIS568\SpaceInvaders\SpaceInvaders_v2\obj\Debug\Assembly-CSharp.pdb
 D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\obj\Debug\Assembly-CSharp.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Assembly-CSharp.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Assembly-CSharp.pdb
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\nunit.framework.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEditor.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.Analytics.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.HoloLens.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.Networking.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.TestRunner.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.Timeline.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.UI.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Mono.Cecil.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Unity.SerializationLogic.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Unity.DataContract.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\ExCSS.Unity.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Unity.Legacy.NRefactory.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Unity.UNetWeaver.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Unity.CecilTools.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Mono.Cecil.Pdb.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\Mono.Cecil.Mdb.dll
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.xml
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEditor.xml
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.UI.xml
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.Networking.xml
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.TestRunner.xml
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\nunit.framework.xml
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.Timeline.xml
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.Analytics.xml
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\Temp\bin\Debug\UnityEngine.HoloLens.xml
-D:\Penn\F17\CIS568\SpaceInvaders\Space Invaders\obj\Debug\Assembly-CSharp.pdb
