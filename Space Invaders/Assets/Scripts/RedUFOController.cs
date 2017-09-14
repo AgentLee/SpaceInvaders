@@ -8,6 +8,7 @@ public class RedUFOController : MonoBehaviour
 	public float speed;
 	public int[] pointValues;
 	public Vector3 startPos;
+	public bool hit;
 
 	public GameObject g;
 
@@ -15,6 +16,8 @@ public class RedUFOController : MonoBehaviour
 	void Start () 
 	{
 		g = GameObject.Find ("GlobalObject");
+
+		hit = false;
 
 		InvokeRepeating ("MoveEnemy", 0.1f, 0.3f);
 
@@ -33,6 +36,13 @@ public class RedUFOController : MonoBehaviour
 		pointValues [2] = 150;
 
 		ufo.position = startPos;
+	}
+
+	void Update()
+	{
+		if (hit) {
+			g.GetComponent<Global> ().hitRedUFO = true;
+		}
 	}
 
 	void MoveEnemy()

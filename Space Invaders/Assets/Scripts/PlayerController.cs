@@ -85,8 +85,22 @@ public class PlayerController : MonoBehaviour
 	// Moves player left/right
 	// Want to extend this so that when the player hits the redUFO
 	// they can move anywhere in space.
+	public float invulnerability = 0;
 	void MovePlayer()
 	{
+		if (g.GetComponent<Global> ().hitRedUFO) {
+			float v = Input.GetAxis ("Vertical");
+
+			if (player.position.y < -12 && v < 0) {
+				v = -12;
+			} 
+			else if (player.position.y > 25 && v > 0) {
+				v = 25;
+			}
+
+			player.position += Vector3.up * v * speed;
+		}
+
 		float h = Input.GetAxis ("Horizontal");
 
 		if (player.position.x < minBounds && h < 0) {
@@ -114,5 +128,20 @@ public class PlayerController : MonoBehaviour
 		else {
 			player.transform.rotation = Quaternion.Euler (0.0f, 0.0f, 0 * -tilt);
 		}
+	}
+
+	IEnumerator Invulnerability()
+	{
+		float elapsed = 0;
+		while(elapsed <= 3)
+		{
+			
+
+			elapsed = Time.deltaTime;
+
+			yield return null;
+		}
+	
+		yield return null;
 	}
 }

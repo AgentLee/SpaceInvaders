@@ -66,12 +66,16 @@ public class BulletController : MonoBehaviour
 		else if (collider.tag == "RedUFO") {
 			RedUFOController ufo = collider.gameObject.GetComponent<RedUFOController> ();
 
+			ufo.hit = true;
+
 			// Get random point value in the point values array
 			int pointValue = ufo.pointValues[Random.Range (0, 3)];
 			g.GetComponent<Global> ().score += pointValue;
 
+			g.GetComponent<Global> ().hitRedUFO = true;
+
 			// Update player's accuracy
-			PlayerController player = GameObject.Find("PlayerController").gameObject.GetComponent<PlayerController>();
+			PlayerController player = GameObject.Find("Player").gameObject.GetComponent<PlayerController>();
 			player.shotsHit++;
 
 			Global global = g.gameObject.GetComponent<Global> ();

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -198,10 +198,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0
   score: 0
+  scores: 
   highScore: {fileID: 1007636501}
   gameOver: {fileID: 0}
   levelUp: {fileID: 0}
   livesObject: {fileID: 0}
+  audio: {fileID: 0}
   player: {fileID: 1919823062}
   lostLife: 0
   numLives: 0
@@ -215,6 +217,7 @@ MonoBehaviour:
   enemies: {fileID: 1406786451}
   numEnemies: 0
   redUFO: {fileID: 1281604306036518, guid: f36bde76d8ed8984aa03274db3a6ab24, type: 2}
+  hitRedUFO: 0
   maxTime: 5
   minTime: 2
   spawnedRedUFO: 0

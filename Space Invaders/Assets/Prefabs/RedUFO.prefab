@@ -122,5 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  pointValues: 
   startPos: {x: 0, y: 0, z: 0}
+  hit: 0
   g: {fileID: 0}

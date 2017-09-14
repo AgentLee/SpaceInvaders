@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class Global : MonoBehaviour 
 {
-	// UI Elements
+	// UI/Sound Elements
 	public float timer;
 	public int score;
+	public int[] scores;
 	public Text highScore;
 	public GameObject gameOver;
 	public GameObject levelUp;
 	public GameObject livesObject;
+//	public AudioSource audio;
 
 	// Player Management
 	public GameObject player;
@@ -32,6 +34,7 @@ public class Global : MonoBehaviour
 	public int numEnemies;
 	// Red UFO
 	public GameObject redUFO;
+	public bool hitRedUFO;
 	public float maxTime = 5;
 	public float minTime = 2;
 	private float timeRedUFO;
@@ -49,6 +52,7 @@ public class Global : MonoBehaviour
 		Cursor.visible = false;
 
 		// UI
+		scores = new int[5];
 		score = 0;
 		timer = 0;
 
@@ -68,6 +72,7 @@ public class Global : MonoBehaviour
 		// Red UFO
 		SetRandomTime ();
 		spawnedRedUFO = false;
+		hitRedUFO = false;
 
 		// Hide the end game conditions
 		livesObject = GameObject.Find ("Lives").gameObject;
@@ -110,6 +115,10 @@ public class Global : MonoBehaviour
 			SetRandomTime ();
 		}
 
+		if (hitRedUFO) {
+//			audio.Pause ();
+		}
+
 		// Rotate the lives at the bottom left
 		RotateLives (livesObject.transform);
 		// Check to see if the player died and needs to respawn
@@ -117,8 +126,6 @@ public class Global : MonoBehaviour
 
 		// TODO
 		CheckLevelUp();
-
-
 
 		UpdateHighScore ();
 
@@ -219,8 +226,50 @@ public class Global : MonoBehaviour
 
 		if (score > PlayerPrefs.GetInt ("HighScore", 0)) {
 			PlayerPrefs.SetInt ("HighScore", score);
-			highScore.text = score.ToString();
+			highScore.text = score.ToString ();
 		}
+
+		// TODO
+//		int scorePosition = 0;
+//		if (score > PlayerPrefs.GetInt ("HighScore5", 0)) {
+//			scorePosition = 5;
+//			if (score > PlayerPrefs.GetInt ("HighScore4", 0)) {
+//				scorePosition = 4;
+//				if (score > PlayerPrefs.GetInt ("HighScore3", 0)) {
+//					scorePosition = 3;
+//					if (score > PlayerPrefs.GetInt ("HighScore2", 0)) {
+//						scorePosition = 2;
+//						if (score > PlayerPrefs.GetInt ("HighScore", 0)) {
+//							scorePosition = 1;
+//						} 
+//					}
+//				}
+//			}
+//		}
+//
+//		if (scorePosition > 1) {
+//			PlayerPrefs.SetInt ("HighScore" + scorePosition, score);
+//			Debug.Log ("NEW HIGH SCORE AT " + scorePosition);
+//		} 
+//		else {
+//			PlayerPrefs.SetInt ("HighScore", score);
+//			highScore.text = score.ToString ();
+//		}
+
+
+
+//		for (int i = 0; i < scores.Length; i++) {
+//			int highScoreKey = "HighScore" + (i + 1).ToString ();
+//			int highScore = PlayerPrefs.SetInt (highScoreKey, 0);
+//
+//			if (score > highScore) {
+//				int temp = highScore;
+//				PlayerPrefs.SetInt (highScoreKey, score);
+//				score = temp;
+//			}
+//		}
+//
+//		Debug.Log (scores);
 	}
 
 	void CheckLevelUp()
