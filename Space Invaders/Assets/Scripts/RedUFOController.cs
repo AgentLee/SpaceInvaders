@@ -42,6 +42,7 @@ public class RedUFOController : MonoBehaviour
 	{
 		if (hit) {
 			g.GetComponent<Global> ().hitRedUFO = true;
+			g.GetComponent<Global> ().spawnedRedUFO = false;
 		}
 	}
 

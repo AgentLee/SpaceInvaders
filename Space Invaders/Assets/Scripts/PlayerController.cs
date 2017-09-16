@@ -30,6 +30,11 @@ public class PlayerController : MonoBehaviour
 	public GameObject g;
 	public bool freeze;
 
+	public float startTime;
+	public Vector3 resetPosition;
+
+	public bool reset;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -42,12 +47,32 @@ public class PlayerController : MonoBehaviour
 		shotsFired = 0.0f;
 		shotsHit = 0.0f;
 		accuracy = 0.0f;
+
+		startTime = 1.0f;
+
+		reset = false;
+		resetPosition = new Vector3 (0f, -12.05f, 10.06f);
 	}
-	
+
 	void FixedUpdate () 
 	{
 		if (!freeze) {
-			MovePlayer ();
+			if (reset) {
+				if (player.position.y > resetPosition.y || player.position.y < resetPosition.y) {
+					Vector3 moveDirection = (resetPosition - player.position).normalized;
+
+					player.position += moveDirection * speed * Time.deltaTime;
+					player.rotation = Quaternion.identity;
+				}
+				else {
+					reset = false;
+				}
+
+//				player.position = Vector3.Lerp (player.position, resetPosition, .01f);
+			} 
+			else {
+				MovePlayer ();
+			}
 		}
 
 		if (shotsHit == 0.0f && shotsFired >= 0.0f) {
@@ -57,9 +82,15 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+
+
 	// Update is called once per frame
 	void Update()
 	{
+//		if (g.GetComponent<Global> ().hitRedUFO) {
+//			invulnerability -= Time.deltaTime;
+//		}
+
 		// If the player gets hit by an enemy bullet,
 		// we want to freeze all movement until the respawn is finished.
 		freeze = g.GetComponent<Global> ().freeze;
@@ -85,10 +116,10 @@ public class PlayerController : MonoBehaviour
 	// Moves player left/right
 	// Want to extend this so that when the player hits the redUFO
 	// they can move anywhere in space.
-	public float invulnerability = 0;
+	public float invulnerability;
 	void MovePlayer()
 	{
-		if (g.GetComponent<Global> ().hitRedUFO) {
+		if (g.GetComponent<Global> ().hitRedUFO && g.GetComponent<Global>().invincible) {
 			float v = Input.GetAxis ("Vertical");
 
 			if (player.position.y < -12 && v < 0) {

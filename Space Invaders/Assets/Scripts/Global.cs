@@ -51,6 +51,8 @@ public class Global : MonoBehaviour
 		// Hide the cursor
 		Cursor.visible = false;
 
+		invincible = false;
+
 		// UI
 		scores = new int[5];
 		score = 0;
@@ -115,10 +117,6 @@ public class Global : MonoBehaviour
 			SetRandomTime ();
 		}
 
-		if (hitRedUFO) {
-//			audio.Pause ();
-		}
-
 		// Rotate the lives at the bottom left
 		RotateLives (livesObject.transform);
 		// Check to see if the player died and needs to respawn
@@ -141,6 +139,12 @@ public class Global : MonoBehaviour
 
 			player.gameObject.GetComponent<PlayerController> ().shotsHit++;
 		}
+	
+		if (hitRedUFO) {
+			StartCoroutine ("RedDeadUFO");
+		}
+
+//		Debug.Log ("SPAWNED: " + spawnedRedUFO);
 	}
 
 	// ---------------------------------------------------------------
@@ -373,5 +377,24 @@ public class Global : MonoBehaviour
 	IEnumerator DestroyEnemies()
 	{
 		yield return new WaitForSeconds (3);
+	}
+
+	public bool invincible;
+	IEnumerator RedDeadUFO()
+	{
+		invincible = true;
+		Debug.Log ("player can move all around the screen");
+
+		// Need to test the invincibility time a bit.
+		yield return new WaitForSeconds (10);
+
+		invincible = false;
+		Debug.Log ("reset player position now");
+
+		player.GetComponent<PlayerController> ().reset = true;
+
+		// Reset flags
+		hitRedUFO = false;
+		spawnedRedUFO = false;
 	}
 }
