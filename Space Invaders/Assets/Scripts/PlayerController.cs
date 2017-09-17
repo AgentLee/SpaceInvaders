@@ -40,9 +40,13 @@ public class PlayerController : MonoBehaviour
 
 	public float EPSILON = 0.75f;
 
+	public bool startGame;
+
 	// Use this for initialization
 	void Start () 
 	{
+		startGame = true;
+
 		g = GameObject.Find ("GlobalObject");
 
 		player = GetComponent<Transform> ();	
@@ -114,7 +118,7 @@ public class PlayerController : MonoBehaviour
 					Vector3 pos = shotSpawn.position;
 					pos.y += 1.5f;
 
-					Instantiate (shot, pos, shotSpawn.rotation);
+					Instantiate (shot, pos, Quaternion.identity);
 
 					AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
 
@@ -152,24 +156,25 @@ public class PlayerController : MonoBehaviour
 			h = 0;
 		}
 
-		//TiltPlayer();
+		// TODO
+		// The player rotates on start about the x axis.
+		if (!startGame) {
+			TiltPlayer ();
+		}
+		else {
+			startGame = false;
+		}
 
 		player.position += Vector3.right * h * speed;
 	}
 
-	// TODO
+
+	float tiltAngle = -30.0f;
 	void TiltPlayer()
 	{
-		if (Input.anyKey) {
-			if (Input.GetKey(KeyCode.A)) {
-				player.transform.rotation = Quaternion.Euler (0.0f, 0.0f, (transform.position).x * -tilt);
-			} else if (Input.GetKey (KeyCode.D)) {
-				player.transform.rotation = Quaternion.Euler (0.0f, 0.0f, (transform.position).x * -tilt);
-			}
-		}
-		else {
-			player.transform.rotation = Quaternion.Euler (0.0f, 0.0f, 0 * -tilt);
-		}
+		float tiltZ = Input.GetAxis ("Horizontal") * tiltAngle;
+		Quaternion angle = Quaternion.Euler (0, 0, tiltZ);
+		player.rotation = Quaternion.Slerp (player.rotation, angle, Time.deltaTime * 2.0f);
 	}
 
 	IEnumerator Invulnerability()
