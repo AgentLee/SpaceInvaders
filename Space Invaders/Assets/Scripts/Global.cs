@@ -41,9 +41,14 @@ public class Global : MonoBehaviour
 	private float spawnTime;
 	public bool spawnedRedUFO;
 
+	public float hordeTimer;
+
 	// Toggle this whenever the player loses a life
 	// so the player and the enemies don't move/fire.
 	public bool freeze;
+
+	public GameObject[] enemy10Holder;
+	public GameObject enemy10;
 
 	// Use this for initialization
 	void Start ()
@@ -95,12 +100,50 @@ public class Global : MonoBehaviour
 		baseText.text = "Base Health: 100.00%";
 
 		hitEnemy = false;
+
+		hordeTimer = 10;
+
+		hordeStart = false;
 	}
+		
+	public bool hordeStart;
+	public float farLeftX = -17.51f;
+	public float farLeftY = -10.5f;
+	public float farLeftZ = -0.00249958f;
 
 	// Update is called once per frame
 	void Update () 
 	{
 		timer += Time.deltaTime;
+
+		hordeTimer -= Time.deltaTime;
+		if (hordeTimer < 0) {
+			hordeStart = !hordeStart;
+
+			if (hordeStart) {
+				// This goes with the aesthetic 
+				enemies.transform.position += Vector3.down * 3.0f;
+
+				Vector3 pos = enemy10.transform.position;
+				pos.y -= 4;
+				Instantiate (enemy10, pos, enemy10.transform.rotation);
+
+				hordeTimer = 30;
+			} else {
+//				Vector3 pos = enemy10.transform.position;
+//				pos.y = 27;
+//				while (true) {
+//					enemy10.transform.position = Vector3.Lerp (enemy10.transform.position, pos, Time.deltaTime);
+//
+//					if (Mathf.Abs(enemy10.transform.position.y - pos.y) <= 0.75f) {
+//						break;
+//					}
+//				}
+			}
+
+			// TODO
+			// Add Winning Condition here
+		}
 
 		// Checks for
 		// 		- Player loses all their lives
@@ -116,6 +159,8 @@ public class Global : MonoBehaviour
 			SpawnRedUFO ();
 			SetRandomTime ();
 		}
+
+
 
 		// Rotate the lives at the bottom left
 		RotateLives (livesObject.transform);
@@ -383,15 +428,15 @@ public class Global : MonoBehaviour
 	IEnumerator RedDeadUFO()
 	{
 		invincible = true;
-		Debug.Log ("player can move all around the screen");
+
+		player.GetComponent<PlayerController> ().prepForLaunch = true;
 
 		// Need to test the invincibility time a bit.
 		yield return new WaitForSeconds (10);
 
 		invincible = false;
-		Debug.Log ("reset player position now");
 
-		player.GetComponent<PlayerController> ().reset = true;
+//		player.GetComponent<PlayerController> ().reset = true;
 
 		// Reset flags
 		hitRedUFO = false;

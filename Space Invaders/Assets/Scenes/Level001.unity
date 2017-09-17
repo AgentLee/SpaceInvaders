@@ -220,7 +220,14 @@ MonoBehaviour:
   maxTime: 5
   minTime: 2
   spawnedRedUFO: 0
+  hordeTimer: 0
   freeze: 0
+  enemy10Holder: []
+  enemy10: {fileID: 1921168096}
+  hordeStart: 0
+  farLeftX: 0
+  farLeftY: 0
+  farLeftZ: 0
   enemy1: {fileID: 1692353688823458, guid: a3376d2990142e948a7bc2f56f044840, type: 2}
   enemy2: {fileID: 1604382169929878, guid: def76996081eca349a6fc35a7d0d29c9, type: 2}
   enemy3: {fileID: 1671115734895284, guid: ea74029e9c7f63447b468e22f7b38105, type: 2}
@@ -4074,7 +4081,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4020272677949902, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4020272677949902, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}
       propertyPath: m_LocalRotation.y
@@ -4082,11 +4089,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4020272677949902, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4020272677949902, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4020272677949902, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}
       propertyPath: m_RootOrder
@@ -4121,6 +4128,19 @@ Prefab:
         type: 2}
       propertyPath: invulnerability
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 33101111028617508, guid: 592a9ca6ac0ee0b45b998169b16b76ff,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 4020272677949902, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020272677949902, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}

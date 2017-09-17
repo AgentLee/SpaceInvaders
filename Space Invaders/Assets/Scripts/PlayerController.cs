@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
 public class PlayerController : MonoBehaviour 
 {
 	private Transform player;
@@ -33,7 +34,11 @@ public class PlayerController : MonoBehaviour
 	public float startTime;
 	public Vector3 resetPosition;
 
+	public bool prepForLaunch;
+	public bool setToLaunch;
 	public bool reset;
+
+	public float EPSILON = 0.75f;
 
 	// Use this for initialization
 	void Start () 
@@ -52,23 +57,29 @@ public class PlayerController : MonoBehaviour
 
 		reset = false;
 		resetPosition = new Vector3 (0f, -12.05f, 10.06f);
+
+		invincible = false;
+		prepForLaunch = false;
+		setToLaunch = false;
 	}
 
+	public bool invincible;
+	public float maxSpeed = 25;
+	public float acceleration;
 	void FixedUpdate () 
 	{
 		if (!freeze) {
-			if (reset) {
-				if (player.position.y > resetPosition.y || player.position.y < resetPosition.y) {
-					Vector3 moveDirection = (resetPosition - player.position).normalized;
+			// Move player to the middle of the screen.
+			// After doing this the player will be launched into battle
+			// and can move all around the screen for about 10 seconds.
+			if (prepForLaunch && !setToLaunch) {
+				player.position = Vector3.Lerp (player.position, resetPosition, Time.deltaTime);
 
-					player.position += moveDirection * speed * Time.deltaTime;
-					player.rotation = Quaternion.identity;
-				}
-				else {
-					reset = false;
+				if (Mathf.Abs (player.position.x - resetPosition.x) <= 0.5f) {
+					prepForLaunch = false;
+					setToLaunch = true;
 				}
 
-//				player.position = Vector3.Lerp (player.position, resetPosition, .01f);
 			} 
 			else {
 				MovePlayer ();

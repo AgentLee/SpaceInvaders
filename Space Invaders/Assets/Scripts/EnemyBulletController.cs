@@ -40,6 +40,22 @@ public class EnemyBulletController : MonoBehaviour
 			return;
 		}
 
+		switch (collider.tag) 
+		{
+			case "Base":
+				// Destroy base piece
+				Destroy (collider.gameObject);
+				g.GetComponent<Global> ().baseCount--;
+				break;
+			case "Player":
+				g.GetComponent<Global> ().numLives--;
+				// Trigger Respawn() in Global
+				g.GetComponent<Global> ().lostLife = true;
+				break;
+			default:
+				break;
+		}
+
 		AudioSource.PlayClipAtPoint (bulletSound, gameObject.transform.position);
 
 		// Create an explosion
@@ -55,24 +71,6 @@ public class EnemyBulletController : MonoBehaviour
 
 		// Destroy the bullet
 		Destroy (gameObject);
-
-		switch (collider.tag) 
-		{
-			case "Base":
-				// Destroy base piece
-				Destroy (collider.gameObject);
-				g.GetComponent<Global> ().baseCount--;
-
-				break;
-			case "Player":
-				g.GetComponent<Global> ().numLives--;
-				// Trigger Respawn() in Global
-				g.GetComponent<Global> ().lostLife = true;
-
-				break;
-			default:
-				break;
-		}
 	}
 
 	bool CheckBulletCollision(string tag)
