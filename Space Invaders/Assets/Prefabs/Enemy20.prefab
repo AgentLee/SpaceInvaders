@@ -129,4 +129,5 @@ MonoBehaviour:
   raid: 0
   blasterSound: {fileID: 8300000, guid: 481626f52095c4641812b39ccaec8123, type: 3}
   g: {fileID: 0}
+  hordeStart: 0
   freeze: 0

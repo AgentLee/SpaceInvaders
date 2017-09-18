@@ -53,8 +53,13 @@ public class BulletController : MonoBehaviour
 		if (collider.tag == "Enemy") {
 			EnemyController enemy = collider.gameObject.GetComponent<EnemyController> ();
 
+            //NewEnemyScript e = collider.gameObject.GetComponent<NewEnemyScript>();
+
+            NewEnemyControllerScript e = collider.gameObject.GetComponent<NewEnemyControllerScript>();
+
 			// Update score and enemy counter
-			g.GetComponent<Global> ().score += enemy.pointValue;
+			//g.GetComponent<Global> ().score += enemy.pointValue;
+			g.GetComponent<Global> ().score += e.pointValue;
 			g.GetComponent<Global> ().numEnemies--;
 
 			// Update player's accuracy

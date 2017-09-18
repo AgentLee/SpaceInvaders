@@ -2,7 +2,11 @@
 CIS568 Assignment 2: Deconstructing a Classic
 
 ## Todo
-- Need to restructure enemy code
+- ~~Need to restructure enemy code~~
+    - Need to move back to `EnemyController`. 
+        - Made each group of enemies into a prefab.
+            - Each group gets `NewEnemyScript` which controls movement and shooting.
+            - Each individual enemy gets `NewEnemyControllerScript` which handles collisions.
 - Horde Attack 
     - ~~Timer~~
     - Decide how they will attack

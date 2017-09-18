@@ -53,6 +53,8 @@ public class Global : MonoBehaviour
 
 	public GameObject[] enemy10Holder;
 	public GameObject enemy10;
+	public GameObject enemy20;
+	public GameObject enemy30;
 
 	public bool overExtended;
     public bool invincibilityFinished;
@@ -127,57 +129,42 @@ public class Global : MonoBehaviour
         invincibilityFinished = false;
 
         hordeStart = false;
+
+        SpawnEnemies();
 	}
 
-    public bool hordeStart;
-    void UpdateHordeTimer()
+    void SpawnEnemies()
     {
-        hordeTimer -= Time.deltaTime;
-        foreach (Transform horder in hordeHolder.transform)
-        {
-            if (horder.tag == "HordeTimer")
-            {
-                horder.GetComponent<Text>().text = ": " + hordeTimer.ToString("N0");
-            }
-        }
+        Instantiate(enemy10, enemy10.transform.position, enemy10.transform.rotation);
+        Instantiate(enemy20, enemy20.transform.position, enemy20.transform.rotation);
+        Instantiate(enemy30, enemy30.transform.position, enemy30.transform.rotation);
     }
 
-    // The enemies on the current level will move aside, making way
-    // for the new horde attack. They will go towards the player 
-    // faster than the normal enemies and will loop back into space
-    // if they aren't destroyed. 
-    // This is more of a mini game idea. 
-    void StartHorde()
+    IEnumerator Horder()
     {
-        
+        Vector3 newPos = enemy10.transform.position;
+        newPos.x = 100;
 
-        // This goes with the aesthetic 
-        //enemies.transform.position += Vector3.down * 3.0f;
+        float distance = Vector3.Distance(enemy10.transform.position, newPos);
 
-        //Vector3 pos = enemy10.transform.position;
-        //pos.y -= 4;
-        //Instantiate(enemy10, pos, enemy10.transform.rotation);
+        enemy10.transform.position = Vector3.Lerp(enemy10.transform.position, newPos, Time.deltaTime);
 
-        //hordeTimer = 30;
+        //if (distance > 1.5f)
+        //{
+        //}
+        //else {
+        //    hordeStart = false;
 
-        //				Vector3 pos = enemy10.transform.position;
-        //				pos.y = 27;
-        //				while (true) {
-        //					enemy10.transform.position = Vector3.Lerp (enemy10.transform.position, pos, Time.deltaTime);
-        //
-        //					if (Mathf.Abs(enemy10.transform.position.y - pos.y) <= 0.75f) {
-        //						break;
-        //					}
-        //				}
+        //    yield break;
+        //}
 
-        // TODO
-        // Add Winning Condition here
+        yield break;
     }
 
-	// Update is called once per frame
-	void Update () 
+    // Update is called once per frame
+    void Update () 
 	{
-		timer += Time.deltaTime;
+        timer += Time.deltaTime;
 
         UpdateHordeTimer();
         if(hordeTimer <= 0.0f)
@@ -464,11 +451,58 @@ public class Global : MonoBehaviour
 		spawnTime = Random.Range (minTime, maxTime);
 	}
 
-	// ---------------------------------------------------------------
-	// Wait Functions
-	// ---------------------------------------------------------------
+    // ---------------------------------------------------------------
+    // Horde Management
+    // ---------------------------------------------------------------
 
-	IEnumerator Respawn()
+    public bool hordeStart;
+    void UpdateHordeTimer()
+    {
+        hordeTimer -= Time.deltaTime;
+        foreach (Transform horder in hordeHolder.transform)
+        {
+            if (horder.tag == "HordeTimer")
+            {
+                horder.GetComponent<Text>().text = ": " + hordeTimer.ToString("N0");
+            }
+        }
+    }
+
+    // The enemies on the current level will move aside, making way
+    // for the new horde attack. They will go towards the player 
+    // faster than the normal enemies and will loop back into space
+    // if they aren't destroyed. 
+    // This is more of a mini game idea. 
+    void StartHorde()
+    {
+        // This goes with the aesthetic 
+        //enemies.transform.position += Vector3.down * 3.0f;
+
+        //Vector3 pos = enemy10.transform.position;
+        //pos.y -= 4;
+        //Instantiate(enemy10, pos, enemy10.transform.rotation);
+
+        //hordeTimer = 30;
+
+        //				Vector3 pos = enemy10.transform.position;
+        //				pos.y = 27;
+        //				while (true) {
+        //					enemy10.transform.position = Vector3.Lerp (enemy10.transform.position, pos, Time.deltaTime);
+        //
+        //					if (Mathf.Abs(enemy10.transform.position.y - pos.y) <= 0.75f) {
+        //						break;
+        //					}
+        //				}
+
+        // TODO
+        // Add Winning Condition here
+    }
+
+    // ---------------------------------------------------------------
+    // Wait Functions
+    // ---------------------------------------------------------------
+
+    IEnumerator Respawn()
 	{
 		// Make sure nothing moves/fires
 		freeze = true;
