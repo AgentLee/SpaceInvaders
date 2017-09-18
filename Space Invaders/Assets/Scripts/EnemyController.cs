@@ -15,6 +15,8 @@ public class EnemyController : MonoBehaviour
 	public GameObject shot;
 	public float fireRate = 0.95f;
 
+	public bool shouldBeShooting;
+
 	public bool raid;
 
 	public AudioClip blasterSound;
@@ -59,6 +61,7 @@ public class EnemyController : MonoBehaviour
 		}
 	}
 
+
 	void MoveEnemy()
 	{
 		if(!freeze) {
@@ -74,11 +77,13 @@ public class EnemyController : MonoBehaviour
 					return;
 				}
 
-				if (Random.value > fireRate) {
+				// TODO
+				// FIX THIS
+				if (Random.value > fireRate && shouldBeShooting) {
 					AudioSource.PlayClipAtPoint (blasterSound, gameObject.transform.position);
-					Vector3 pos = enemy.position;
+					Vector3 pos = this.transform.position;
 					pos.y -= 1.0f;
-					Instantiate (shot, pos, enemy.rotation);
+					Instantiate (shot, pos, this.transform.rotation);
 				}
 			}
 		}

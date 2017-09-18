@@ -38,15 +38,13 @@ public class PlayerController : MonoBehaviour
 	public bool setToLaunch;
 	public bool reset;
 
-	public float EPSILON = 0.75f;
+	public bool freeToMove;
 
-	public bool startGame;
+	public float EPSILON = 0.75f;
 
 	// Use this for initialization
 	void Start () 
 	{
-		startGame = true;
-
 		g = GameObject.Find ("GlobalObject");
 
 		player = GetComponent<Transform> ();	
@@ -62,9 +60,10 @@ public class PlayerController : MonoBehaviour
 		reset = false;
 		resetPosition = new Vector3 (0f, -12.05f, 10.06f);
 
-		invincible = false;
 		prepForLaunch = false;
 		setToLaunch = false;
+
+		freeToMove = false;
 	}
 
 	public bool invincible;
@@ -73,21 +72,7 @@ public class PlayerController : MonoBehaviour
 	void FixedUpdate () 
 	{
 		if (!freeze) {
-			// Move player to the middle of the screen.
-			// After doing this the player will be launched into battle
-			// and can move all around the screen for about 10 seconds.
-			if (prepForLaunch && !setToLaunch) {
-				player.position = Vector3.Lerp (player.position, resetPosition, Time.deltaTime);
-
-				if (Mathf.Abs (player.position.x - resetPosition.x) <= 0.5f) {
-					prepForLaunch = false;
-					setToLaunch = true;
-				}
-
-			} 
-			else {
-				MovePlayer ();
-			}
+			MovePlayer ();
 		}
 
 		if (shotsHit == 0.0f && shotsFired >= 0.0f) {
@@ -97,18 +82,17 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-
-
 	// Update is called once per frame
 	void Update()
 	{
-//		if (g.GetComponent<Global> ().hitRedUFO) {
-//			invulnerability -= Time.deltaTime;
-//		}
-
 		// If the player gets hit by an enemy bullet,
 		// we want to freeze all movement until the respawn is finished.
 		freeze = g.GetComponent<Global> ().freeze;
+		// If the player hits the Red UFO, 
+		// the player is given (20) seconds to move around.
+		// They will be given a (10) second warning to return to base.
+		// If they don't then they basically get stuck where they are.
+		freeToMove = g.GetComponent<Global> ().invincible;
 
 		if (!freeze) {
 			if (Input.GetKeyDown (KeyCode.Space) || Input.GetButton ("Fire1")) {
@@ -129,12 +113,9 @@ public class PlayerController : MonoBehaviour
 	}
 
 	// Moves player left/right
-	// Want to extend this so that when the player hits the redUFO
-	// they can move anywhere in space.
-	public float invulnerability;
 	void MovePlayer()
 	{
-		if (g.GetComponent<Global> ().hitRedUFO && g.GetComponent<Global>().invincible) {
+		if (g.GetComponent<Global> ().hitRedUFO && freeToMove) {
 			float v = Input.GetAxis ("Vertical");
 
 			if (player.position.y < -12 && v < 0) {
@@ -156,14 +137,7 @@ public class PlayerController : MonoBehaviour
 			h = 0;
 		}
 
-		// TODO
-		// The player rotates on start about the x axis.
-		if (!startGame) {
-			TiltPlayer ();
-		}
-		else {
-			startGame = false;
-		}
+		TiltPlayer ();
 
 		player.position += Vector3.right * h * speed;
 	}
@@ -182,8 +156,6 @@ public class PlayerController : MonoBehaviour
 		float elapsed = 0;
 		while(elapsed <= 3)
 		{
-			
-
 			elapsed = Time.deltaTime;
 
 			yield return null;

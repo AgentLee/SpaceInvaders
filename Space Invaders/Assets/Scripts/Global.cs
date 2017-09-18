@@ -43,12 +43,16 @@ public class Global : MonoBehaviour
 
 	public float hordeTimer;
 
+	public GameObject safeZone;
+
 	// Toggle this whenever the player loses a life
 	// so the player and the enemies don't move/fire.
 	public bool freeze;
 
 	public GameObject[] enemy10Holder;
 	public GameObject enemy10;
+
+	public bool overExtended;
 
 	// Use this for initialization
 	void Start ()
@@ -90,6 +94,9 @@ public class Global : MonoBehaviour
 		levelUp = GameObject.Find ("LevelUp").gameObject;
 		levelUp.GetComponent<Text> ().enabled = false;
 
+		safeZone = GameObject.Find ("SafeZone").gameObject;
+
+
 		// Set the high score to 0 if it's the first time playing on the machine.
 		highScore.text = PlayerPrefs.GetInt ("HighScore", 0).ToString();
 
@@ -104,6 +111,8 @@ public class Global : MonoBehaviour
 		hordeTimer = 10;
 
 		hordeStart = false;
+
+		overExtended = false;
 	}
 		
 	public bool hordeStart;
@@ -187,6 +196,8 @@ public class Global : MonoBehaviour
 	
 		if (hitRedUFO) {
 			StartCoroutine ("RedDeadUFO");
+
+			Debug.Log (hitRedUFO);
 		}
 
 //		Debug.Log ("SPAWNED: " + spawnedRedUFO);
@@ -252,7 +263,7 @@ public class Global : MonoBehaviour
 
 	void CheckRespawn(Transform lives)
 	{
-		if (lostLife) {
+		if (lostLife || overExtended) {
 			AudioSource.PlayClipAtPoint (wilhelm, player.transform.position);
 
 			// Destroy one by one
@@ -263,6 +274,7 @@ public class Global : MonoBehaviour
 
 			StartCoroutine ("Respawn");
 			lostLife = false;
+			overExtended = false;
 		}
 	}
 
@@ -379,6 +391,9 @@ public class Global : MonoBehaviour
 		// Respawn time
 		yield return new WaitForSeconds (1);
 
+		// Reset player rotation
+		player.transform.rotation = Quaternion.identity;
+
 		// Flash the player
 		float timeToBlink = Time.time + 3;
 		while (Time.time < timeToBlink) {
@@ -431,15 +446,70 @@ public class Global : MonoBehaviour
 
 		player.GetComponent<PlayerController> ().prepForLaunch = true;
 
+		Debug.Log ("Player can move around for 20 seconds");
+
 		// Need to test the invincibility time a bit.
-		yield return new WaitForSeconds (10);
+		yield return new WaitForSeconds (5);
 
-		invincible = false;
+		StartCoroutine ("ReturnToSafeZone");
+	}
 
-//		player.GetComponent<PlayerController> ().reset = true;
+	IEnumerator ReturnToSafeZone()
+	{
+		MeshRenderer render = safeZone.gameObject.GetComponentInChildren<MeshRenderer> ();
+		render.enabled = false;
 
-		// Reset flags
-		hitRedUFO = false;
-		spawnedRedUFO = false;
+		Debug.Log ("10 seconds to return to base");
+		render.enabled = true;
+
+		yield return new WaitForSeconds (5);
+
+		Debug.Log ("IF NOT AT BASE, DESTROY");
+
+		// Maybe keep the player out there as a punishment?
+
+		// Check to see where the player is on the screen.
+		// If they're in the safe zone they get reset to the start position.
+		Vector3 safeZoneCoords = new Vector3(42f, -10f, 10.06f);
+		Vector3 startPos = new Vector3(0f, -12.05f, 10.06f);
+		Vector3 playerPos = player.transform.position;
+
+		// Player is in the safeZone
+		if (playerPos.x <= safeZoneCoords.x && playerPos.x >= -safeZoneCoords.x &&
+			playerPos.y <= safeZoneCoords.y && playerPos.y >= -13.5 &&
+			playerPos.z == safeZoneCoords.z) {
+
+			invincible = false;
+			render.enabled = false;
+
+			// Reset flags
+			hitRedUFO = false;
+			spawnedRedUFO = false;
+
+			yield break;
+
+			/*
+			float distance = Vector3.Distance (startPos, playerPos);
+			Debug.Log (distance);
+
+			if (distance <= 2.5f) {
+				invincible = false;
+				render.enabled = false;
+
+				//		player.GetComponent<PlayerController> ().reset = true;
+
+				// Reset flags
+				hitRedUFO = false;
+				spawnedRedUFO = false;
+
+				yield break;
+			} else {
+				player.transform.position = Vector3.Lerp (player.transform.position, startPos, Time.deltaTime);
+			}
+			*/
+		} else {
+			Debug.Log ("Destroy Player");
+			overExtended = true;
+		}
 	}
 }
