@@ -77,7 +77,6 @@ public class BulletController : MonoBehaviour
 			// Update player's accuracy
 			PlayerController player = GameObject.Find("Player").gameObject.GetComponent<PlayerController>();
 			player.shotsHit++;
-			player.invincible = true;
 
 			Global global = g.gameObject.GetComponent<Global> ();
 			Debug.Log (global.player.gameObject.GetComponent<PlayerController> ().shotsHit);

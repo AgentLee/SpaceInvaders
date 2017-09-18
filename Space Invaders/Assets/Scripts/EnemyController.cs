@@ -21,6 +21,8 @@ public class EnemyController : MonoBehaviour
 
 	public AudioClip blasterSound;
 
+    public GameObject g;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -40,16 +42,20 @@ public class EnemyController : MonoBehaviour
 		}
 	}
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
+    }
+
 	public bool freeze;
 	void FixedUpdate()
 	{
-		GameObject g = GameObject.Find ("GlobalObject");
-		if (g.GetComponent<Global> ().freeze) {
-			freeze = true;
-		}
-		else {
-			freeze = false;
-		}
+		g = GameObject.Find ("GlobalObject");
+
+        freeze = g.GetComponent<Global> ().freeze; 
 	}
 
 	void Update()

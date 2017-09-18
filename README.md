@@ -7,8 +7,13 @@ CIS568 Assignment 2: Deconstructing a Classic
 - Resources
     - Lives
     - Shields
+    - Shot types (burst fire, etc)
 - New Models
 - Need to restructure enemy code
+- ~~Add explosion to when the player is out of position.~~
+- Monster attack
+- Might need to add more functionality to the player when it can go into space.
+- ~~Add collision between player and enemies~~
 
 ## Bugs
 - Red UFO spawning
@@ -25,4 +30,5 @@ CIS568 Assignment 2: Deconstructing a Classic
     - Took the lerp out of the coroutine and did it once it finished. I have a lot of flags now though.
 - ~~Need to fix coroutine for spawn~~ 
     - Reorganized the coroutine
+- Extra life doesn't show up (counter works but object doesn't).
 

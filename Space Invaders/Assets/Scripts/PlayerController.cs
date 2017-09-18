@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
 	// Movement
 	public float speed;
-	public float tilt;
+	public float tiltAngle;
 	public float minBounds;
 	public float maxBounds;
 
@@ -30,9 +30,6 @@ public class PlayerController : MonoBehaviour
 	// Global GameObject
 	public GameObject g;
 	public bool freeze;
-
-	public float startTime;
-	public Vector3 resetPosition;
 
 	public bool prepForLaunch;
 	public bool setToLaunch;
@@ -55,20 +52,16 @@ public class PlayerController : MonoBehaviour
 		shotsHit = 0.0f;
 		accuracy = 0.0f;
 
-		startTime = 1.0f;
-
 		reset = false;
-		resetPosition = new Vector3 (0f, -12.05f, 10.06f);
 
 		prepForLaunch = false;
 		setToLaunch = false;
 
 		freeToMove = false;
+
+        tiltAngle = -30.0f;
 	}
 
-	public bool invincible;
-	public float maxSpeed = 25;
-	public float acceleration;
 	void FixedUpdate () 
 	{
 		if (!freeze) {
@@ -85,7 +78,6 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
 		// If the player gets hit by an enemy bullet,
 		// we want to freeze all movement until the respawn is finished.
 		freeze = g.GetComponent<Global> ().freeze;
@@ -113,9 +105,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	// Moves player left/right
+	// Moves player left/right unless the RedUFO is hit.
 	void MovePlayer()
 	{
+        // If the RedUFO is hit then the player can move all around.
+        // They have (10) seconds to do whatever. At (5) seconds they'll get
+        // a warning to return to the safe zone.
 		if (g.GetComponent<Global> ().hitRedUFO && freeToMove) {
 			float v = Input.GetAxis ("Vertical");
 
@@ -136,13 +131,11 @@ public class PlayerController : MonoBehaviour
 			h = 0;
 		}
 
+        // Control player rotation when moving left/right
 		TiltPlayer ();
-
 		player.position += Vector3.right * h * speed;
 	}
 
-
-	float tiltAngle = -30.0f;
 	void TiltPlayer()
 	{
 		float tiltZ = Input.GetAxis ("Horizontal") * tiltAngle;
@@ -150,16 +143,14 @@ public class PlayerController : MonoBehaviour
 		player.rotation = Quaternion.Slerp (player.rotation, angle, Time.deltaTime * 2.0f);
 	}
 
-	IEnumerator Invulnerability()
-	{
-		float elapsed = 0;
-		while(elapsed <= 3)
-		{
-			elapsed = Time.deltaTime;
-
-			yield return null;
-		}
-	
-		yield return null;
-	}
+    // If the player flies into an enemy ship, 
+    // it gets destroyed. This is handled in the
+    // Global script.
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Enemy")
+        {
+            g.GetComponent<Global>().collidedWithEnemy = true;
+        }
+    }
 }

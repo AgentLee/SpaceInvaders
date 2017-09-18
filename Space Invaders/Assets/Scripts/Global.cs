@@ -56,6 +56,8 @@ public class Global : MonoBehaviour
 	public bool overExtended;
     public bool invincibilityFinished;
 
+    public bool spawnResources;
+
     // Use this for initialization
     void Start ()
 	{
@@ -305,13 +307,38 @@ public class Global : MonoBehaviour
 		}
 	}
 
-	void CheckRespawn(Transform lives)
+    public GameObject explosion;
+    public GameObject monster;
+    public bool collidedWithEnemy;
+    void CheckRespawn(Transform lives)
 	{
-		if (lostLife || overExtended) {
+		if (lostLife || overExtended || collidedWithEnemy) {
 			AudioSource.PlayClipAtPoint (wilhelm, player.transform.position);
 
-			// Destroy one by one
-			foreach (Transform life in lives) {
+            if(overExtended || collidedWithEnemy)
+            {
+                // Create Explosion
+                // TODO
+                // Figure out how to make it so that the explosions are on top of the other bases.
+                Vector3 pos = player.transform.position;
+                pos.y += 2.0f;
+                //		pos.z += -10.0f;
+                Quaternion angle = Quaternion.AngleAxis(0, Vector3.right);
+                // Create a copy of the explosion 
+                GameObject newExplosion = (GameObject)Instantiate(explosion, pos, angle);
+                // Delete after 5 seconds
+                Destroy(newExplosion, 5);
+
+                //monster = GameObject.Find("Monster");
+                //GameObject m = (GameObject)Instantiate(monster, pos,)
+
+                Vector3 resetPos = new Vector3(0.0f, -12.05f, 10.06f);
+                player.transform.position = resetPos;
+                //player.transform.position = Vector3.Lerp(player.transform.position, new Vector3(0.0f, 12.05f, 10.06f), 1);
+            }
+
+            // Destroy one by one
+            foreach (Transform life in lives) {
 				Destroy (life.gameObject);
 				break;
 			}
@@ -319,6 +346,7 @@ public class Global : MonoBehaviour
 			StartCoroutine ("Respawn");
 			lostLife = false;
 			overExtended = false;
+			collidedWithEnemy = false;
 		}
 	}
 
