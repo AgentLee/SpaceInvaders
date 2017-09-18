@@ -130,36 +130,31 @@ public class Global : MonoBehaviour
 
         hordeStart = false;
 
-        SpawnEnemies();
+        SpawnEnemies(0);
+        spawnedEnemies = false;
 	}
 
-    void SpawnEnemies()
+    public bool spawnedEnemies;
+
+    void SpawnEnemies(int level)
     {
-        Instantiate(enemy10, enemy10.transform.position, enemy10.transform.rotation);
-        Instantiate(enemy20, enemy20.transform.position, enemy20.transform.rotation);
-        Instantiate(enemy30, enemy30.transform.position, enemy30.transform.rotation);
+        Vector3 enemy10pos = enemy10.transform.position;
+        Vector3 enemy20pos = enemy20.transform.position;
+        Vector3 enemy30pos = enemy30.transform.position;
+
+        enemy10pos.x += level * 5.0f;
+        enemy20pos.x += level * 5.0f;
+        enemy30pos.x += level * 5.0f;
+
+        Instantiate(enemy10, enemy10pos, enemy10.transform.rotation);
+        Instantiate(enemy20, enemy20pos, enemy20.transform.rotation);
+        Instantiate(enemy30, enemy30pos, enemy30.transform.rotation);
+
+        spawnedEnemies = true;
     }
 
-    IEnumerator Horder()
-    {
-        Vector3 newPos = enemy10.transform.position;
-        newPos.x = 100;
-
-        float distance = Vector3.Distance(enemy10.transform.position, newPos);
-
-        enemy10.transform.position = Vector3.Lerp(enemy10.transform.position, newPos, Time.deltaTime);
-
-        //if (distance > 1.5f)
-        //{
-        //}
-        //else {
-        //    hordeStart = false;
-
-        //    yield break;
-        //}
-
-        yield break;
-    }
+    public AudioClip barrierDestroyed;
+    public bool playedBarrierDestroyedClip;
 
     // Update is called once per frame
     void Update () 
@@ -170,6 +165,11 @@ public class Global : MonoBehaviour
         if(hordeTimer <= 0.0f)
         {
             hordeStart = true;
+            if (!playedBarrierDestroyedClip)
+            {
+                AudioSource.PlayClipAtPoint(barrierDestroyed, this.transform.position);
+                playedBarrierDestroyedClip = true;
+            }
 
             foreach (Transform horder in hordeHolder.transform)
             {
@@ -194,6 +194,8 @@ public class Global : MonoBehaviour
 			SetRandomTime ();
 		}
 
+        // Shows/hides lives
+        LifeCount(livesObject.transform);
 		// Rotate the lives at the bottom left
 		RotateLives (livesObject.transform);
 		// Check to see if the player died and needs to respawn
@@ -269,8 +271,8 @@ public class Global : MonoBehaviour
 			AudioSource.PlayClipAtPoint (wilhelm, player.transform.position);
 
 			foreach (Transform life in livesObject.transform) {
-				Destroy (life.gameObject);
-				break;
+                Destroy(life.gameObject);
+                break;
 			}
 
 			return true;
@@ -304,6 +306,24 @@ public class Global : MonoBehaviour
 	// ---------------------------------------------------------------
 	// Lives Management
 	// --------------------------------------------------------------
+
+    void LifeCount(Transform lives)
+    {
+        int count = 0;
+        foreach (Transform life in lives)
+        {
+            MeshRenderer render = life.gameObject.GetComponentInChildren<MeshRenderer>();
+            count++;
+            if (count <= numLives)
+            {
+                render.enabled = true;
+            }
+            else
+            {
+                render.enabled = false;
+            }
+        }
+    }
 
 	void RotateLives(Transform lives)
 	{
@@ -343,8 +363,14 @@ public class Global : MonoBehaviour
             }
 
             // Destroy one by one
+            int count = 0;
             foreach (Transform life in lives) {
-				Destroy (life.gameObject);
+                count++;
+
+                MeshRenderer render = life.gameObject.GetComponentInChildren<MeshRenderer>();
+                if (count == numLives)
+                    render.enabled = false;
+                    //Destroy (life.gameObject);
 				break;
 			}
 
@@ -410,6 +436,7 @@ public class Global : MonoBehaviour
 //		Debug.Log (scores);
 	}
 
+    public int level;
 	void CheckLevelUp()
 	{
 		// Level Up
@@ -417,6 +444,9 @@ public class Global : MonoBehaviour
 			levelUp.GetComponent<Text> ().enabled = true;
 
 			numLives++;
+
+            if(!spawnedEnemies)
+                SpawnEnemies(++level);
 
 			// TODO
 			// Fix extra life instantiation

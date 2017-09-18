@@ -9,12 +9,17 @@ CIS568 Assignment 2: Deconstructing a Classic
             - Each individual enemy gets `NewEnemyControllerScript` which handles collisions.
 - Horde Attack 
     - ~~Timer~~
-    - Decide how they will attack
-    - Move to coroutine
+    - ~~Decide how they will attack~~
+    - ~~Move to coroutine~~
+    - Scoring system
+    - Star field
 - Monster attack
 - Resources
     - Lives
+        - Max at 5
+        - They become points after 5th life.
     - Shields
+        - Bases can take more damage
     - Shot types (burst fire, etc)
 - New Models
 - Might need to add more functionality to the player when it can go into space.
@@ -28,7 +33,9 @@ CIS568 Assignment 2: Deconstructing a Classic
 ## Bugs
 - ~~Bullet placement for enemies~~
     - ~~They don't even spawn now lol.~~
-- Extra life doesn't show up (counter works but object doesn't).
+- ~~Extra life doesn't show up (counter works but object doesn't).~~
+    - Changed the concept
+    - Need to fix life hiding from (left to right) to (right to left)
 - Explosions show up behind the object
     - Can be fixed with Orthographic camera
         - But this loses 3D-ness

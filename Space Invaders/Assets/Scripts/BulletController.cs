@@ -33,24 +33,48 @@ public class BulletController : MonoBehaviour
 	{
 		AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
 
-		// Create Explosion
-		// TODO
-		// Figure out how to make it so that the explosions are on top of the other bases.
-		Vector3 pos = gameObject.transform.position;
-		pos.y += 2.0f;
-        //pos.z += -5.0f;
-        Quaternion angle = Quaternion.AngleAxis (0, Vector3.right);
-		// Create a copy of the explosion 
-		GameObject newExplosion = (GameObject)Instantiate (explosion, pos, angle);
-		// Delete after 5 seconds
-		Destroy (newExplosion, 5);
+        if(!g.GetComponent<Global>().hordeStart)
+        {
+            // Create Explosion
+            // TODO
+            // Figure out how to make it so that the explosions are on top of the other bases.
+            Vector3 pos = gameObject.transform.position;
+            pos.y += 2.0f;
+            //pos.z += -5.0f;
+            Quaternion angle = Quaternion.AngleAxis(0, Vector3.right);
+            // Create a copy of the explosion 
+            GameObject newExplosion = (GameObject)Instantiate(explosion, pos, angle);
+            // Delete after 5 seconds
+            Destroy(newExplosion, 5);
 
-		// Destroy the bullet
-		Destroy (gameObject);
-		// Destroy the enemy/base piece/red ufo
-		Destroy (collider.gameObject);
+            // Destroy the bullet
+            Destroy(gameObject);
+            // Destroy the enemy/base piece/red ufo
+            Destroy(collider.gameObject);
+        }
 
-		if (collider.tag == "Enemy") {
+        // Freeze all other enemies during the horde
+        if(collider.tag == "Horder" && g.GetComponent<Global>().hordeStart)
+        {
+            // Create Explosion
+            // TODO
+            // Figure out how to make it so that the explosions are on top of the other bases.
+            Vector3 pos = gameObject.transform.position;
+            pos.y += 2.0f;
+            //pos.z += -5.0f;
+            Quaternion angle = Quaternion.AngleAxis(0, Vector3.right);
+            // Create a copy of the explosion 
+            GameObject newExplosion = (GameObject)Instantiate(explosion, pos, angle);
+            // Delete after 5 seconds
+            Destroy(newExplosion, 5);
+
+            // Destroy the bullet
+            Destroy(gameObject);
+            // Destroy the enemy/base piece/red ufo
+            Destroy(collider.gameObject);
+        }
+
+		if (collider.tag == "Enemy" && !g.GetComponent<Global>().hordeStart) {
 			EnemyController enemy = collider.gameObject.GetComponent<EnemyController> ();
 
             //NewEnemyScript e = collider.gameObject.GetComponent<NewEnemyScript>();
@@ -65,10 +89,10 @@ public class BulletController : MonoBehaviour
 			// Update player's accuracy
 			g.gameObject.GetComponent<Global>().hitEnemy = true;
 		} 
-		else if (collider.tag == "Base") {
+		else if (collider.tag == "Base" && !g.GetComponent<Global>().hordeStart) {
 			g.GetComponent<Global> ().baseCount--;
 		} 
-		else if (collider.tag == "RedUFO") {
+		else if (collider.tag == "RedUFO" && !g.GetComponent<Global>().hordeStart) {
 			RedUFOController ufo = collider.gameObject.GetComponent<RedUFOController> ();
 
 			ufo.hit = true;

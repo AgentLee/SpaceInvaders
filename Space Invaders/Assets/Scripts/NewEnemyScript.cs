@@ -120,7 +120,7 @@ public class NewEnemyScript : MonoBehaviour
                 //StartCoroutine("HordeAttack");
             }
 
-            if (shouldBeShooting) {
+            if (!hordeStart && shouldBeShooting) {
                 // This allows each individual enemy to shoot bullets.
                 foreach (Transform enemy in enemies)
                 {
@@ -173,6 +173,7 @@ public class NewEnemyScript : MonoBehaviour
         spawnedHorde = false;
         g.GetComponent<Global>().hordeStart = false;
         g.GetComponent<Global>().hordeTimer = 30;
+        g.GetComponent<Global>().playedBarrierDestroyedClip = false;
 
         Debug.Log("END HORDE");
 
