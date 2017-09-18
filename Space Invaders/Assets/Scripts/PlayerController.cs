@@ -85,6 +85,7 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+
 		// If the player gets hit by an enemy bullet,
 		// we want to freeze all movement until the respawn is finished.
 		freeze = g.GetComponent<Global> ().freeze;
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
 		// If they don't then they basically get stuck where they are.
 		freeToMove = g.GetComponent<Global> ().invincible;
 
-		if (!freeze) {
+        if (!freeze) {
 			if (Input.GetKeyDown (KeyCode.Space) || Input.GetButton ("Fire1")) {
 				if (Time.time > nextFire) {
 					nextFire = Time.time + fireRate;

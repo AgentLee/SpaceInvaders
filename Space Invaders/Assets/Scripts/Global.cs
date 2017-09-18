@@ -21,9 +21,10 @@ public class Global : MonoBehaviour
 	public int numLives;
 	public Transform extraLife;
 	public Vector3 rotateAmount;
-	// TODO
-	// Find a better way to delete bases
-	public int baseCount;
+	public bool invincible;
+    // TODO
+    // Find a better way to delete bases
+    public int baseCount;
 	public Text baseText;
 	public AudioClip wilhelm;
 	public bool hitEnemy;
@@ -53,9 +54,10 @@ public class Global : MonoBehaviour
 	public GameObject enemy10;
 
 	public bool overExtended;
+    public bool invincibilityFinished;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
 	{
 		// Hide the cursor
 		Cursor.visible = false;
@@ -96,7 +98,6 @@ public class Global : MonoBehaviour
 
 		safeZone = GameObject.Find ("SafeZone").gameObject;
 
-
 		// Set the high score to 0 if it's the first time playing on the machine.
 		highScore.text = PlayerPrefs.GetInt ("HighScore", 0).ToString();
 
@@ -113,12 +114,22 @@ public class Global : MonoBehaviour
 		hordeStart = false;
 
 		overExtended = false;
+
+		invincibleTimer = 20;
+
+		testBool = false;
+
+        invincibilityFinished = false;
 	}
 		
 	public bool hordeStart;
 	public float farLeftX = -17.51f;
 	public float farLeftY = -10.5f;
 	public float farLeftZ = -0.00249958f;
+
+	public float invincibleTimer;
+
+	public bool testBool;
 
 	// Update is called once per frame
 	void Update () 
@@ -196,12 +207,45 @@ public class Global : MonoBehaviour
 	
 		if (hitRedUFO) {
 			StartCoroutine ("RedDeadUFO");
-
-			Debug.Log (hitRedUFO);
 		}
+
+        // See if there's another way without having a new boolean.
+        if(invincibilityFinished)
+        {
+            // BLESS THIS FUNCTION.
+            StopCoroutine("RedDeadUFO");
+
+            invincibilityFinished = false;
+
+            // Check to see where the player is on the screen.
+            // If they're in the safe zone they get reset to the start position.
+            Vector3 safeZoneCoords = new Vector3(42f, -10f, 10.06f);
+            Vector3 startPos = new Vector3(0f, -12.05f, 10.06f);
+            Vector3 playerPos = player.transform.position;
+
+            // Player is in the safeZone
+            if (playerPos.x <= safeZoneCoords.x && playerPos.x >= -safeZoneCoords.x &&
+                playerPos.y <= safeZoneCoords.y && playerPos.y >= -13.5 &&
+                playerPos.z == safeZoneCoords.z)
+            {
+                Debug.Log("IN SAFE ZONE");
+
+                // Have the player return to the starting positionish
+                if (Vector3.Distance(playerPos, startPos) > 0.5f) {
+                    player.transform.position = Vector3.Lerp(player.transform.position, startPos, Time.deltaTime);
+                    invincibilityFinished = true;
+                }
+            }
+            else
+            {
+                Debug.Log("Destroy Player");
+                overExtended = true;
+            }
+        }
 
 //		Debug.Log ("SPAWNED: " + spawnedRedUFO);
 	}
+
 
 	// ---------------------------------------------------------------
 	// End Game Conditions
@@ -439,77 +483,37 @@ public class Global : MonoBehaviour
 		yield return new WaitForSeconds (3);
 	}
 
-	public bool invincible;
 	IEnumerator RedDeadUFO()
 	{
-		invincible = true;
+        // Tells PlayerController that the player can move all over the screen.
+        invincible = true;
 
-		player.GetComponent<PlayerController> ().prepForLaunch = true;
+        // Start invincibility ------------------------------
 
-		Debug.Log ("Player can move around for 20 seconds");
+        yield return new WaitForSeconds (5);
 
-		// Need to test the invincibility time a bit.
-		yield return new WaitForSeconds (5);
+        // Give the player a warning that they have
+        // (n/2) seconds left to return to the base.
+        Debug.Log ("5 seconds to return to base");
 
-		StartCoroutine ("ReturnToSafeZone");
-	}
+        yield return new WaitForSeconds(5);
 
-	IEnumerator ReturnToSafeZone()
-	{
-		MeshRenderer render = safeZone.gameObject.GetComponentInChildren<MeshRenderer> ();
-		render.enabled = false;
+        // End invincibility ------------------------------
 
-		Debug.Log ("10 seconds to return to base");
-		render.enabled = true;
+        // hitRedUFO will end the coroutine
+        hitRedUFO = false;
+        // hitRedUFO and invincible will stop
+        // the user from moving all over the screen and
+        // will be restricted back to horizontal movements.
+        invincible = false;
+        // This will allow the red ufo's to spawn again.
+        // Will need to tweak this so they don't spawn 
+        // right after invulnerability.
+        spawnedRedUFO = false;
 
-		yield return new WaitForSeconds (5);
+        invincibilityFinished = true;
 
-		Debug.Log ("IF NOT AT BASE, DESTROY");
-
-		// Maybe keep the player out there as a punishment?
-
-		// Check to see where the player is on the screen.
-		// If they're in the safe zone they get reset to the start position.
-		Vector3 safeZoneCoords = new Vector3(42f, -10f, 10.06f);
-		Vector3 startPos = new Vector3(0f, -12.05f, 10.06f);
-		Vector3 playerPos = player.transform.position;
-
-		// Player is in the safeZone
-		if (playerPos.x <= safeZoneCoords.x && playerPos.x >= -safeZoneCoords.x &&
-			playerPos.y <= safeZoneCoords.y && playerPos.y >= -13.5 &&
-			playerPos.z == safeZoneCoords.z) {
-
-			invincible = false;
-			render.enabled = false;
-
-			// Reset flags
-			hitRedUFO = false;
-			spawnedRedUFO = false;
-
-			yield break;
-
-			/*
-			float distance = Vector3.Distance (startPos, playerPos);
-			Debug.Log (distance);
-
-			if (distance <= 2.5f) {
-				invincible = false;
-				render.enabled = false;
-
-				//		player.GetComponent<PlayerController> ().reset = true;
-
-				// Reset flags
-				hitRedUFO = false;
-				spawnedRedUFO = false;
-
-				yield break;
-			} else {
-				player.transform.position = Vector3.Lerp (player.transform.position, startPos, Time.deltaTime);
-			}
-			*/
-		} else {
-			Debug.Log ("Destroy Player");
-			overExtended = true;
-		}
+        // Just to make sure we exit the coroutine immediately.
+        yield break;
 	}
 }
