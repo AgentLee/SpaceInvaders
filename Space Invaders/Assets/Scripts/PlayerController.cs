@@ -152,5 +152,8 @@ public class PlayerController : MonoBehaviour
         {
             g.GetComponent<Global>().collidedWithEnemy = true;
         }
+
+        // TODO
+        // Add base to this
     }
 }

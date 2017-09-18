@@ -23,6 +23,8 @@ public class EnemyController : MonoBehaviour
 
     public GameObject g;
 
+    public bool hordeStart;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -33,9 +35,13 @@ public class EnemyController : MonoBehaviour
 		freeze = false;
 
 		raid = false;
-	}
 
-	void OnTriggerEnter(Collider collider)
+		g = GameObject.Find ("GlobalObject");
+
+        hordeStart = false;
+    }
+
+    void OnTriggerEnter(Collider collider)
 	{
 		if (collider.tag == "Bullet") {
 			//Debug.Log (pointValue);
@@ -53,13 +59,39 @@ public class EnemyController : MonoBehaviour
 	public bool freeze;
 	void FixedUpdate()
 	{
-		g = GameObject.Find ("GlobalObject");
+        freeze = g.GetComponent<Global> ().freeze;
 
-        freeze = g.GetComponent<Global> ().freeze; 
+        hordeStart = g.GetComponent<Global>().hordeStart;
 	}
 
 	void Update()
 	{
+        Debug.Log(g.GetComponent<Global>().hordeTimer);
+
+        if(g.GetComponent<Global>().hordeTimer <= 0)
+        {
+            Debug.Log("HORDE");
+            foreach (Transform enemy in enemies)
+            {
+                MeshRenderer render = enemy.gameObject.GetComponentInChildren<MeshRenderer>();
+                render.enabled = false;
+            }
+
+            return;
+        }
+
+        if (hordeStart)
+        {
+            Debug.Log("HORDE");
+            foreach (Transform enemy in enemies)
+            {
+                MeshRenderer render = enemy.gameObject.GetComponentInChildren<MeshRenderer>();
+                render.enabled = false;
+            }
+
+            return;
+        }
+
 		if (raid) {
 			foreach (Transform enemy in enemies) {
 				enemy.position += Vector3.down * 2.0f;

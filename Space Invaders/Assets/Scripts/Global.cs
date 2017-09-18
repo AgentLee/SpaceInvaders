@@ -42,6 +42,7 @@ public class Global : MonoBehaviour
 	private float spawnTime;
 	public bool spawnedRedUFO;
 
+    public GameObject hordeHolder;
 	public float hordeTimer;
 
 	public GameObject safeZone;
@@ -89,6 +90,16 @@ public class Global : MonoBehaviour
 		spawnedRedUFO = false;
 		hitRedUFO = false;
 
+        hordeTimer = 5;
+        hordeHolder = GameObject.Find("Horde").gameObject;
+        foreach(Transform horder in hordeHolder.transform)
+        {
+            if(horder.tag == "HordeTimer")
+            {
+                horder.GetComponent<Text>().text = ": " + hordeTimer.ToString("N0");
+            }
+        }
+
 		// Hide the end game conditions
 		livesObject = GameObject.Find ("Lives").gameObject;
 
@@ -111,68 +122,82 @@ public class Global : MonoBehaviour
 
 		hitEnemy = false;
 
-		hordeTimer = 10;
-
-		hordeStart = false;
-
 		overExtended = false;
 
-		invincibleTimer = 20;
-
-		testBool = false;
-
         invincibilityFinished = false;
+
+        hordeStart = false;
 	}
-		
-	public bool hordeStart;
-	public float farLeftX = -17.51f;
-	public float farLeftY = -10.5f;
-	public float farLeftZ = -0.00249958f;
 
-	public float invincibleTimer;
+    public bool hordeStart;
+    void UpdateHordeTimer()
+    {
+        hordeTimer -= Time.deltaTime;
+        foreach (Transform horder in hordeHolder.transform)
+        {
+            if (horder.tag == "HordeTimer")
+            {
+                horder.GetComponent<Text>().text = ": " + hordeTimer.ToString("N0");
+            }
+        }
+    }
 
-	public bool testBool;
+    // The enemies on the current level will move aside, making way
+    // for the new horde attack. They will go towards the player 
+    // faster than the normal enemies and will loop back into space
+    // if they aren't destroyed. 
+    // This is more of a mini game idea. 
+    void StartHorde()
+    {
+        
+
+        // This goes with the aesthetic 
+        //enemies.transform.position += Vector3.down * 3.0f;
+
+        //Vector3 pos = enemy10.transform.position;
+        //pos.y -= 4;
+        //Instantiate(enemy10, pos, enemy10.transform.rotation);
+
+        //hordeTimer = 30;
+
+        //				Vector3 pos = enemy10.transform.position;
+        //				pos.y = 27;
+        //				while (true) {
+        //					enemy10.transform.position = Vector3.Lerp (enemy10.transform.position, pos, Time.deltaTime);
+        //
+        //					if (Mathf.Abs(enemy10.transform.position.y - pos.y) <= 0.75f) {
+        //						break;
+        //					}
+        //				}
+
+        // TODO
+        // Add Winning Condition here
+    }
 
 	// Update is called once per frame
 	void Update () 
 	{
 		timer += Time.deltaTime;
 
-		hordeTimer -= Time.deltaTime;
-		if (hordeTimer < 0) {
-			hordeStart = !hordeStart;
+        UpdateHordeTimer();
+        if(hordeTimer <= 0.0f)
+        {
+            hordeStart = true;
 
-			if (hordeStart) {
-				// This goes with the aesthetic 
-				enemies.transform.position += Vector3.down * 3.0f;
+            // Reset horde timer
+            hordeTimer = 30;
 
-				Vector3 pos = enemy10.transform.position;
-				pos.y -= 4;
-				Instantiate (enemy10, pos, enemy10.transform.rotation);
+            // Move this to coroutine?
+            StartHorde();
 
-				hordeTimer = 30;
-			} else {
-//				Vector3 pos = enemy10.transform.position;
-//				pos.y = 27;
-//				while (true) {
-//					enemy10.transform.position = Vector3.Lerp (enemy10.transform.position, pos, Time.deltaTime);
-//
-//					if (Mathf.Abs(enemy10.transform.position.y - pos.y) <= 0.75f) {
-//						break;
-//					}
-//				}
-			}
+            hordeStart = false;
+        }
 
-			// TODO
-			// Add Winning Condition here
-		}
-
-		// Checks for
-		// 		- Player loses all their lives
-		// 		- All the bases are destroyed
-		//		- The enemies reached the bases
-		//
-		if (CheckEndGame ()) {
+        // Checks for
+        // 		- Player loses all their lives
+        // 		- All the bases are destroyed
+        //		- The enemies reached the bases
+        if (CheckEndGame ()) {
 			return;
 		}
 
@@ -181,8 +206,6 @@ public class Global : MonoBehaviour
 			SpawnRedUFO ();
 			SetRandomTime ();
 		}
-
-
 
 		// Rotate the lives at the bottom left
 		RotateLives (livesObject.transform);
@@ -230,9 +253,7 @@ public class Global : MonoBehaviour
                 playerPos.y <= safeZoneCoords.y && playerPos.y >= -13.5 &&
                 playerPos.z == safeZoneCoords.z)
             {
-                Debug.Log("IN SAFE ZONE");
-
-                // Have the player return to the starting positionish
+                // Move the player return to the starting positionish
                 if (Vector3.Distance(playerPos, startPos) > 0.5f) {
                     player.transform.position = Vector3.Lerp(player.transform.position, startPos, Time.deltaTime);
                     invincibilityFinished = true;
@@ -240,12 +261,9 @@ public class Global : MonoBehaviour
             }
             else
             {
-                Debug.Log("Destroy Player");
                 overExtended = true;
             }
         }
-
-//		Debug.Log ("SPAWNED: " + spawnedRedUFO);
 	}
 
 
