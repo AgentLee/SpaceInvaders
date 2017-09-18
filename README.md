@@ -20,7 +20,9 @@ CIS568 Assignment 2: Deconstructing a Classic
     - They don't even spawn now lol.
 - ~~Player rotation about x-axis at the start of the game.~~
 - When the player gets destroyed twice it won't spawn again.
-- Player falls to the abyss once passed the line.
-- Player can't move after lerping back to startPos.
-- Need to fix coroutine for spawn
+- ~~Player falls to the abyss once passed the line.~~
+- ~~Player can't move after lerping back to startPos.~~ 
+    - Took the lerp out of the coroutine and did it once it finished. I have a lot of flags now though.
+- ~~Need to fix coroutine for spawn~~ 
+    - Reorganized the coroutine
 

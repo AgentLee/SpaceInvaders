@@ -208,6 +208,7 @@ MonoBehaviour:
   numLives: 0
   extraLife: {fileID: 4703525058163406, guid: f8f670a596c50d84eb0f5be5cfa9962b, type: 2}
   rotateAmount: {x: 0, y: -50, z: -15}
+  invincible: 0
   baseCount: 0
   baseText: {fileID: 505526587}
   wilhelm: {fileID: 8300000, guid: 612a803f43b2d154faadcb9cba969a52, type: 3}
@@ -225,15 +226,18 @@ MonoBehaviour:
   freeze: 0
   enemy10Holder: []
   enemy10: {fileID: 1921168096}
+  overExtended: 0
+  invincibilityFinished: 0
   hordeStart: 0
   farLeftX: 0
   farLeftY: 0
   farLeftZ: 0
+  invincibleTimer: 0
+  testBool: 0
   enemy1: {fileID: 1692353688823458, guid: a3376d2990142e948a7bc2f56f044840, type: 2}
   enemy2: {fileID: 1604382169929878, guid: def76996081eca349a6fc35a7d0d29c9, type: 2}
   enemy3: {fileID: 1671115734895284, guid: ea74029e9c7f63447b468e22f7b38105, type: 2}
   enemy4: {fileID: 1281604306036518, guid: f36bde76d8ed8984aa03274db3a6ab24, type: 2}
-  invincible: 0
 --- !u!4 &114891637
 Transform:
   m_ObjectHideFlags: 0
@@ -4074,7 +4078,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4020272677949902, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -12.05
+      value: -13.54
       objectReference: {fileID: 0}
     - target: {fileID: 4020272677949902, guid: 592a9ca6ac0ee0b45b998169b16b76ff, type: 2}
       propertyPath: m_LocalPosition.z

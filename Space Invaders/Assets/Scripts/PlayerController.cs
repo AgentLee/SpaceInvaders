@@ -119,11 +119,10 @@ public class PlayerController : MonoBehaviour
 		if (g.GetComponent<Global> ().hitRedUFO && freeToMove) {
 			float v = Input.GetAxis ("Vertical");
 
-			if (player.position.y < -12 && v < 0) {
-				v = -12;
-			} 
-			else if (player.position.y > 25 && v > 0) {
-				v = 25;
+			if (player.position.y < -15 && v < 0 || 
+                player.position.y > 15 && v > 0)
+            {
+				v = 0;
 			}
 
 			player.position += Vector3.up * v * speed;
@@ -131,10 +130,9 @@ public class PlayerController : MonoBehaviour
 
 		float h = Input.GetAxis ("Horizontal");
 
-		if (player.position.x < minBounds && h < 0) {
-			h = 0;
-		} 
-		else if (player.position.x > maxBounds && h > 0) {
+		if (player.position.x < minBounds && h < 0 ||
+            player.position.x > maxBounds && h > 0)
+        {
 			h = 0;
 		}
 
