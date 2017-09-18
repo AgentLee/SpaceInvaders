@@ -2189,6 +2189,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 784378007}
+  - component: {fileID: 784378008}
   m_Layer: 0
   m_Name: Base 1
   m_TagString: Base
@@ -2219,6 +2220,19 @@ Transform:
   m_Father: {fileID: 383684622}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &784378008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 784378006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f27d2ec85e91f4fae3131497cca3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hordeStart: 0
+  g: {fileID: 0}
 --- !u!4 &808785867
 Transform:
   m_ObjectHideFlags: 0
@@ -4296,6 +4310,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1553335610}
+  - component: {fileID: 1553335611}
   m_Layer: 0
   m_Name: Base 2
   m_TagString: Base
@@ -4326,6 +4341,19 @@ Transform:
   m_Father: {fileID: 383684622}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1553335611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1553335609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f27d2ec85e91f4fae3131497cca3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hordeStart: 0
+  g: {fileID: 0}
 --- !u!1 &1563799146
 GameObject:
   m_ObjectHideFlags: 0
@@ -4334,6 +4362,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1563799147}
+  - component: {fileID: 1563799148}
   m_Layer: 0
   m_Name: Base 3
   m_TagString: Base
@@ -4364,6 +4393,19 @@ Transform:
   m_Father: {fileID: 383684622}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1563799148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1563799146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f27d2ec85e91f4fae3131497cca3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hordeStart: 0
+  g: {fileID: 0}
 --- !u!4 &1565578474 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4524778585099732, guid: 845340236e72da944b055acd83245699,
@@ -4563,6 +4605,58 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8ec6e3a78c2cc4641bc44ca3a80f8067, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1637735749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1637735751}
+  - component: {fileID: 1637735750}
+  m_Layer: 0
+  m_Name: HordeEnemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1637735750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1637735749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661158706d4a98742a204879ab817986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.3
+  shot: {fileID: 0}
+  fireRate: 0.95
+  shouldBeShooting: 0
+  blasterSound: {fileID: 0}
+  partOfHorde: 1
+  hordeStart: 0
+  g: {fileID: 0}
+  freeze: 0
+  horder: {fileID: 1458750911795992, guid: 64410bf585ec1d54f94db5b98b04a2f1, type: 2}
+  spawnedHorde: 0
+  enemiesBreached: 0
+--- !u!4 &1637735751
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1637735749}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10.0625}
+  m_LocalScale: {x: 1.2261635, y: 1.2261639, z: 1.2261639}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1657285407
 GameObject:
   m_ObjectHideFlags: 0
@@ -5583,6 +5677,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2060271234}
+  - component: {fileID: 2060271235}
   m_Layer: 0
   m_Name: Base 4
   m_TagString: Base
@@ -5613,6 +5708,19 @@ Transform:
   m_Father: {fileID: 383684622}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2060271235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2060271233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f27d2ec85e91f4fae3131497cca3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hordeStart: 0
+  g: {fileID: 0}
 --- !u!1 &2115515009
 GameObject:
   m_ObjectHideFlags: 0

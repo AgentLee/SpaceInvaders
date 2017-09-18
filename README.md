@@ -26,13 +26,13 @@ CIS568 Assignment 2: Deconstructing a Classic
 - ~~Add collision between player and enemies~~
 
 ## Bugs
-- Bullet placement for enemies
-    - They don't even spawn now lol.
+- ~~Bullet placement for enemies~~
+    - ~~They don't even spawn now lol.~~
 - Extra life doesn't show up (counter works but object doesn't).
 - Explosions show up behind the object
     - Can be fixed with Orthographic camera
         - But this loses 3D-ness
-- When the player gets destroyed twice it won't spawn again.
+- ~~When the player gets destroyed twice it won't spawn again.~~
 - ~~Red UFO spawning~~
     - ~~Only breaks when the player hits the RedUFO~~
     - ~~A bunch of them spawn after invincibility~~

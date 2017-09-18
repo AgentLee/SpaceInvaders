@@ -171,13 +171,13 @@ public class Global : MonoBehaviour
         {
             hordeStart = true;
 
-            // Reset horde timer
-            hordeTimer = 30;
-
-            // Move this to coroutine?
-            StartHorde();
-
-            hordeStart = false;
+            foreach (Transform horder in hordeHolder.transform)
+            {
+                if (horder.tag == "HordeTimer")
+                {
+                    horder.GetComponent<Text>().text = "HORDE INCOMING!";
+                }
+            }
         }
 
         // Checks for
