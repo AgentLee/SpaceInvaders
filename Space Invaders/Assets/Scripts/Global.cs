@@ -196,7 +196,7 @@ public class Global : MonoBehaviour
 
         yield return new WaitForSeconds(5);
 
-        score -= enemiesBreached;
+        //score -= enemiesBreached;
         enemiesBreached = 0;
         enemiesBreachedText.GetComponent<Text>().enabled = false;
 

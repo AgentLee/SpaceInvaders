@@ -154,6 +154,7 @@ public class NewEnemyScript : MonoBehaviour
 
                 if (enemy.position.y < -20)
                 {
+                    g.GetComponent<Global>().score--;
                     g.GetComponent<Global>().enemiesBreached++;
                     Destroy(enemy.gameObject);
                 }
@@ -182,7 +183,6 @@ public class NewEnemyScript : MonoBehaviour
         g.GetComponent<Global>().playedBarrierDestroyedClip = false;
 
         g.GetComponent<Global>().endedHordeAttack = true;
-        g.GetComponent<Global>().enemiesHordeDestroyed = 100 - (destroyed + enemiesBreached);
 
         yield break;
     }
