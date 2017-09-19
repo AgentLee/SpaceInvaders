@@ -12,20 +12,44 @@ public class Resources : MonoBehaviour {
 
     public bool spawnedResources;
 
+    public GameObject[] resources;
+
     // Use this for initialization
     void Start () {
         g = GameObject.Find("GlobalObject");
 
         spawnedResources = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+        resources = new GameObject[5];
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if(g.GetComponent<Global>().spawnResources)
         {
             if(!spawnedResources)
             {
-                SpawnResources();
+                for (int i = 0; i < 5; i++)
+                {
+                    int num = Random.Range(0, 3);
+
+                    if (num == 0)
+                    {
+                        resources[i] = Instantiate(resource1, RandomPosition(), Quaternion.identity).gameObject;
+                    }
+                    else if (num == 1)
+                    {
+                        resources[i] = Instantiate(resource2, RandomPosition(), Quaternion.identity).gameObject;
+                    }
+                    else if(num == 2)
+                    {
+                        resources[i] = Instantiate(resource3, RandomPosition(), Quaternion.identity).gameObject;
+                    }
+                }
+
+                spawnedResources = true;
+
+                StartCoroutine("DestroyResources");
             }
 
             // Randomly spawn lives, shields, or bullets
@@ -46,39 +70,19 @@ public class Resources : MonoBehaviour {
     Vector3 RandomPosition()
     {
         float x = Random.Range(-25, 25);
-        float y = Random.Range(-6, 28);
+        float y = Random.Range(-6, 20);
         return new Vector3(x, y, 10.06f);
     }
 
-    public GameObject[] resources;
-    IEnumerator SpawnResources()
+    IEnumerator DestroyResources()
     {
-        resources = new GameObject[5];
-        for(int i = 0; i < 5; i++)
-        {
-            int num = Random.Range(0, 2);
+        yield return new WaitForSeconds(5);
 
-            switch(num)
-            {
-                case 0:
-                    resources[i] = Instantiate(resource1, RandomPosition(), Quaternion.identity);
-                    break;
-                case 1:
-                    resources[i] = Instantiate(resource2, RandomPosition(), Quaternion.identity);
-                    break;
-                case 2:
-                    resources[i] = Instantiate(resource3, RandomPosition(), Quaternion.identity);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-		yield return new WaitForSeconds (10);
-
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             Destroy(resources[i].gameObject);
         }
+
+        yield break;
     }
 }

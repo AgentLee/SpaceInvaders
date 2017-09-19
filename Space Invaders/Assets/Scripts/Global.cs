@@ -268,7 +268,6 @@ public class Global : MonoBehaviour
     void UpdateResourceTimer()
     {
         resourceTimer += Time.deltaTime;
-        Debug.Log(resourceTimer);
     }
 
     void MovePlayerToSafeZone()
