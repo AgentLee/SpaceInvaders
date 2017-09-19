@@ -31,10 +31,3 @@ Add a delegate to SceneManager.sceneLoaded instead to get notifications after sc
 <RI> Initializing input.
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
-<RI> Initialized touch support.
-UnloadTime: 2.091153 ms
-Setting up 4 worker threads for Enlighten.
-  Thread -> id: 2dac -> priority: 1 
-  Thread -> id: 497c -> priority: 1 
-  Thread -> id: 1f38 -> priority: 1 
-  Thread -> id: 413c -> priority: 1 

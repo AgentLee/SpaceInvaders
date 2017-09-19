@@ -180,7 +180,7 @@ public class NewEnemyScript : MonoBehaviour
         hordeStart = false;
         spawnedHorde = false;
         g.GetComponent<Global>().hordeStart = false;
-        g.GetComponent<Global>().hordeTimer = 5;
+        g.GetComponent<Global>().hordeTimer = 30;
         g.GetComponent<Global>().playedBarrierDestroyedClip = false;
 
         g.GetComponent<Global>().endedHordeAttack = true;

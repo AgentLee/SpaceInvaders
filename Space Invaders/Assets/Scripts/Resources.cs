@@ -27,26 +27,10 @@ public class Resources : MonoBehaviour {
     void Update () {
 		if(g.GetComponent<Global>().spawnResources)
         {
-            if(!spawnedResources)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    int num = Random.Range(0, 2);
-
-                    if (num == 0)
-                    {
-                        resources[i] = Instantiate(resource1, new Vector3(Random.Range(-30, 30), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
-                    }
-                    else if (num == 1)
-                    {
-                        resources[i] = Instantiate(resource2, new Vector3(Random.Range(-30, 30), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
-                    }
-                }
-
-                spawnedResources = true;
-
+            //if(!spawnedResources)
+            //{
                 StartCoroutine("DestroyResources");
-            }
+            //}
         }
 	}
 
@@ -69,12 +53,29 @@ public class Resources : MonoBehaviour {
 
     IEnumerator DestroyResources()
     {
+        for (int i = 0; i < 5; i++)
+        {
+            int num = Random.Range(0, 2);
+
+            if (num == 0)
+            {
+                resources[i] = Instantiate(resource1, new Vector3(Random.Range(-30, 30), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
+            }
+            else if (num == 1)
+            {
+                resources[i] = Instantiate(resource2, new Vector3(Random.Range(-30, 30), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
+            }
+        }
+
+        g.GetComponent<Global>().spawnResources = false;
         yield return new WaitForSeconds(5);
 
         for (int i = 0; i < 5; i++)
         {
             Destroy(resources[i].gameObject);
         }
+
+        spawnedResources = true;
 
         yield break;
     }

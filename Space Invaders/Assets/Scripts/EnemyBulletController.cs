@@ -30,13 +30,35 @@ public class EnemyBulletController : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter(Collider collider)
+    //public bool shields;
+    //IEnumerator ShieldsUp()
+    //{
+    //    AudioSource.PlayClipAtPoint(g.GetComponent<Global>().shieldGen, new Vector3(0, 0, 0));
+    //    yield return new WaitForSeconds(3);
+    //    shields = false;
+    //    yield break;
+    //}
+
+    void OnTriggerEnter(Collider collider)
 	{
-		// Checks to see if the bullet hit
-		// other bullets, the line element, or other enemies.
-		// If it does then an explosion shouldn't occur and 
-		// we just return out of the function.
-		if (!CheckBulletCollision (collider.tag)) {
+        //if (!g.GetComponent<Global>().hordeStart && g.GetComponent<Global>().resource_shields && collider.tag == "Base")
+        //{
+        //    //if (shields)
+        //    //    StartCoroutine("ShieldsUp");
+        //    //else if (!shields)
+        //    //{
+        //    //    StopCoroutine("ShieldsUp");
+        //    //}
+
+        //    return;
+        //}
+
+
+        // Checks to see if the bullet hit
+        // other bullets, the line element, or other enemies.
+        // If it does then an explosion shouldn't occur and 
+        // we just return out of the function.
+        if (!CheckBulletCollision (collider.tag)) {
 			return;
 		}
 

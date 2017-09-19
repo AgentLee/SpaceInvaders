@@ -8,16 +8,17 @@ using UnityEngine;
 public class NewEnemyControllerScript : MonoBehaviour {
 
     public int pointValue;
-
+    public GameObject g;
 	// Use this for initialization
 	void Start () {
-		
+        g = GameObject.Find("GlobalObject");
 	}
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Player")
         {
+            g.GetComponent<Global>().numEnemies--;
             Destroy(gameObject);
         }
     }

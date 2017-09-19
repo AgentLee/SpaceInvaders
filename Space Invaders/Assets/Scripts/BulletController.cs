@@ -17,8 +17,11 @@ public class BulletController : MonoBehaviour
 		bullet = GetComponent<Transform> ();	
 
 		g = GameObject.Find ("GlobalObject");
-	}
 
+        shieldTimer = 3;
+    }
+
+    public float shieldTimer;
 	void FixedUpdate()
 	{
 		bullet.position += Vector3.up * speed;
@@ -27,29 +30,52 @@ public class BulletController : MonoBehaviour
 		if (bullet.position.y >= 20) {
 			Destroy (gameObject);
 		}
+
+        if(startShieldTimer)
+        {
+            shieldTimer -= Time.deltaTime;
+
+            if(shieldTimer <= 0.0f)
+            {
+                startShieldTimer = false;
+                shieldTimer = 3;
+            }
+        }
 	}
 
-    public bool shields;
-    IEnumerator ShieldsUp()
-    {
-        AudioSource.PlayClipAtPoint(g.GetComponent<Global>().shieldGen, new Vector3(0, 0, 0));
-        yield return new WaitForSeconds(3);
-        shields = false;
-    }
+    public bool startShieldTimer;
+    //public bool shields;
+    //IEnumerator ShieldsUp()
+    //{
+    //    AudioSource.PlayClipAtPoint(g.GetComponent<Global>().shieldGen, new Vector3(0, 0, 0));
+    //    yield return new WaitForSeconds(3);
+    //    shields = false;
+    //    yield break;
+    //}
 
     void OnTriggerEnter(Collider collider)
 	{
         if (!g.GetComponent<Global>().hordeStart && g.GetComponent<Global>().resource_shields && collider.tag == "Base")
         {
-            if(shields)
-                StartCoroutine("ShieldsUp");
-            else if(!shields)
-            {
-                StopCoroutine("ShieldsUp");
-            }
+            startShieldTimer = true;
+            //if(shields)
+            //    StartCoroutine("ShieldsUp");
+            //else if(!shields)
+            //{
+            //    StopCoroutine("ShieldsUp");
+            //}
 
             return;
         }
+
+        if(g.GetComponent<Global>().shieldTimer > 0)
+        {
+            Debug.Log("SHIELDS UP");
+        } else
+        {
+            Debug.Log("SHIELDS DOWN");
+        }
+       
 
         if(!g.GetComponent<Global>().hordeStart)
         {

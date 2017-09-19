@@ -95,7 +95,7 @@ public class Global : MonoBehaviour
 		score = 0;
 		timer = 0;
 
-        resourceTimer = 0;
+        resourceTimer = Random.Range(20, 40);
 
 		// Player
 		lostLife = false;
@@ -116,7 +116,7 @@ public class Global : MonoBehaviour
 		hitRedUFO = false;
 
         // Horde Timer
-        hordeTimer = 5;
+        hordeTimer = 30;
         hordeHolder = GameObject.Find("Horde").gameObject;
         foreach(Transform horder in hordeHolder.transform)
         {
@@ -175,8 +175,16 @@ public class Global : MonoBehaviour
         quitButton.GetComponent<Text>().enabled = false;
 
         enemiesBreached = 0;
+
+        counter = Random.Range(20, 40);
+
+        status = GameObject.Find("Status");
+        status.GetComponent<Text>().text = "Attack!!";
+
+        shieldTimer = 3;
     }
 
+    public int counter;
     public AudioClip lightspeed;
 
     public ParticleSystem hyperspace;
@@ -226,9 +234,22 @@ public class Global : MonoBehaviour
 
     public int enemiesHordeDestroyed;
 
+    public float shieldTimer;
+
     // Update is called once per frame
     void Update () 
 	{
+        if(resource_shields)
+        {
+            shieldTimer -= Time.deltaTime;
+            if (shieldTimer <= 0)
+            {
+                shieldTimer = 3;
+                resource_shields = false;
+            }
+        }
+        
+
         timer += Time.deltaTime;
 
         if(endedHordeAttack)
@@ -320,11 +341,11 @@ public class Global : MonoBehaviour
             MovePlayerToSafeZone();
         }
 
-        UpdateResourceTimer();
-        if(resourceTimer >= 5)
+        resourceTimer -= Time.deltaTime;
+        if(resourceTimer <= 0 && !spawnResources)
         {
             spawnResources = true;
-            resourceTimer = -600;
+            resourceTimer = Random.Range(20, 40);
         }
 
         if(resource_life)
@@ -348,8 +369,12 @@ public class Global : MonoBehaviour
         {
             SceneManager.LoadScene("Level001");
         }
-	}
 
+        status = GameObject.Find("Status");
+        status.GetComponent<Text>().text = "ATTACK!";
+    }
+
+    public GameObject status;
     public AudioClip oneup;
 
     void UpdateResourceTimer()
@@ -565,6 +590,8 @@ public class Global : MonoBehaviour
 
                 Vector3 resetPos = new Vector3(0.0f, -12.05f, 10.06f);
                 player.transform.position = resetPos;
+
+                numLives--;
                 //player.transform.position = Vector3.Lerp(player.transform.position, new Vector3(0.0f, 12.05f, 10.06f), 1);
             }
 
@@ -730,6 +757,8 @@ public class Global : MonoBehaviour
 
 		yield return new WaitForSeconds (10);
 
+        ActivatePauseMenu();
+
 		Time.timeScale = 0;
 	}
 
@@ -749,6 +778,8 @@ public class Global : MonoBehaviour
 
         // Give the player a warning that they have
         // (n/2) seconds left to return to the base.
+        status = GameObject.Find("Status");
+        status.GetComponent<Text>().text = "RETURN TO BASE!";
         Debug.Log ("5 seconds to return to base");
 
         yield return new WaitForSeconds(5);
