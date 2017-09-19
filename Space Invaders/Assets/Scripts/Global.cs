@@ -74,6 +74,8 @@ public class Global : MonoBehaviour
     // Use this for initialization
     void Start ()
 	{
+        hyperspace = GameObject.Find("Hyperspace").GetComponent<ParticleSystem>();
+        hyperspace.Stop();
         engine = GameObject.Find("Engine");
         
         // Hide the cursor
@@ -107,7 +109,7 @@ public class Global : MonoBehaviour
 		hitRedUFO = false;
 
         // Horde Timer
-        hordeTimer = 300;
+        hordeTimer = 5;
         hordeHolder = GameObject.Find("Horde").gameObject;
         foreach(Transform horder in hordeHolder.transform)
         {
@@ -168,6 +170,7 @@ public class Global : MonoBehaviour
         enemiesBreached = 0;
     }
 
+    public ParticleSystem hyperspace;
     public bool spawnedEnemies;
     public int enemiesBreached;
     void SpawnEnemies(int level)

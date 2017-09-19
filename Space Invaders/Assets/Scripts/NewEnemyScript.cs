@@ -146,6 +146,7 @@ public class NewEnemyScript : MonoBehaviour
 
     IEnumerator HordeAttack()
     {
+        g.GetComponent<Global>().hyperspace.Play();
         if(partOfHorde)
         {
             foreach (Transform enemy in enemies)
@@ -160,7 +161,6 @@ public class NewEnemyScript : MonoBehaviour
                 }
             }
         }
-        
 
 		yield return new WaitForSeconds (20);
 
@@ -183,6 +183,7 @@ public class NewEnemyScript : MonoBehaviour
         g.GetComponent<Global>().playedBarrierDestroyedClip = false;
 
         g.GetComponent<Global>().endedHordeAttack = true;
+        g.GetComponent<Global>().hyperspace.Stop();
 
         yield break;
     }
