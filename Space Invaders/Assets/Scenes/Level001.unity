@@ -277,6 +277,34 @@ Transform:
   m_PrefabParentObject: {fileID: 4703525058163406, guid: f8f670a596c50d84eb0f5be5cfa9962b,
     type: 2}
   m_PrefabInternal: {fileID: 59110046}
+--- !u!1 &59993902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 59993903}
+  m_Layer: 0
+  m_Name: ShootingStars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &59993903
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 59993902}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &70370982
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +615,9 @@ MonoBehaviour:
   enemiesDestroyedText: {fileID: 0}
   enemiesBreachedText: {fileID: 0}
   engine: {fileID: 0}
+  resource_life: 0
+  resource_shields: 0
+  lightspeed: {fileID: 8300000, guid: 611f4ce8ecd267544888540e81d31917, type: 3}
   hyperspace: {fileID: 198086896450939792, guid: 12c15a654c0777742ae5f09f4b0f3505,
     type: 2}
   spawnedEnemies: 0
@@ -594,8 +625,11 @@ MonoBehaviour:
   paused: 0
   barrierDestroyed: {fileID: 8300000, guid: 4c7745f9f20017e46b49d902dad6f9f5, type: 3}
   playedBarrierDestroyedClip: 0
+  gotShieldBlip: {fileID: 8300000, guid: 67a99ea392b918646bf6f89aa6ba4cc8, type: 3}
+  shieldGen: {fileID: 8300000, guid: d46273d88fc90844c9da1369218c553c, type: 3}
   endedHordeAttack: 0
   enemiesHordeDestroyed: 0
+  oneup: {fileID: 8300000, guid: 37c80efcd48e75244a33ee23f7ff580f, type: 3}
   enemy1: {fileID: 1692353688823458, guid: a3376d2990142e948a7bc2f56f044840, type: 2}
   enemy2: {fileID: 1604382169929878, guid: def76996081eca349a6fc35a7d0d29c9, type: 2}
   enemy3: {fileID: 1671115734895284, guid: ea74029e9c7f63447b468e22f7b38105, type: 2}
@@ -603,6 +637,7 @@ MonoBehaviour:
   explosion: {fileID: 1676673465608534, guid: cc81659800acd104e91be24f63fe469a, type: 2}
   monster: {fileID: 1981780776792516, guid: fc25a6d4d5acad04fb42f3ccae56d15e, type: 2}
   collidedWithEnemy: 0
+  showedLevelUp: 0
   level: 0
   hordeStart: 0
 --- !u!4 &114891637
@@ -2450,6 +2485,7 @@ MonoBehaviour:
   g: {fileID: 0}
   barrierActivated: {fileID: 8300000, guid: 23978b2c2198f454f891198856606be4, type: 3}
   playedBarrierActivatedClip: 0
+  health: 0
 --- !u!1001 &799734694
 Prefab:
   m_ObjectHideFlags: 0
@@ -2556,7 +2592,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4207799637620316, guid: 0caed5af5c14e4a0181bb0133dda595c, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4207799637620316, guid: 0caed5af5c14e4a0181bb0133dda595c, type: 2}
       propertyPath: m_LocalScale.y
@@ -4279,7 +4315,7 @@ Transform:
   - {fileID: 1565578474}
   - {fileID: 261255662}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1406786453
 MonoBehaviour:
@@ -4956,6 +4992,7 @@ MonoBehaviour:
   g: {fileID: 0}
   barrierActivated: {fileID: 0}
   playedBarrierActivatedClip: 0
+  health: 0
 --- !u!1 &1563799146
 GameObject:
   m_ObjectHideFlags: 0
@@ -5010,6 +5047,7 @@ MonoBehaviour:
   g: {fileID: 0}
   barrierActivated: {fileID: 0}
   playedBarrierActivatedClip: 0
+  health: 0
 --- !u!4 &1565578474 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4524778585099732, guid: 845340236e72da944b055acd83245699,
@@ -5575,7 +5613,7 @@ RectTransform:
   - {fileID: 945274339}
   - {fileID: 259448001}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6372,7 +6410,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cdf901dfb9b0045c0898cc8fc12f8238, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -3.4411302
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cdf901dfb9b0045c0898cc8fc12f8238, type: 2}
       propertyPath: m_LocalRotation.x
@@ -6572,6 +6610,7 @@ MonoBehaviour:
   g: {fileID: 0}
   barrierActivated: {fileID: 0}
   playedBarrierActivatedClip: 0
+  health: 0
 --- !u!1 &2115515009
 GameObject:
   m_ObjectHideFlags: 0

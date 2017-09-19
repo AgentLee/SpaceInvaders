@@ -122,9 +122,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.2
+  tiltAngle: 0
   minBounds: -20
   maxBounds: 20
-  shot: {fileID: 1249517185252342, guid: 835a1c6f9d785974aad7bbde75447c81, type: 2}
   shotSpawn: {fileID: 4020272677949902}
+  shot: {fileID: 1249517185252342, guid: 835a1c6f9d785974aad7bbde75447c81, type: 2}
   fireRate: 0.5
   blaster: {fileID: 8300000, guid: 76ecdec37d1ef1b4c894c97f0ba69430, type: 3}
+  hitEnemy: 0
+  shotsFired: 0
+  shotsHit: 0
+  accuracy: 0
+  g: {fileID: 0}
+  freeze: 0
+  prepForLaunch: 0
+  setToLaunch: 0
+  reset: 0
+  freeToMove: 0
+  EPSILON: 0.75

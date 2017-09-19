@@ -31,19 +31,15 @@ public class Resources : MonoBehaviour {
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    int num = Random.Range(0, 3);
+                    int num = Random.Range(0, 2);
 
                     if (num == 0)
                     {
-                        resources[i] = Instantiate(resource1, new Vector3(Random.Range(-25, 25), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
+                        resources[i] = Instantiate(resource1, new Vector3(Random.Range(-30, 30), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
                     }
                     else if (num == 1)
                     {
-                        resources[i] = Instantiate(resource2, new Vector3(Random.Range(-25, 25), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
-                    }
-                    else if(num == 2)
-                    {
-                        resources[i] = Instantiate(resource3, new Vector3(Random.Range(-25, 25), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
+                        resources[i] = Instantiate(resource2, new Vector3(Random.Range(-30, 30), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
                     }
                 }
 
@@ -51,19 +47,6 @@ public class Resources : MonoBehaviour {
 
                 StartCoroutine("DestroyResources");
             }
-
-            // Randomly spawn lives, shields, or bullets
-
-            // Lives
-            // If the user already has 5 lives then they can get a random
-            // amount of points by hitting the resource.
-
-            // Shields
-            // The players' bases get more protection.
-            // Their health can increase preventing them from being destroyed quicker.
-
-            // Bullets
-            // Burst fire or missile
         }
 	}
 

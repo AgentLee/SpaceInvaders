@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Global : MonoBehaviour 
 {
@@ -71,9 +72,15 @@ public class Global : MonoBehaviour
 
     public GameObject engine;
 
+    public bool resource_life;
+    public bool resource_shields;
+
     // Use this for initialization
     void Start ()
 	{
+        resource_life = false;
+        resource_shields = false;
+
         hyperspace = GameObject.Find("Hyperspace").GetComponent<ParticleSystem>();
         hyperspace.Stop();
         engine = GameObject.Find("Engine");
@@ -170,6 +177,8 @@ public class Global : MonoBehaviour
         enemiesBreached = 0;
     }
 
+    public AudioClip lightspeed;
+
     public ParticleSystem hyperspace;
     public bool spawnedEnemies;
     public int enemiesBreached;
@@ -211,6 +220,8 @@ public class Global : MonoBehaviour
         yield break;
     }
 
+    public AudioClip gotShieldBlip;
+    public AudioClip shieldGen;
     public bool endedHordeAttack;
 
     public int enemiesHordeDestroyed;
@@ -298,6 +309,10 @@ public class Global : MonoBehaviour
 		if (hitRedUFO) {
 			StartCoroutine ("RedDeadUFO");
 		}
+        else if(!hitRedUFO)
+        {
+            StopCoroutine("RedDeadUFO");
+        }
 
         // See if there's another way without having a new boolean.
         if(invincibilityFinished)
@@ -311,7 +326,31 @@ public class Global : MonoBehaviour
             spawnResources = true;
             resourceTimer = -600;
         }
+
+        if(resource_life)
+        {
+            AudioSource.PlayClipAtPoint(oneup, new Vector3(0, 0,0));
+
+            if (numLives == 3)
+            {
+                score += 50;
+            }
+            else
+            {
+                numLives++;
+            }
+
+            resource_life = false;
+        }
+
+        // Restart Level
+        if(Input.GetKey(KeyCode.P))
+        {
+            SceneManager.LoadScene("Level001");
+        }
 	}
+
+    public AudioClip oneup;
 
     void UpdateResourceTimer()
     {
@@ -418,7 +457,9 @@ public class Global : MonoBehaviour
 			AudioSource.PlayClipAtPoint (wilhelm, player.transform.position);
 
 			foreach (Transform life in livesObject.transform) {
-                Destroy(life.gameObject);
+                MeshRenderer render = life.gameObject.GetComponent<MeshRenderer>();
+                render.enabled = false;
+                //Destroy(life.gameObject);
                 break;
 			}
 
@@ -456,6 +497,24 @@ public class Global : MonoBehaviour
 
     void LifeCount(Transform lives)
     {
+        if(resource_life)
+        {
+            if(numLives == 3)
+            {
+
+            }
+            else if(numLives == 2)
+            {
+
+            }
+            else if(numLives == 1)
+            {
+
+            }
+        }
+
+        Debug.Log(numLives);
+
         int count = 0;
         foreach (Transform life in lives)
         {
@@ -541,14 +600,35 @@ public class Global : MonoBehaviour
 		}
 	}
 
+    public bool showedLevelUp;
+    IEnumerator showLevelUp()
+    {
+
+        yield return new WaitForSeconds(5);
+
+        showedLevelUp = true;
+
+        yield break;
+    }
+
     public int level;
 	void CheckLevelUp()
 	{
 		// Level Up
 		if (numEnemies <= 0) {
-			levelUp.GetComponent<Text> ().enabled = true;
+          //  if(!showedLevelUp)
+          //  {
+		        //levelUp.GetComponent<Text> ().enabled = true;
+          //      StartCoroutine("showLevelUp");
+          //  } 
+          //  else if(showedLevelUp)
+          //  {
+          //      StopCoroutine("showLevelUp");
+		        //levelUp.GetComponent<Text> ().enabled = false;
+          //      showedLevelUp = false;
+          //  }
 
-			numLives++;
+            numLives++;
 
             if(!spawnedEnemies)
                 SpawnEnemies(++level);

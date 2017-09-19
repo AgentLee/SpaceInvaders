@@ -11,6 +11,8 @@ public class BaseController : MonoBehaviour
     public AudioClip barrierActivated;
     public bool playedBarrierActivatedClip;
 
+    public int health;
+
     // Use this for initialization
     void Start () {
         g = GameObject.Find("GlobalObject");
@@ -22,6 +24,8 @@ public class BaseController : MonoBehaviour
         playedBarrierActivatedClip = true;
 
         barrierActivated = null;
+
+        health = 1;
     }
 
     void FixedUpdate()

@@ -29,12 +29,31 @@ public class BulletController : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter(Collider collider)
+    public bool shields;
+    IEnumerator ShieldsUp()
+    {
+        AudioSource.PlayClipAtPoint(g.GetComponent<Global>().shieldGen, new Vector3(0, 0, 0));
+        yield return new WaitForSeconds(3);
+        shields = false;
+    }
+
+    void OnTriggerEnter(Collider collider)
 	{
-		AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
+        if (!g.GetComponent<Global>().hordeStart && g.GetComponent<Global>().resource_shields && collider.tag == "Base")
+        {
+            if(shields)
+                StartCoroutine("ShieldsUp");
+            else if(!shields)
+            {
+                StopCoroutine("ShieldsUp");
+            }
+
+            return;
+        }
 
         if(!g.GetComponent<Global>().hordeStart)
         {
+        AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
             // Create Explosion
             // TODO
             // Figure out how to make it so that the explosions are on top of the other bases.
@@ -56,12 +75,13 @@ public class BulletController : MonoBehaviour
         // Freeze all other enemies during the horde
         if(collider.tag == "Horder" && g.GetComponent<Global>().hordeStart)
         {
+        AudioSource.PlayClipAtPoint (blaster, gameObject.transform.position);
             // Create Explosion
             // TODO
             // Figure out how to make it so that the explosions are on top of the other bases.
             Vector3 pos = gameObject.transform.position;
             pos.y += 2.0f;
-            //pos.z += -5.0f;
+            pos.z += -5.0f;
             Quaternion angle = Quaternion.AngleAxis(0, Vector3.right);
             // Create a copy of the explosion 
             GameObject newExplosion = (GameObject)Instantiate(explosion, pos, angle);
@@ -111,17 +131,32 @@ public class BulletController : MonoBehaviour
 			Debug.Log (global.player.gameObject.GetComponent<PlayerController> ().shotsHit);
 		}
 
+        Debug.Log(collider.tag);
+
         if (collider.tag == "Resource1")
         {
             Debug.Log("EXTRA LIFE");
+            g.GetComponent<Global>().resource_life = true;
+
+            AudioSource.PlayClipAtPoint(g.GetComponent<Global>().oneup, new Vector3(0, 0, 0));
+
+            // Destroy the bullet
+            Destroy(gameObject);
+            // Destroy the enemy/base piece/red ufo
+            Destroy(collider.gameObject);
         }
         if (collider.tag == "Resource2")
         {
             Debug.Log("MORE SHIELDS");
-        }
-        if (collider.tag == "Resource3")
-        {
-            Debug.Log("BULLETS");
+            g.GetComponent<Global>().resource_shields = true;
+
+            AudioSource.PlayClipAtPoint(g.GetComponent<Global>().gotShieldBlip, new Vector3(0, 0, 0));
+
+            // Destroy the bullet
+            Destroy(gameObject);
+            // Destroy the enemy/base piece/red ufo
+            Destroy(collider.gameObject);
         }
     }
+
 }

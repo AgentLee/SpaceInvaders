@@ -48,7 +48,7 @@ public class NewEnemyScript : MonoBehaviour
         {
             if (!spawnedHorde && partOfHorde)
             {
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 30; i++)
                 {
                     Vector3 pos = new Vector3(Random.Range(-15, 15), Random.Range(22, 1000), 10.0625f);
                     Instantiate(horder, pos, Quaternion.identity).transform.parent = enemies;
@@ -56,6 +56,7 @@ public class NewEnemyScript : MonoBehaviour
 
                 spawnedHorde = true;
             }
+            //AudioSource.PlayClipAtPoint(g.GetComponent<Global>().lightspeed, new Vector3(0, 0, 0));
 
             StartCoroutine("HordeAttack");
         }
