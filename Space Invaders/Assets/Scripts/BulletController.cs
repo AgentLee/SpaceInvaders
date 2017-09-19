@@ -110,5 +110,17 @@ public class BulletController : MonoBehaviour
 			Global global = g.gameObject.GetComponent<Global> ();
 			Debug.Log (global.player.gameObject.GetComponent<PlayerController> ().shotsHit);
 		}
-	}
+
+        //if (collider.name == "Resource1") {
+        //    Debug.Log("EXTRA LIFE");
+        //}
+        //if (collider.name == "Resource2")
+        //{
+        //    Debug.Log("MORE SHIELDS");
+        //}
+        //if (collider.name == "Resource3")
+        //{
+        //    Debug.Log("BULLETS");
+        //}
+    }
 }

@@ -66,6 +66,9 @@ public class Global : MonoBehaviour
 
     public float resourceTimer;
 
+    public GameObject enemiesDestroyedText;
+    public GameObject enemiesBreachedText;
+
     // Use this for initialization
     void Start ()
 	{
@@ -99,6 +102,7 @@ public class Global : MonoBehaviour
 		spawnedRedUFO = false;
 		hitRedUFO = false;
 
+        // Horde Timer
         hordeTimer = 5;
         hordeHolder = GameObject.Find("Horde").gameObject;
         foreach(Transform horder in hordeHolder.transform)
@@ -109,11 +113,19 @@ public class Global : MonoBehaviour
             }
         }
 
+        // Pause Text
         pausedText = GameObject.Find("Pause").gameObject;
         pausedText.GetComponent<Text>().enabled = false;
 
-		// Hide the end game conditions
-		livesObject = GameObject.Find ("Lives").gameObject;
+        // Horde Stats
+        enemiesDestroyedText = GameObject.Find("DestroyedEnemies");
+        enemiesDestroyedText.GetComponent<Text>().enabled = false;
+
+        enemiesBreachedText = GameObject.Find("EnemiesBreached");
+        enemiesBreachedText.GetComponent<Text>().enabled = false;
+
+        // Hide the end game conditions
+        livesObject = GameObject.Find ("Lives").gameObject;
 
 		gameOver = GameObject.Find ("GameOver").gameObject;
 		gameOver.GetComponent<Text> ().enabled = false;
@@ -148,10 +160,12 @@ public class Global : MonoBehaviour
 
         quitButton = GameObject.Find("Quit").gameObject;
         quitButton.GetComponent<Text>().enabled = false;
+
+        enemiesBreached = 0;
     }
 
     public bool spawnedEnemies;
-
+    public int enemiesBreached;
     void SpawnEnemies(int level)
     {
         Vector3 enemy10pos = enemy10.transform.position;
@@ -175,10 +189,39 @@ public class Global : MonoBehaviour
     public AudioClip barrierDestroyed;
     public bool playedBarrierDestroyedClip;
 
+    public IEnumerator ShowHordeStats()
+    {
+        enemiesBreachedText.GetComponent<Text>().text = enemiesBreached.ToString() + " enemies breached";
+        enemiesBreachedText.GetComponent<Text>().enabled = true;
+
+        yield return new WaitForSeconds(5);
+
+        score -= enemiesBreached;
+        enemiesBreached = 0;
+        enemiesBreachedText.GetComponent<Text>().enabled = false;
+
+        endedHordeAttack = false;
+
+        yield break;
+    }
+
+    public bool endedHordeAttack;
+
+    public int enemiesHordeDestroyed;
+
     // Update is called once per frame
     void Update () 
 	{
         timer += Time.deltaTime;
+
+        if(endedHordeAttack)
+        {
+            StartCoroutine("ShowHordeStats");
+        }
+        if(!endedHordeAttack)
+        {
+            StopCoroutine("ShowHordeStats");
+        }
 
         UpdateHordeTimer();
         if(hordeTimer <= 0.0f)
@@ -236,7 +279,6 @@ public class Global : MonoBehaviour
         // Player presses Escape to pause the game
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("PAUSE");
             ActivatePauseMenu();
         }
 
@@ -353,7 +395,6 @@ public class Global : MonoBehaviour
             Application.Quit();
         }
     }
-
 
     // ---------------------------------------------------------------
     // End Game Conditions

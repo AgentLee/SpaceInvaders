@@ -35,15 +35,15 @@ public class Resources : MonoBehaviour {
 
                     if (num == 0)
                     {
-                        resources[i] = Instantiate(resource1, RandomPosition(), Quaternion.identity).gameObject;
+                        resources[i] = Instantiate(resource1, new Vector3(Random.Range(-25, 25), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
                     }
                     else if (num == 1)
                     {
-                        resources[i] = Instantiate(resource2, RandomPosition(), Quaternion.identity).gameObject;
+                        resources[i] = Instantiate(resource2, new Vector3(Random.Range(-25, 25), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
                     }
                     else if(num == 2)
                     {
-                        resources[i] = Instantiate(resource3, RandomPosition(), Quaternion.identity).gameObject;
+                        resources[i] = Instantiate(resource3, new Vector3(Random.Range(-25, 25), Random.Range(-6, 20), 10.06f), Quaternion.identity).gameObject;
                     }
                 }
 

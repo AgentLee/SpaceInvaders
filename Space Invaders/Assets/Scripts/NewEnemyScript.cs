@@ -48,7 +48,7 @@ public class NewEnemyScript : MonoBehaviour
         {
             if (!spawnedHorde && partOfHorde)
             {
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     Vector3 pos = new Vector3(Random.Range(-15, 15), Random.Range(22, 1000), 10.0625f);
                     Instantiate(horder, pos, Quaternion.identity).transform.parent = enemies;
@@ -58,6 +58,10 @@ public class NewEnemyScript : MonoBehaviour
             }
 
             StartCoroutine("HordeAttack");
+        }
+        else if(!hordeStart)
+        {
+            StopCoroutine("HordeAttack");
         }
 	}
 
@@ -88,6 +92,7 @@ public class NewEnemyScript : MonoBehaviour
         }
     }
 
+    public int enemiesDestroyed;
     void MoveEnemy()
     {
         // True when the player died and is in the middle of respawn.
@@ -149,33 +154,35 @@ public class NewEnemyScript : MonoBehaviour
 
                 if (enemy.position.y < -20)
                 {
-                    enemiesBreached++;
+                    g.GetComponent<Global>().enemiesBreached++;
                     Destroy(enemy.gameObject);
                 }
             }
         }
         
 
-		yield return new WaitForSeconds (5);
+		yield return new WaitForSeconds (20);
 
         // See if there's a way to have them keep moving down.
         // Otherwise keep it like this for now.
-        if(partOfHorde)
+        int destroyed = 0;
+        if (partOfHorde)
         {
             foreach (Transform enemy in enemies)
             {
                 Destroy(enemy.gameObject);
+                destroyed++;
             }
         }
-        
 
         hordeStart = false;
         spawnedHorde = false;
         g.GetComponent<Global>().hordeStart = false;
-        g.GetComponent<Global>().hordeTimer = 30;
+        g.GetComponent<Global>().hordeTimer = 5;
         g.GetComponent<Global>().playedBarrierDestroyedClip = false;
 
-        Debug.Log("END HORDE");
+        g.GetComponent<Global>().endedHordeAttack = true;
+        g.GetComponent<Global>().enemiesHordeDestroyed = 100 - (destroyed + enemiesBreached);
 
         yield break;
     }

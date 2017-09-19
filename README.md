@@ -14,7 +14,7 @@ CIS568 Assignment 2: Deconstructing a Classic
     - Scoring system
     - Star field
 - Monster attack
-- Resources
+- Resources (Only have them spawn during the invulnerability)
     - Lives
         - Max at 5
         - They become points after 5th life.
