@@ -11,8 +11,6 @@ public class BaseController : MonoBehaviour
     public AudioClip barrierActivated;
     public bool playedBarrierActivatedClip;
 
-    bool started;
-
     // Use this for initialization
     void Start () {
         g = GameObject.Find("GlobalObject");
@@ -23,7 +21,7 @@ public class BaseController : MonoBehaviour
 
         playedBarrierActivatedClip = true;
 
-        started = true;
+        barrierActivated = null;
     }
 
     void FixedUpdate()
@@ -54,7 +52,7 @@ public class BaseController : MonoBehaviour
                 render.enabled = true;
             }
 
-            if(!playedBarrierActivatedClip)
+            if(!playedBarrierActivatedClip && barrierActivated != null)
             {
                 AudioSource.PlayClipAtPoint(barrierActivated, this.transform.position);
                 playedBarrierActivatedClip = true;

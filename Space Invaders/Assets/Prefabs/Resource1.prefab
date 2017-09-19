@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 135094813568158134}
   - component: {fileID: 23617138990539488}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Resource1
   m_TagString: ExtraLife
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

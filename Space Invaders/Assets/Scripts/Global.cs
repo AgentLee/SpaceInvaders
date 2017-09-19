@@ -64,6 +64,8 @@ public class Global : MonoBehaviour
 
     public bool spawnResources;
 
+    public float resourceTimer;
+
     // Use this for initialization
     void Start ()
 	{
@@ -76,6 +78,8 @@ public class Global : MonoBehaviour
 		scores = new int[5];
 		score = 0;
 		timer = 0;
+
+        resourceTimer = 0;
 
 		// Player
 		lostLife = false;
@@ -232,35 +236,12 @@ public class Global : MonoBehaviour
         // Player presses Escape to pause the game
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-
-
-            paused = !paused;
-
-            if(!paused)
-            {
-                Cursor.visible = false;
-
-                pausedText.GetComponent<Text>().enabled = false;
-
-                resumeButton.SetActive(false);
-                quitButton.SetActive(false);
-
-                Time.timeScale = 1;
-            }
-            else
-            {
-                Cursor.visible = true;
-
-                pausedText.GetComponent<Text>().enabled = true;
-
-                resumeButton.SetActive(true);
-                quitButton.SetActive(true);
-
-                Time.timeScale = 0;
-            }
+            Debug.Log("PAUSE");
+            ActivatePauseMenu();
         }
 
-		if (hitEnemy) {
+		if (hitEnemy)
+        {
 			hitEnemy = false;
 
 			player.gameObject.GetComponent<PlayerController> ().shotsHit++;
@@ -273,34 +254,85 @@ public class Global : MonoBehaviour
         // See if there's another way without having a new boolean.
         if(invincibilityFinished)
         {
-            // BLESS THIS FUNCTION.
-            StopCoroutine("RedDeadUFO");
+            MovePlayerToSafeZone();
+        }
 
-            invincibilityFinished = false;
-
-            // Check to see where the player is on the screen.
-            // If they're in the safe zone they get reset to the start position.
-            Vector3 safeZoneCoords = new Vector3(42f, -10f, 10.06f);
-            Vector3 startPos = new Vector3(0f, -12.05f, 10.06f);
-            Vector3 playerPos = player.transform.position;
-
-            // Player is in the safeZone
-            if (playerPos.x <= safeZoneCoords.x && playerPos.x >= -safeZoneCoords.x &&
-                playerPos.y <= safeZoneCoords.y && playerPos.y >= -13.5 &&
-                playerPos.z == safeZoneCoords.z)
-            {
-                // Move the player return to the starting positionish
-                if (Vector3.Distance(playerPos, startPos) > 0.5f) {
-                    player.transform.position = Vector3.Lerp(player.transform.position, startPos, Time.deltaTime);
-                    invincibilityFinished = true;
-                }
-            }
-            else
-            {
-                overExtended = true;
-            }
+        UpdateResourceTimer();
+        if(resourceTimer >= 5)
+        {
+            spawnResources = true;
+            resourceTimer = -600;
         }
 	}
+
+    void UpdateResourceTimer()
+    {
+        resourceTimer += Time.deltaTime;
+        Debug.Log(resourceTimer);
+    }
+
+    void MovePlayerToSafeZone()
+    {
+        // BLESS THIS FUNCTION.
+        StopCoroutine("RedDeadUFO");
+
+        invincibilityFinished = false;
+
+        // Check to see where the player is on the screen.
+        // If they're in the safe zone they get reset to the start position.
+        Vector3 safeZoneCoords = new Vector3(42f, -10f, 10.06f);
+        Vector3 startPos = new Vector3(0f, -12.05f, 10.06f);
+        Vector3 playerPos = player.transform.position;
+
+        // Player is in the safeZone
+        if (playerPos.x <= safeZoneCoords.x && playerPos.x >= -safeZoneCoords.x &&
+            playerPos.y <= safeZoneCoords.y && playerPos.y >= -13.5 &&
+            playerPos.z == safeZoneCoords.z)
+        {
+            // Move the player return to the starting positionish
+            if (Vector3.Distance(playerPos, startPos) > 0.5f)
+            {
+                player.transform.position = Vector3.Lerp(player.transform.position, startPos, Time.deltaTime);
+                invincibilityFinished = true;
+            }
+        }
+        else
+        {
+            overExtended = true;
+        }
+    }
+
+    // ---------------------------------------------------------------
+    // Pause Menu
+    // ---------------------------------------------------------------
+
+    void ActivatePauseMenu()
+    {
+        paused = !paused;
+
+        if (!paused)
+        {
+            Cursor.visible = false;
+
+            pausedText.GetComponent<Text>().enabled = false;
+
+            resumeButton.SetActive(false);
+            quitButton.SetActive(false);
+
+            Time.timeScale = 1;
+        }
+        else
+        {
+            Cursor.visible = true;
+
+            pausedText.GetComponent<Text>().enabled = true;
+
+            resumeButton.SetActive(true);
+            quitButton.SetActive(true);
+
+            Time.timeScale = 0;
+        }
+    }
 
     public void PauseMenu(int option)
     {
@@ -330,7 +362,8 @@ public class Global : MonoBehaviour
 
     bool EnemiesReachedBase()
 	{
-		return enemies.transform.position.y <= 1.0f;
+        return false;
+		//return enemies.transform.position.y <= 1.0f;
 	}
 
 	bool RanOutOfLives()
@@ -460,48 +493,6 @@ public class Global : MonoBehaviour
 			PlayerPrefs.SetInt ("HighScore", score);
 			highScore.text = score.ToString ();
 		}
-
-		// TODO
-//		int scorePosition = 0;
-//		if (score > PlayerPrefs.GetInt ("HighScore5", 0)) {
-//			scorePosition = 5;
-//			if (score > PlayerPrefs.GetInt ("HighScore4", 0)) {
-//				scorePosition = 4;
-//				if (score > PlayerPrefs.GetInt ("HighScore3", 0)) {
-//					scorePosition = 3;
-//					if (score > PlayerPrefs.GetInt ("HighScore2", 0)) {
-//						scorePosition = 2;
-//						if (score > PlayerPrefs.GetInt ("HighScore", 0)) {
-//							scorePosition = 1;
-//						} 
-//					}
-//				}
-//			}
-//		}
-//
-//		if (scorePosition > 1) {
-//			PlayerPrefs.SetInt ("HighScore" + scorePosition, score);
-//			Debug.Log ("NEW HIGH SCORE AT " + scorePosition);
-//		} 
-//		else {
-//			PlayerPrefs.SetInt ("HighScore", score);
-//			highScore.text = score.ToString ();
-//		}
-
-
-
-//		for (int i = 0; i < scores.Length; i++) {
-//			int highScoreKey = "HighScore" + (i + 1).ToString ();
-//			int highScore = PlayerPrefs.SetInt (highScoreKey, 0);
-//
-//			if (score > highScore) {
-//				int temp = highScore;
-//				PlayerPrefs.SetInt (highScoreKey, score);
-//				score = temp;
-//			}
-//		}
-//
-//		Debug.Log (scores);
 	}
 
     public int level;
@@ -515,19 +506,6 @@ public class Global : MonoBehaviour
 
             if(!spawnedEnemies)
                 SpawnEnemies(++level);
-
-			// TODO
-			// Fix extra life instantiation
-			//		g = GameObject.FindGameObjectWithTag ("Lives");
-			//		Vector3 lifePos = new Vector3(0, 0, 0);
-			//		Quaternion lifeRotation = Quaternion.identity;
-			//		foreach (Transform life in g.transform) {
-			//			lifePos = life.position;
-			//			lifeRotation = life.rotation;
-			//		}
-
-			//		Instantiate (extraLife, lifePos, lifeRotation);
-			//Debug.Log (g.transform.childCount);
 		}
 	}
 
@@ -564,36 +542,6 @@ public class Global : MonoBehaviour
                 horder.GetComponent<Text>().text = ": " + hordeTimer.ToString("N0");
             }
         }
-    }
-
-    // The enemies on the current level will move aside, making way
-    // for the new horde attack. They will go towards the player 
-    // faster than the normal enemies and will loop back into space
-    // if they aren't destroyed. 
-    // This is more of a mini game idea. 
-    void StartHorde()
-    {
-        // This goes with the aesthetic 
-        //enemies.transform.position += Vector3.down * 3.0f;
-
-        //Vector3 pos = enemy10.transform.position;
-        //pos.y -= 4;
-        //Instantiate(enemy10, pos, enemy10.transform.rotation);
-
-        //hordeTimer = 30;
-
-        //				Vector3 pos = enemy10.transform.position;
-        //				pos.y = 27;
-        //				while (true) {
-        //					enemy10.transform.position = Vector3.Lerp (enemy10.transform.position, pos, Time.deltaTime);
-        //
-        //					if (Mathf.Abs(enemy10.transform.position.y - pos.y) <= 0.75f) {
-        //						break;
-        //					}
-        //				}
-
-        // TODO
-        // Add Winning Condition here
     }
 
     // ---------------------------------------------------------------

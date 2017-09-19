@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\NewEnemyScript.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\RedUFOController.cs" />
+     <Compile Include="Assets\Scripts\Resources.cs" />
      <Compile Include="Assets\Scripts\ScoreUI.cs" />
      <Compile Include="Assets\Scripts\StartMenu.cs" />
      <None Include="Assets\Shaders\OutlineDiffuse.shader" />
