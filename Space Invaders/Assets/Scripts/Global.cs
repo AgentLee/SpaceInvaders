@@ -69,10 +69,14 @@ public class Global : MonoBehaviour
     public GameObject enemiesDestroyedText;
     public GameObject enemiesBreachedText;
 
+    public GameObject engine;
+
     // Use this for initialization
     void Start ()
 	{
-		// Hide the cursor
+        engine = GameObject.Find("Engine");
+        
+        // Hide the cursor
 		Cursor.visible = false;
 
 		invincible = false;
@@ -103,7 +107,7 @@ public class Global : MonoBehaviour
 		hitRedUFO = false;
 
         // Horde Timer
-        hordeTimer = 5;
+        hordeTimer = 300;
         hordeHolder = GameObject.Find("Horde").gameObject;
         foreach(Transform horder in hordeHolder.transform)
         {
@@ -196,7 +200,6 @@ public class Global : MonoBehaviour
 
         yield return new WaitForSeconds(5);
 
-        //score -= enemiesBreached;
         enemiesBreached = 0;
         enemiesBreachedText.GetComponent<Text>().enabled = false;
 
@@ -597,9 +600,10 @@ public class Global : MonoBehaviour
 		// EnemyBulletController handles the explosion effect
 		MeshRenderer render = player.gameObject.GetComponentInChildren<MeshRenderer> ();
 		render.enabled = false;
+        engine.GetComponent<ParticleRenderer>().enabled = false;
 
-		// Respawn time
-		yield return new WaitForSeconds (1);
+        // Respawn time
+        yield return new WaitForSeconds (1);
 
 		// Reset player rotation
 		player.transform.rotation = Quaternion.identity;
@@ -610,13 +614,15 @@ public class Global : MonoBehaviour
 			yield return new WaitForSeconds (0.5f);
 			 
 			render.enabled = !render.enabled;
-		}
+            engine.GetComponent<ParticleRenderer>().enabled = !engine.GetComponent<ParticleRenderer>().enabled;
+        }
 
-		// Just to make sure the player is shown
-		render.enabled = true;
+        // Just to make sure the player is shown
+        render.enabled = true;
+        engine.GetComponent<ParticleRenderer>().enabled = true;
 
-		// Allow the player/enemies to move
-		freeze = false;
+        // Allow the player/enemies to move
+        freeze = false;
 	}
 
 	IEnumerator GG()

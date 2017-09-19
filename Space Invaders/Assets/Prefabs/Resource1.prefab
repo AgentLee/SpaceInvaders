@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23617138990539488}
   m_Layer: 0
   m_Name: Resource1
-  m_TagString: ExtraLife
+  m_TagString: Resource1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

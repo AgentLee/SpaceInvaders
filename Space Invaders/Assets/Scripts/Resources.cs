@@ -69,7 +69,17 @@ public class Resources : MonoBehaviour {
 
     Vector3 RandomPosition()
     {
-        float x = Random.Range(-25, 25);
+        float x;
+        float side = Random.Range(1, 2);
+        if(side == 1)
+        {
+            x = Random.Range(-30, -21);
+        }
+        else
+        {
+            x = Random.Range(22, 30);
+        }
+
         float y = Random.Range(-6, 20);
         return new Vector3(x, y, 10.06f);
     }

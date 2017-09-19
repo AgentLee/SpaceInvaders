@@ -111,16 +111,17 @@ public class BulletController : MonoBehaviour
 			Debug.Log (global.player.gameObject.GetComponent<PlayerController> ().shotsHit);
 		}
 
-        //if (collider.name == "Resource1") {
-        //    Debug.Log("EXTRA LIFE");
-        //}
-        //if (collider.name == "Resource2")
-        //{
-        //    Debug.Log("MORE SHIELDS");
-        //}
-        //if (collider.name == "Resource3")
-        //{
-        //    Debug.Log("BULLETS");
-        //}
+        if (collider.tag == "Resource1")
+        {
+            Debug.Log("EXTRA LIFE");
+        }
+        if (collider.tag == "Resource2")
+        {
+            Debug.Log("MORE SHIELDS");
+        }
+        if (collider.tag == "Resource3")
+        {
+            Debug.Log("BULLETS");
+        }
     }
 }
