@@ -13,10 +13,13 @@ public class Global : MonoBehaviour
 	public GameObject gameOver;
 	public GameObject levelUp;
 	public GameObject livesObject;
-//	public AudioSource audio;
+	public GameObject pausedText;
+    public GameObject resumeButton;
+    public GameObject quitButton;
+    //	public AudioSource audio;
 
-	// Player Management
-	public GameObject player;
+    // Player Management
+    public GameObject player;
 	public bool lostLife;
 	public int numLives;
 	public Transform extraLife;
@@ -102,6 +105,9 @@ public class Global : MonoBehaviour
             }
         }
 
+        pausedText = GameObject.Find("Pause").gameObject;
+        pausedText.GetComponent<Text>().enabled = false;
+
 		// Hide the end game conditions
 		livesObject = GameObject.Find ("Lives").gameObject;
 
@@ -132,7 +138,13 @@ public class Global : MonoBehaviour
 
         SpawnEnemies(0);
         spawnedEnemies = false;
-	}
+
+        resumeButton = GameObject.Find("Resume").gameObject;
+        resumeButton.GetComponent<Text>().enabled = false;
+
+        quitButton = GameObject.Find("Quit").gameObject;
+        quitButton.GetComponent<Text>().enabled = false;
+    }
 
     public bool spawnedEnemies;
 
@@ -151,8 +163,11 @@ public class Global : MonoBehaviour
         Instantiate(enemy30, enemy30pos, enemy30.transform.rotation);
 
         spawnedEnemies = true;
+
+        paused = false;
     }
 
+    public bool paused;
     public AudioClip barrierDestroyed;
     public bool playedBarrierDestroyedClip;
 
@@ -206,12 +221,44 @@ public class Global : MonoBehaviour
 
 		UpdateHighScore ();
 
+        // Player holds tab to see accuracy and base health
 		accuracy.text = "Accuracy: " + player.gameObject.GetComponent<PlayerController> ().accuracy.ToString ("F2") + "%";
 		if (Input.GetKey (KeyCode.Tab)) {
 			accuracy.enabled = true;
 		} else {
 			accuracy.enabled = false;
 		}
+
+        // Player presses Escape to pause the game
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+
+
+            paused = !paused;
+
+            if(!paused)
+            {
+                Cursor.visible = false;
+
+                pausedText.GetComponent<Text>().enabled = false;
+
+                resumeButton.SetActive(false);
+                quitButton.SetActive(false);
+
+                Time.timeScale = 1;
+            }
+            else
+            {
+                Cursor.visible = true;
+
+                pausedText.GetComponent<Text>().enabled = true;
+
+                resumeButton.SetActive(true);
+                quitButton.SetActive(true);
+
+                Time.timeScale = 0;
+            }
+        }
 
 		if (hitEnemy) {
 			hitEnemy = false;
@@ -255,12 +302,33 @@ public class Global : MonoBehaviour
         }
 	}
 
+    public void PauseMenu(int option)
+    {
+        if (option == 0)
+        {
+            resumeButton.SetActive(false);
+            quitButton.SetActive(false);
 
-	// ---------------------------------------------------------------
-	// End Game Conditions
-	// ---------------------------------------------------------------
+            paused = false;
+            pausedText.GetComponent<Text>().enabled = false;
+            Time.timeScale = 1;
+        }
+        else if(option == 1)
+        {
+            resumeButton.SetActive(false);
+            quitButton.SetActive(false);
 
-	bool EnemiesReachedBase()
+            Debug.Log("Quit");
+            Application.Quit();
+        }
+    }
+
+
+    // ---------------------------------------------------------------
+    // End Game Conditions
+    // ---------------------------------------------------------------
+
+    bool EnemiesReachedBase()
 	{
 		return enemies.transform.position.y <= 1.0f;
 	}
