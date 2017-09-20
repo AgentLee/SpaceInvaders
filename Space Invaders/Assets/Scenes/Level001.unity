@@ -623,6 +623,9 @@ MonoBehaviour:
     type: 2}
   spawnedEnemies: 0
   enemiesBreached: 0
+  enemy10Group: {fileID: 0}
+  enemy20Group: {fileID: 0}
+  enemy30Group: {fileID: 0}
   paused: 0
   barrierDestroyed: {fileID: 8300000, guid: 4c7745f9f20017e46b49d902dad6f9f5, type: 3}
   playedBarrierDestroyedClip: 0
@@ -630,7 +633,10 @@ MonoBehaviour:
   shieldGen: {fileID: 8300000, guid: d46273d88fc90844c9da1369218c553c, type: 3}
   endedHordeAttack: 0
   enemiesHordeDestroyed: 0
+  shieldTimer: 0
+  status: {fileID: 0}
   oneup: {fileID: 8300000, guid: 37c80efcd48e75244a33ee23f7ff580f, type: 3}
+  safeZoneText: {fileID: 0}
   enemy1: {fileID: 1692353688823458, guid: a3376d2990142e948a7bc2f56f044840, type: 2}
   enemy2: {fileID: 1604382169929878, guid: def76996081eca349a6fc35a7d0d29c9, type: 2}
   enemy3: {fileID: 1671115734895284, guid: ea74029e9c7f63447b468e22f7b38105, type: 2}
@@ -5688,6 +5694,7 @@ RectTransform:
   - {fileID: 945274339}
   - {fileID: 259448001}
   - {fileID: 759435384}
+  - {fileID: 1728118951}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5757,6 +5764,80 @@ Transform:
   m_Father: {fileID: 1921168097}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1728118950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1728118951}
+  - component: {fileID: 1728118953}
+  - component: {fileID: 1728118952}
+  m_Layer: 5
+  m_Name: SafeZoneText
+  m_TagString: SafeZoneText
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1728118951
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1728118950}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1687197430}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -236}
+  m_SizeDelta: {x: 1426, y: 161.8}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1728118952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1728118950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: fc541c3a56c454d61bd697c3dd12b751, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Safe zone
+--- !u!222 &1728118953
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1728118950}
 --- !u!4 &1733983217 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4685453059442120, guid: 02d0532c9bca8194fa68ca2a52359bad,

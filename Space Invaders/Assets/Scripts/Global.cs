@@ -75,9 +75,22 @@ public class Global : MonoBehaviour
     public bool resource_life;
     public bool resource_shields;
 
+    IEnumerator SafeZone()
+    {
+        yield return new WaitForSeconds(5);
+
+        safeZoneText.GetComponent<Text>().enabled = false;
+
+        yield break;
+    }
+
     // Use this for initialization
     void Start ()
 	{
+        safeZoneText = GameObject.Find("SafeZoneText");
+        safeZoneText.GetComponent<Text>().enabled = true;
+        StartCoroutine("SafeZone");
+
         resource_life = false;
         resource_shields = false;
 
@@ -200,14 +213,18 @@ public class Global : MonoBehaviour
         enemy20pos.x += level * 5.0f;
         enemy30pos.x += level * 5.0f;
 
-        Instantiate(enemy10, enemy10pos, enemy10.transform.rotation);
-        Instantiate(enemy20, enemy20pos, enemy20.transform.rotation);
-        Instantiate(enemy30, enemy30pos, enemy30.transform.rotation);
+        enemy10Group = Instantiate(enemy10, enemy10pos, enemy10.transform.rotation);
+        enemy20Group = Instantiate(enemy20, enemy20pos, enemy20.transform.rotation);
+        enemy30Group = Instantiate(enemy30, enemy30pos, enemy30.transform.rotation);
 
         spawnedEnemies = true;
 
         paused = false;
     }
+
+    public GameObject enemy10Group;
+    public GameObject enemy20Group;
+    public GameObject enemy30Group;
 
     public bool paused;
     public AudioClip barrierDestroyed;
@@ -328,7 +345,7 @@ public class Global : MonoBehaviour
 		}
 	
 		if (hitRedUFO) {
-			StartCoroutine ("RedDeadUFO");
+            StartCoroutine ("RedDeadUFO");
 		}
         else if(!hitRedUFO)
         {
@@ -413,6 +430,8 @@ public class Global : MonoBehaviour
         }
     }
 
+    public GameObject safeZoneText;
+
     // ---------------------------------------------------------------
     // Pause Menu
     // ---------------------------------------------------------------
@@ -471,9 +490,13 @@ public class Global : MonoBehaviour
     // ---------------------------------------------------------------
 
     bool EnemiesReachedBase()
-	{
+    {
+        if (enemy10Group.transform.position.y <= -4 || enemy20Group.transform.position.y <= -4 || enemy30Group.transform.position.y <= -4)
+        {
+            return true;
+        }
+
         return false;
-		//return enemies.transform.position.y <= 1.0f;
 	}
 
 	bool RanOutOfLives()
@@ -774,12 +797,14 @@ public class Global : MonoBehaviour
 
         // Start invincibility ------------------------------
 
+        
         yield return new WaitForSeconds (5);
 
         // Give the player a warning that they have
         // (n/2) seconds left to return to the base.
         status = GameObject.Find("Status");
         status.GetComponent<Text>().text = "RETURN TO BASE!";
+
         Debug.Log ("5 seconds to return to base");
 
         yield return new WaitForSeconds(5);
