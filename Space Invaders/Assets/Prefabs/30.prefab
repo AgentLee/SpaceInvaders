@@ -1152,6 +1152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114072157485635430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1169,8 +1170,13 @@ MonoBehaviour:
   shouldBeShooting: 0
   blasterSound: {fileID: 8300000, guid: 481626f52095c4641812b39ccaec8123, type: 3}
   partOfHorde: 0
+  hordeStart: 0
   g: {fileID: 0}
   freeze: 0
+  horder: {fileID: 0}
+  spawnedHorde: 0
+  enemiesBreached: 0
+  enemiesDestroyed: 0
 --- !u!114 &114073781288072714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1183,6 +1189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114145019697249130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1195,6 +1202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114290408835064002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1207,6 +1215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114339599192896124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1219,6 +1228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114512179571132788
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1231,6 +1241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114569298847932526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1243,6 +1254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114611135232943886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1255,6 +1267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114686911992538966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1267,6 +1280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114775596887176984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1279,6 +1293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}
 --- !u!114 &114813746163706112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1291,3 +1306,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 30
+  g: {fileID: 0}

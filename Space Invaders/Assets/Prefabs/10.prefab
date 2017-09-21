@@ -1152,6 +1152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114144440034471348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1164,6 +1165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114337386051641898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1176,6 +1178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114342181600050704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1188,6 +1191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114647918208065782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1200,6 +1204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114674811281820470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1212,6 +1217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114678167067984566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1224,6 +1230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114807411894501864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1236,6 +1243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114855514077863130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1248,6 +1256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114928769032836328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1260,6 +1269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114939505357338586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1272,6 +1282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 10
+  g: {fileID: 0}
 --- !u!114 &114959627065271146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1289,5 +1300,10 @@ MonoBehaviour:
   shouldBeShooting: 1
   blasterSound: {fileID: 8300000, guid: 481626f52095c4641812b39ccaec8123, type: 3}
   partOfHorde: 0
+  hordeStart: 0
   g: {fileID: 0}
   freeze: 0
+  horder: {fileID: 0}
+  spawnedHorde: 0
+  enemiesBreached: 0
+  enemiesDestroyed: 0

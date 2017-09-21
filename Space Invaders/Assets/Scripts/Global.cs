@@ -108,7 +108,7 @@ public class Global : MonoBehaviour
 		score = 0;
 		timer = 0;
 
-        resourceTimer = Random.Range(20, 40);
+        resourceTimer = Random.Range(10, 40);
 
 		// Player
 		lostLife = false;
