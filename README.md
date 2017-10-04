@@ -7,7 +7,7 @@ The goal of this project was to familiarize myself with developing in Unity by r
 
 # Demo
 
- [![](demo/demo_screenshot.png)](https://vimeo.com/236786590)
+ [![Space Invaders Demo](Demo/demo_screenshot.png)](https://vimeo.com/236786590)
 
 # How to Play
 
