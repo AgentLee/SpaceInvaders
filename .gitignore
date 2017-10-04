@@ -14,4 +14,16 @@ Temp/
 
 *.sln
 
+Demo/space_invaders_final_Data/
+
+Demo/space_invaders_Data/
+
+Demo/space_invaders2_Data/
+
+Demo/space_invaders_final2_data/
+
+Demo/*.exe
+
+Demo/SpaceInvadersMac
+
 #Unity gitignore end

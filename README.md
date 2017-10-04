@@ -1,56 +1,68 @@
 # SpaceInvaders
 CIS568 Assignment 2: Deconstructing a Classic
 
-## Todo
-- ~~Need to restructure enemy code~~
-    - Need to move back to `EnemyController`. 
-        - Made each group of enemies into a prefab.
-            - Each group gets `NewEnemyScript` which controls movement and shooting.
-            - Each individual enemy gets `NewEnemyControllerScript` which handles collisions.
-- Horde Attack 
-    - ~~Timer~~
-    - ~~Decide how they will attack~~
-    - ~~Move to coroutine~~
-    - Scoring system
-    - Star field
-- Monster attack
-- Resources (Only have them spawn during the invulnerability)
-    - Lives
-        - Max at 5
-        - They become points after 5th life.
-    - Shields
-        - Bases can take more damage
-    - Shot types (burst fire, etc)
-- New Models
-- Might need to add more functionality to the player when it can go into space.
-- High Scores
+# Overview
+
+The goal of this project was to familiarize myself with developing in Unity by recreating Space Invaders and putting my own twist to it.
+
+# Demo
+
+ [![Space Invaders Demo](demo/demo_screenshot.png)](https://vimeo.com/236786590)
+
+# How to Play
+
+**Goal**: Destroy all the enemy ships before you run out of lives, the bases get destroyed, or invade the base. 
+
+| Key                   | Movement      |
+| -------------         |-------------  | 
+| W/Up Arrow            | Move Up       | 
+| A/Left Arrow          | Move Left     | 
+| S/Down Arrow          | Move Down     | 
+| D/Right Arrow         | Move Right    | 
+| Space Bar/Left Click  | Fire Bullet   | 
+
+# Original Gameplay
+All the features and game mechanics from the original Space Invaders are implemented. 
+- Enemy UFO's...
+    - move faster as their numbers decrease and when they move down
+    - shoot at the player at various rates and times throughout the game
+    - give the player points (10, 20, 30) when destroyed
+- Players...
+    - start with 3 lives
+    - shoot at the enemies to move onto the next level
+- Red UFO's...
+    - spawn periodically throughout the game
+    - give the player a random point value (50, 100, 150) when destroyed
+- Game Over
+    - All the bases are destroyed
+    - Player loses all their lives
+    - The enemies reach the bases
 - Level Up
-    - Need to adjust enemy speeds
-- ~~Invulnerability~~
-- ~~Add explosion to when the player is out of position.~~
-- ~~Add collision between player and enemies~~
+    - All the enemies get destroyed
+    - Enemies spawn closer to the base
 
-## Bugs
-- ~~Bullet placement for enemies~~
-    - ~~They don't even spawn now lol.~~
-- ~~Extra life doesn't show up (counter works but object doesn't).~~
-    - Changed the concept
-    - Need to fix life hiding from (left to right) to (right to left)
-- Explosions show up behind the object
-    - Can be fixed with Orthographic camera
-        - But this loses 3D-ness
-- ~~When the player gets destroyed twice it won't spawn again.~~
-- ~~Red UFO spawning~~
-    - ~~Only breaks when the player hits the RedUFO~~
-    - ~~A bunch of them spawn after invincibility~~
-        - I think this was implicitly fixed with the invincibility change.
-- ~~Invincibility~~
-    - ~~Need the player to return to the safe zone~~
-- ~~Player rotation about x-axis at the start of the game.~~
-- ~~Player falls to the abyss once passed the line.~~
-- ~~Player can't move after lerping back to startPos.~~ 
-    - Took the lerp out of the coroutine and did it once it finished. I have a lot of flags now though.
-- ~~Need to fix coroutine for spawn~~ 
-    - Reorganized the coroutine
+# Remixed Gameplay
+All of the original gameplay is still the same but with extra features and mechanics. 
 
+- Red UFO's allow the player to become "invincible" and move all around the screen.
+    - They are only given 10-20 seconds to destroy as many enemies as they can or grab as many resources as they can before time runs out.
+    - When there are 5 seconds left, the status bar warns the player to return to the safe zone.
+        - If they don't, they get destroyed and lose a life.
+- Horde Atack
+    - The idea behind this was that the player gets launched into space via hyperspace and they have to destroy as many enemies that fly past them as they can. For every enemy that gets past the player, they lose a point. I have plans to have these enemies appear in the original game screen as continuation. So if 5 enemy ships get past the player, then 5 would show up when the horde attack is over. 
+    - There is a timer in the top right corner that counts down to when the next attack will occur. 
+- Resources can appear at random times. The player shoots at them to get them. 
+    - Extra lives
+    - Shields
+        - Bases don't lose health when the enemy or player shoot at them for about 3 seconds.
+            - These *should* be able to stack, so if a player shoots at 3 shield resources then they get 9 seconds of freedom.
+    - Bullet types (not yet implemented)
+        - Burst fire
+        - Nuke
 
+# Future Enhancements
+- Add bullet types
+- Create a low poly aesthetic 
+- Fix hyperspace effect
+- Tweaks to timing 
+- Tweaks to shielding 
